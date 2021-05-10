@@ -151,10 +151,12 @@ void ThreadPoolTask::loadDisplayWidth(const QString &info)
         QStringList lines = param.split("\n");
         if (lines.size() < 5)
             continue;
+        bool res = false;
         foreach (const QString &line, lines) {
             if (line.contains("SysFS ID")) {
                 QString pci = line.right(7);
-                int width = getDisplayWidthFromLspci(pci);
+                int width = 64;
+                res = getDisplayWidthFromLspci(pci, width);
                 widthS += pci;
                 widthS += "-";
                 widthS += QString::number(width);
@@ -162,27 +164,35 @@ void ThreadPoolTask::loadDisplayWidth(const QString &info)
                 break;
             }
         }
-
-        DeviceInfoManager::getInstance()->addInfo("width", widthS);
+        if (res)
+            DeviceInfoManager::getInstance()->addInfo("width", widthS);
     }
 }
 
-int ThreadPoolTask::getDisplayWidthFromLspci(const QString &info)
+bool ThreadPoolTask::getDisplayWidthFromLspci(const QString &info, int &width)
 {
-    QString cmd = QString("lspci -v -s %1").arg(info);
+    // 添加nvidia-smi 命令
+    // 英伟达GT1010 1G版的显卡位宽是32，但是lshw获取的是64，目前只能通过nvidia-smi判断
+    //QString size("978MiB");
+    QRegExp reg("9[0-9][0-9]MiB");
+
+    QString cmd = QString("nvidia-smi");
     QString sInfo;
     runCmd(cmd, sInfo);
-    QStringList lines = sInfo.split("\n");
-    foreach (const QString &line, lines) {
-        if (!line.contains("Memory at")) {
-            continue;
-        }
-        if (line.contains("32-bit"))
-            return 32;
-        else
-            return 64;
+
+    // 判断是否是该显卡，通过pci判断
+    if (!sInfo.contains(info)) {
+        return false;
     }
-    return 64;
+
+    // 根据显卡大小判断位宽
+    if (sInfo.contains(reg)) {
+        width = 32;
+    } else {
+        width = 64;
+    }
+
+    return true;
 }
 
 void ThreadPoolTask::runCmdToFile(const QString &cmd)

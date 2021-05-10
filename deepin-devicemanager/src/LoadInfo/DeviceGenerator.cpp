@@ -708,6 +708,7 @@ void DeviceGenerator::getKeyboardInfoFromLshw()
 
 void DeviceGenerator::getKeyboardInfoFromCatDevices()
 {
+
 }
 
 void DeviceGenerator::getMouseInfoFromHwinfo()

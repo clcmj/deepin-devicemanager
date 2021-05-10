@@ -118,12 +118,11 @@ void DeviceCpu::setInfoFromLscpu(const QMap<QString, QString> &mapInfo)
 {
     // 设置CPU属性
     setAttribute(mapInfo, "Model name", m_Name);
-    setAttribute(mapInfo, "Vendor ID", m_Vendor, false);
+    setAttribute(mapInfo, "Vendor ID", m_Vendor);
     setAttribute(mapInfo, "Thread(s) per core", m_ThreadNum);
     setAttribute(mapInfo, "BogoMIPS", m_BogoMIPS);
     setAttribute(mapInfo, "Architecture", m_Architecture);
     setAttribute(mapInfo, "CPU family", m_Familly);
-    setAttribute(mapInfo, "CPU MHz", m_CurFrequency);
     setAttribute(mapInfo, "Model", m_Model);
     setAttribute(mapInfo, "Stepping", m_Step);
     setAttribute(mapInfo, "L1d cache", m_CacheL1Data);
@@ -188,7 +187,7 @@ void DeviceCpu::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
     // 获取设备基本信息
     setAttribute(mapInfo, "Manufacturer", m_Vendor);
     setAttribute(mapInfo, "Max Speed", m_Frequency, false);
-    //    setAttribute(mapInfo, "Current Speed", m_CurFrequency);
+    setAttribute(mapInfo, "Current Speed", m_CurFrequency);
     setAttribute(mapInfo, "Family", m_Familly);
 
     // 获取其他cpu信息

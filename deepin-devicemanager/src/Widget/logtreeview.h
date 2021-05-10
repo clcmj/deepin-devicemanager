@@ -90,13 +90,10 @@ public:
     int RowNum()const;
 
 protected:
-    /**
-     * @brief initUI : Initialize the control layout
-     */
     void initUI();
     void paintEvent(QPaintEvent *event) override;
-    void showEvent(QShowEvent *event) override;
-    void drawRow(QPainter *painter, const QStyleOptionViewItem &options, const QModelIndex &index) const override;
+    void drawRow(QPainter *painter, const QStyleOptionViewItem &options,
+                 const QModelIndex &index) const override;
     void keyPressEvent(QKeyEvent *event) override;
 
 private:

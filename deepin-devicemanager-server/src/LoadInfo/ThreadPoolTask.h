@@ -90,9 +90,10 @@ private:
     /**
      * @brief getDisplayWidthFromLspci
      * @param info
+     * @param width
      * @return
      */
-    int getDisplayWidthFromLspci(const QString &info);
+    bool getDisplayWidthFromLspci(const QString &info, int &width);
 
     /**
      * @brief runCmdToTxt

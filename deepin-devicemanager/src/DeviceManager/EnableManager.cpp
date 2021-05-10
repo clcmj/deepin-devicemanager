@@ -19,14 +19,10 @@ EnableManager::EnableManager()
 
 }
 
-EnableDeviceStatus EnableManager::enableDeviceByInput(bool enable, int id)
+EnableDeviceStatus EnableManager::enableDeviceByInput(const QString &name, bool enable, int index)
 {
     // 获取输入设备ID
-    //    if ((!enable) != isDeviceEnable(id))
-    //        id = -1;
-
-    if (enable == isDeviceEnable(id))
-        return EDS_Faild;
+    int id = getDeviceID(name, enable, index);
 
     // 通过ID禁用启用设备
     QString cmd = QString("xinput %1 %2").arg(enable ? "enable" : "disable").arg(id);
@@ -36,6 +32,7 @@ EnableDeviceStatus EnableManager::enableDeviceByInput(bool enable, int id)
     process.waitForFinished(msecs);
     int exitCode = process.exitCode();
     QString output = process.readAllStandardOutput();
+
     if (exitCode == 0)
         return EDS_Success;
 
@@ -139,12 +136,23 @@ bool EnableManager::isDeviceEnableByDriver(const QString &driver)
         if (d.startsWith(driver))
             return true;
     }
-
-    if (driver.contains("loongson-audio", Qt::CaseInsensitive))
-        return true;
-
     /*
     // 获取cat /boot/config* | grep '=y'信息
+    cmd = "cat /boot/config* | grep '=y'";
+    QStringList options;
+
+    // QProcess执行带管道的命令
+    options << "-c" << cmd;
+    process.start("/bin/bash", options);
+    process.waitForFinished(msecs);
+    output = process.readAllStandardOutput();
+    drivers = output.split("\n");
+
+    // 判断驱动是否在/boot/config* 列表中
+    foreach (const QString &d, drivers) {
+        if (d.contains(driver, Qt::CaseInsensitive))
+            return true;
+    }
     */
     QList<QMap<QString, QString>> cmdInfo = DeviceManager::instance()->cmdInfo("dr_config");
     foreach (auto info, cmdInfo) {
@@ -215,8 +223,12 @@ bool EnableManager::isNetworkEnableByIfconfig(const QString &logicalName)
     return false;
 }
 
-int EnableManager::getDeviceID(const QString &name, const QString &key)
+int EnableManager::getDeviceID(const QString &name, bool enable, int index)
 {
+    // 获取输入设备ID
+    int id = -1;
+    int curIndex = -1;
+
     // 先判断有没有同名
     QString cmd = "xinput list";
     QProcess process;
@@ -231,33 +243,14 @@ int EnableManager::getDeviceID(const QString &name, const QString &key)
         if (re.exactMatch(item)) {
             QString n = re.cap(1).trimmed();
             int curId = re.cap(2).toInt();
-            if (n != name)
-                continue;
-            if (isDeviceId(curId, key))
-                return curId;
+            if (n == name && (!enable) == isDeviceEnable(curId)) {
+                curIndex++;
+                if (index == curIndex)
+                    id = curId;
+            }
         }
     }
-    return -1;
-}
-
-bool EnableManager::isDeviceId(const int &id, const QString key)
-{
-    QString cmd = QString("xinput list-props %1").arg(id);
-    QProcess process;
-    int msecs = -1;
-    process.start(cmd);
-    process.waitForFinished(msecs);
-
-    QString output = process.readAllStandardOutput();
-    QStringList items = output.split("\n");
-    foreach (const QString &item, items) {
-        if (!item.contains(key))
-            continue;
-        else
-            return true;
-    }
-
-    return false;
+    return id;
 }
 
 QString EnableManager::getDriverPath(const QString &driver)

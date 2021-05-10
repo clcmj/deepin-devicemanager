@@ -52,18 +52,6 @@ public:
     void loadCmdInfo(const QString &key, const QString &debugFile);
 
     /**
-     * @brief getCurNetworkLinkStatus:lshw -C network获取当前连接状态
-     * @return
-     */
-    QString getCurNetworkLinkStatus();
-
-    /**
-     * @brief getCurPowerInfo:upower --dump获取电池信息
-     * @return
-     */
-    QMap<QString, QMap<QString, QString>> getCurPowerInfo();
-
-    /**
      * @brief cmdInfo:获取命令的解析结果
      * @return 解析结果以map形式返回
      */

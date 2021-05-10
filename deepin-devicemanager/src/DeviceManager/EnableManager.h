@@ -47,7 +47,7 @@ public:
      * @param name : 该设备名称
      * @return : 返回是否禁用成功
      */
-    EnableDeviceStatus enableDeviceByInput(bool enable, int id);
+    EnableDeviceStatus enableDeviceByInput(const QString &name, bool enable, int index = 0);
 
     /**
      * @brief isDeviceEnable : 判断设备是否可用
@@ -106,14 +106,7 @@ public:
      * @param index:设备索引号
      * @return 设备ID
      */
-    int getDeviceID(const QString &name, const QString &key);
-
-    /**
-     * @brief isDeviceId
-     * @param id
-     * @return
-     */
-    bool isDeviceId(const int &id, const QString key);
+    int getDeviceID(const QString &name, bool enable, int index);
 
 protected:
     EnableManager();

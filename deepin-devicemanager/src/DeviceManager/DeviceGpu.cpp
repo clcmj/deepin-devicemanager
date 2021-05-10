@@ -155,10 +155,7 @@ void DeviceGpu::setXrandrInfo(const QMap<QString, QString> &mapInfo)
 void DeviceGpu::setDmesgInfo(const QString &info)
 {
     // 设置显存大小
-    if (info.contains(m_UniqueKey)) {
-        QString size = info;
-        m_GraphicsMemory = size.replace(m_UniqueKey + "=", "");
-    }
+    m_GraphicsMemory = info;
 }
 
 void DeviceGpu::setGpuInfo(const QMap<QString, QString> &mapInfo)

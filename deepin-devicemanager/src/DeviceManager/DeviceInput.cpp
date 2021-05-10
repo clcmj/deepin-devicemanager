@@ -93,13 +93,14 @@ void DeviceInput::setInfoFromHwinfo(const QMap<QString, QString> &mapInfo)
 
     // 获取映射到  cat /proc/bus/input/devices 里面的关键字
     QRegExp re = QRegExp(".*(event[0-9]{1,2}).*");
-    if (re.exactMatch(mapInfo["Device File"]) || re.exactMatch(mapInfo["Device Files"])) {
+    if (re.exactMatch(mapInfo["Device File"])) {
         m_KeysToCatDevices = re.cap(1);
     } else {
         QRegExp rem = QRegExp(".*(mouse[0-9]{1,2}).*");
         if (rem.exactMatch(mapInfo["Device File"]))
             m_KeysToCatDevices = rem.cap(1);
     }
+
     // 由cat /proc/bus/devices/input设置设备信息
     setInfoFromInput();
 
@@ -142,13 +143,14 @@ void DeviceInput::setKLUInfoFromHwinfo(const QMap<QString, QString> &mapInfo)
 
     // 获取映射到  cat /proc/bus/input/devices 里面的关键字
     QRegExp re = QRegExp(".*(event[0-9]{1,2}).*");
-    if (re.exactMatch(mapInfo["Device File"]) || re.exactMatch(mapInfo["Device Files"])) {
+    if (re.exactMatch(mapInfo["Device File"])) {
         m_KeysToCatDevices = re.cap(1);
     } else {
         QRegExp rem = QRegExp(".*(mouse[0-9]{1,2}).*");
         if (rem.exactMatch(mapInfo["Device File"]))
             m_KeysToCatDevices = rem.cap(1);
     }
+
     // 由cat /proc/bus/devices/input设置设备信息
     setInfoFromInput();
 
@@ -163,6 +165,7 @@ void DeviceInput::setInfoFromInput()
 {
     // 获取对应的由cat /proc/bus/devices/input读取的设备信息
     const QMap<QString, QString> &mapInfo = DeviceManager::instance()->inputInfo(m_KeysToCatDevices);
+
     // 设置Name属性
     setAttribute(mapInfo, "Name", m_Name, true);
 
@@ -170,8 +173,7 @@ void DeviceInput::setInfoFromInput()
     m_keysToPairedDevice = mapInfo["Uniq"].toUpper();
 
     // 设置设备是否可用
-    int id = EnableManager::instance()->getDeviceID(m_Name, m_KeysToCatDevices);
-    m_Enable = EnableManager::instance()->isDeviceEnable(id);
+    m_Enable = EnableManager::instance()->isDeviceEnable(m_Name);
 }
 
 void DeviceInput::setInfoFromBluetoothctl()
@@ -217,16 +219,16 @@ const QString DeviceInput::getOverviewInfo()
 EnableDeviceStatus DeviceInput::setEnable(bool e)
 {
     // 设置设备状态
-    int id = EnableManager::instance()->getDeviceID(m_Name, m_KeysToCatDevices);
-    EnableDeviceStatus res = EnableManager::instance()->enableDeviceByInput(e, id);
+    EnableDeviceStatus res = EnableManager::instance()->enableDeviceByInput(m_Name, e, m_Index);
     if (res == EDS_Success)
         m_Enable = e;
+
     return res;
 }
 
 bool DeviceInput::enable()
 {
-    return m_Enable;
+    return EnableManager::instance()->isDeviceEnable(m_Name);
 }
 
 void DeviceInput::initFilterKey()
