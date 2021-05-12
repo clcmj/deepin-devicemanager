@@ -174,7 +174,7 @@ bool ThreadPoolTask::getDisplayWidthFromLspci(const QString &info, int &width)
     // 添加nvidia-smi 命令
     // 英伟达GT1010 1G版的显卡位宽是32，但是lshw获取的是64，目前只能通过nvidia-smi判断
     //QString size("978MiB");
-    QRegExp reg("[\\s][0-9][0-9]MiB*");
+    QRegExp reg("[\\s]9[0-9][0-9]MiB*");
 
     QString cmd = QString("nvidia-smi");
     QString sInfo;
