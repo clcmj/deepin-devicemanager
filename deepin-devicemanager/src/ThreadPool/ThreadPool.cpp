@@ -206,7 +206,8 @@ void ThreadPool::generateInfo()
     qint64 beginMSecond = QDateTime::currentMSecsSinceEpoch();
     while (true) {
         qint64 curMSecond = QDateTime::currentMSecsSinceEpoch();
-        if (m_FinishedGenerator == m_AllTypeNum - 1  || curMSecond - beginMSecond > 4000) {
+        if (m_FinishedGenerator == m_AllTypeNum - 1  || curMSecond - beginMSecond > 2000) {
+            qInfo() << m_FinishedGenerator << " ****** " << m_AllTypeNum;
             start(new GenerateTask(DT_Others, this));
             break;
         }
