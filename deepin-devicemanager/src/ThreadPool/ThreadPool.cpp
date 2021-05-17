@@ -248,7 +248,7 @@ void ThreadPool::getCmdList(QList<QStringList> &cmdList, const QString &arch)
     cmdList.append({ "dmesg",                "sudo dmesg",              "dmesg.txt",              tr("Loading Power Info...")});
     cmdList.append({ "hciconfig",            "hciconfig -a",            "hciconfig.txt",          tr("Loading Printer Info...")});
 
-    if (arch == "KLU" || arch == "PanGuV") {
+    if (arch == "KLU" || arch == "PanGuV" || arch == "KLV") {
         cmdList.append({ "gpuinfo",              "gpuinfo",                 "gpuinfo.txt",            ""});
         cmdList.append({ "bootdevice",           "cat /proc/bootdevice/product_name",                 "bootdevice.txt",            ""});
     }

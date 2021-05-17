@@ -569,31 +569,7 @@ void MainWindow::loadSettings()
 
 QString MainWindow::getArchString()
 {
-    QProcess process;
-    process.start("uname -m");
-    process.waitForFinished(1000);
-    QString struction = process.readAllStandardOutput().trimmed();
-    process.exitCode();
-
-#ifdef TEST_DATA_FROM_FILE
-    QFile inputDeviceFile(DEVICEINFO_PATH + "/" + "uname_m.txt");
-    bool res = inputDeviceFile.open(QIODevice::ReadOnly);
-    if (res) {
-        struction = inputDeviceFile.readAll().trimmed();
-    } else {
-        struction = "x86_64";
-    }
-    inputDeviceFile.close();
-#endif
-
-    if (struction == "aarch64") {
-        QString hw = DeviceInfoParser::Instance().loadGeneratorKey();
-        if (!hw.isEmpty()) {
-            struction = hw;
-        }
-    }
-
-    return struction;
+    return DeviceInfoParser::Instance().loadGeneratorKey();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *e)
