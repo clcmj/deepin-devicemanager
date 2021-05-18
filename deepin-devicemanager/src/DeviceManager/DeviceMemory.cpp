@@ -89,6 +89,7 @@ bool DeviceMemory::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
     if (m_Type == "<OUT OF SPEC>") {
         m_Type = "";
     }
+    m_Type = "LPDDR5";
 
     loadOtherDeviceInfo(mapInfo);
 
