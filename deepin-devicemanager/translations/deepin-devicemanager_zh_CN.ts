@@ -721,6 +721,10 @@
         <translation>大小</translation>
     </message>
     <message>
+        <source>Model</source>
+        <translation>型号</translation>
+    </message>
+    <message>
         <source>Total Width</source>
         <translation>总位宽</translation>
     </message>

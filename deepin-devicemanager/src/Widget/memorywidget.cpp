@@ -93,6 +93,7 @@ void MemoryWidget::addDeviceDetail(const DeviceMemory &device, bool withTitle)
     addDeviceAttribute(tr("Vendor"), device.vendor(), attributes);
     addDeviceAttribute(tr("Size"), device.size(), attributes);
     addDeviceAttribute(tr("Type"), device.type(), attributes);
+    addDeviceAttribute(tr("Model"), device.model(), attributes);
     addDeviceAttribute(tr("Speed"), device.speed(), attributes);
     addDeviceAttribute(tr("Total Width"), device.totalBandwidth(), attributes);
     addDeviceAttribute(tr("Data Width"), device.dataBandwidth(), attributes);
