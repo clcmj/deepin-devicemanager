@@ -138,6 +138,11 @@ const QString &DeviceMemory::vendor()const
     return m_Vendor;
 }
 
+const QString &DeviceMemory::model()const
+{
+    return m_Model;
+}
+
 const QString &DeviceMemory::size()const
 {
     return m_Size;
