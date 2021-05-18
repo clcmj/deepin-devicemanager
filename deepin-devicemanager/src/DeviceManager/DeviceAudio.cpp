@@ -75,6 +75,7 @@ bool DeviceAudio::setInfoFromCatDevices(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Name", m_Name);
     setAttribute(mapInfo, "Vendor", m_Vendor);
 //    setAttribute(mapInfo, "", m_Model);
+    m_Model = "Hi6405";
     setAttribute(mapInfo, "Version", m_Version);
     setAttribute(mapInfo, "Bus", m_BusInfo);
     setAttribute(mapInfo, "", m_Irq);
@@ -187,7 +188,7 @@ void DeviceAudio::initFilterKey()
     addFilterKey(QObject::tr("EV"));
     addFilterKey(QObject::tr("KEY"));
 
-    addFilterKey(QObject::tr("Model"));
+    //addFilterKey(QObject::tr("Model"));
 //    addFilterKey(QObject::tr("Vendor"));
     addFilterKey(QObject::tr("Version"));
     addFilterKey(QObject::tr("Bus"));
