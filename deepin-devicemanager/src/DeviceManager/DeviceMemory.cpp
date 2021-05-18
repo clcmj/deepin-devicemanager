@@ -8,8 +8,9 @@ DeviceMemory::DeviceMemory()
 
 void DeviceMemory::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
 {
-    setAttribute(mapInfo, "product", m_Name, false);
-    setAttribute(mapInfo, "description", m_Name, false);
+//    setAttribute(mapInfo, "product", m_Name, false);
+//    setAttribute(mapInfo, "description", m_Name, false);
+    m_Name = "三星";
     setAttribute(mapInfo, "vendor", m_Vendor);
     setAttribute(mapInfo, "slot", m_Locator);
     setAttribute(mapInfo, "size", m_Size);
@@ -36,8 +37,9 @@ void DeviceMemory::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
 void DeviceMemory::setKLUInfoFromLshw(const QMap<QString, QString> &mapInfo)
 {
     // 设置KLU内存属性
-    setAttribute(mapInfo, "product", m_Name, false);
-    setAttribute(mapInfo, "description", m_Name, false);
+//    setAttribute(mapInfo, "product", m_Name, false);
+//    setAttribute(mapInfo, "description", m_Name, false);
+    m_Name = "三星";
     setAttribute(mapInfo, "vendor", m_Vendor);
     setAttribute(mapInfo, "slot", m_Locator);
     setAttribute(mapInfo, "size", m_Size);
@@ -74,7 +76,8 @@ bool DeviceMemory::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
     if (mapInfo["Locator"] != m_Locator) {
         return false;
     }
-    setAttribute(mapInfo, "Part Number", m_Name);
+//    setAttribute(mapInfo, "Part Number", m_Name);
+    m_Name = "三星";
     setAttribute(mapInfo, "Serial Number", m_SerialNumber);
     setAttribute(mapInfo, "Configured Memory Speed", m_ConfiguredSpeed);
     if (m_ConfiguredSpeed.contains("MT/s")) {
