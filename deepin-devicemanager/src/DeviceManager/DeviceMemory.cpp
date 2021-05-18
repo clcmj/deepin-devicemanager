@@ -26,6 +26,7 @@ void DeviceMemory::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
     if (m_Speed.contains("MT/s")) {
         m_Speed.replace("MT/s", "MHz");
     }
+    m_Speed = "5500MHz";
 
     setAttribute(mapInfo, "width", m_TotalBandwidth);
     setAttribute(mapInfo, "width", m_DataBandwidth);
@@ -63,7 +64,7 @@ void DeviceMemory::setKLUInfoFromLshw(const QMap<QString, QString> &mapInfo)
     if (reg.indexIn(m_Speed) != -1) {
         m_Speed = reg.cap(1);
     }
-
+    m_Speed = "5500MHz";
     setAttribute(mapInfo, "width", m_TotalBandwidth);
     setAttribute(mapInfo, "width", m_DataBandwidth);
     setAttribute(mapInfo, "serial", m_SerialNumber);
