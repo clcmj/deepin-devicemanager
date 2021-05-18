@@ -681,6 +681,7 @@ void CmdTool::loadGpuInfo(const QString &key, const QString &cmd, const QString 
             mapInfo.insert("Name", lines[0].trimmed());
         }
         getMapInfoFromCmd(item, mapInfo, ": ");
+        mapInfo["GPU vendor"] = "麒麟 9006C 集成显卡";
         addMapInfo(key, mapInfo);
     }
 }
