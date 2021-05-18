@@ -10,6 +10,7 @@ void DeviceMemory::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
 {
 //    setAttribute(mapInfo, "product", m_Name, false);
 //    setAttribute(mapInfo, "description", m_Name, false);
+    m_Model = "K3LK3K30EM-CGCNT00";
     m_Name = "三星";
     setAttribute(mapInfo, "vendor", m_Vendor);
     setAttribute(mapInfo, "slot", m_Locator);
@@ -41,6 +42,7 @@ void DeviceMemory::setKLUInfoFromLshw(const QMap<QString, QString> &mapInfo)
 //    setAttribute(mapInfo, "product", m_Name, false);
 //    setAttribute(mapInfo, "description", m_Name, false);
     m_Name = "三星";
+    m_Model = "K3LK3K30EM-CGCNT00";
     setAttribute(mapInfo, "vendor", m_Vendor);
     setAttribute(mapInfo, "slot", m_Locator);
     setAttribute(mapInfo, "size", m_Size);
@@ -79,6 +81,7 @@ bool DeviceMemory::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
     }
 //    setAttribute(mapInfo, "Part Number", m_Name);
     m_Name = "三星";
+    m_Model = "K3LK3K30EM-CGCNT00";
     setAttribute(mapInfo, "Serial Number", m_SerialNumber);
     setAttribute(mapInfo, "Configured Memory Speed", m_ConfiguredSpeed);
     if (m_ConfiguredSpeed.contains("MT/s")) {
