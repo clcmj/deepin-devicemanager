@@ -22,7 +22,8 @@ void DeviceAudio::setInfoFromHwinfo(const QMap<QString, QString> &mapInfo)
 {
     setAttribute(mapInfo, "Device", m_Name);
     setAttribute(mapInfo, "Vendor", m_Vendor);
-    setAttribute(mapInfo, "Model", m_Model);
+//    setAttribute(mapInfo, "Model", m_Model);
+    m_Model = "Hi6405";
     setAttribute(mapInfo, "", m_Version);
     setAttribute(mapInfo, "SysFS BusID", m_BusInfo);
     setAttribute(mapInfo, "IRQ", m_Irq);
@@ -51,7 +52,8 @@ bool DeviceAudio::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
     // 设置设备属性
     setAttribute(mapInfo, "product", m_Name);
     setAttribute(mapInfo, "vendor", m_Vendor);
-    setAttribute(mapInfo, "", m_Model);
+    //setAttribute(mapInfo, "", m_Model);
+    m_Model = "Hi6405";
     setAttribute(mapInfo, "version", m_Version);
     if (m_Version == "00") {
         m_Version = "";
@@ -72,7 +74,7 @@ bool DeviceAudio::setInfoFromCatDevices(const QMap<QString, QString> &mapInfo)
 {
     setAttribute(mapInfo, "Name", m_Name);
     setAttribute(mapInfo, "Vendor", m_Vendor);
-    setAttribute(mapInfo, "", m_Model);
+//    setAttribute(mapInfo, "", m_Model);
     setAttribute(mapInfo, "Version", m_Version);
     setAttribute(mapInfo, "Bus", m_BusInfo);
     setAttribute(mapInfo, "", m_Irq);
