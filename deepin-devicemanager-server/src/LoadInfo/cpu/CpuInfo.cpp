@@ -43,24 +43,24 @@ void CpuInfo::logicalCpus(QString &info)
 {
     foreach (int id, m_MapLogicalCpu.keys()) {
         LogicalCpu &cpu = m_MapLogicalCpu[id];
-        info += QString("processor : %1\n").arg(cpu.logicalID());
-        info += QString("core id : %1\n").arg(cpu.coreID());
-        info += QString("physical id : %1\n").arg(cpu.physicalID());
-        info += QString("L1d cache : %1").arg(cpu.l1dCache());
-        info += QString("L1i cache : %1").arg(cpu.l1iCache());
-        info += QString("L2 cache : %1").arg(cpu.l2Cache());
-        info += QString("L3 cache : %1").arg(cpu.l3Cache());
-        info += QString("CPU MHz : %1\n").arg(cpu.curFreq());
-        info += QString("CPU max MHz : %1\n").arg(cpu.maxFreq());
-        info += QString("CPU min MHz : %1\n").arg(cpu.minFreq());
-        info += QString("flags : %1\n").arg(cpu.flags());
-        info += QString("model : %1\n").arg(cpu.model());
-        info += QString("model name : %1\n").arg(cpu.modelName());
-        info += QString("vendor_id : %1\n").arg(cpu.vendor());
-        info += QString("stepping : %1\n").arg(cpu.stepping());
-        info += QString("cpu family : %1\n").arg(cpu.cpuFamliy());
-        info += QString("bogomips : %1\n").arg(cpu.bogomips());
-        info += QString("Architecture : %1\n").arg(m_Arch);
+        appendKeyValue(info, "processor", cpu.logicalID());
+        appendKeyValue(info, "core id", cpu.coreID());
+        appendKeyValue(info, "physical id", cpu.physicalID());
+        appendKeyValue(info, "L1d cache", cpu.l1dCache());
+        appendKeyValue(info, "L1i cache", cpu.l1iCache());
+        appendKeyValue(info, "L2 cache", cpu.l2Cache());
+        appendKeyValue(info, "L3 cache", cpu.l3Cache());
+        appendKeyValue(info, "CPU MHz", cpu.curFreq());
+        appendKeyValue(info, "CPU max MHz", cpu.maxFreq());
+        appendKeyValue(info, "CPU min MHz", cpu.minFreq());
+        appendKeyValue(info, "flags", cpu.flags());
+        appendKeyValue(info, "model", cpu.model());
+        appendKeyValue(info, "model name", cpu.modelName());
+        appendKeyValue(info, "vendor_id", cpu.vendor());
+        appendKeyValue(info, "stepping", cpu.stepping());
+        appendKeyValue(info, "cpu family", cpu.cpuFamliy());
+        appendKeyValue(info, "bogomips", cpu.bogomips());
+        appendKeyValue(info, "Architecture", m_Arch);
         info += QString("\n");
     }
 }
@@ -282,4 +282,17 @@ void CpuInfo::readCpuFreq(const QString &path, LogicalCpu &lcpu)
         lcpu.setMaxFreq(QString::number(value) + "MHz");
     }
     maxFile.close();
+}
+
+void CpuInfo::appendKeyValue(QString &info, const QString &key, const QString &value)
+{
+    if (value.isEmpty())
+        return;
+    QString v = value;
+    info += QString("%1 : %2\n").arg(key).arg(v.trimmed());
+}
+
+void CpuInfo::appendKeyValue(QString &info, const QString &key, int value)
+{
+    info += QString("%1 : %2\n").arg(key).arg(value);
 }

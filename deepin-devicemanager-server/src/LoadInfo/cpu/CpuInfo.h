@@ -117,6 +117,15 @@ private:
      */
     void readCpuFreq(const QString &path, LogicalCpu &lcpu);
 
+    /**
+     * @brief appendKeyValue
+     * @param info
+     * @param key
+     * @param value
+     */
+    void appendKeyValue(QString &info, const QString &key, const QString &value);
+    void appendKeyValue(QString &info, const QString &key, int value);
+
 private:
     QMap<int, PhysicalCpu>     m_MapPhysicalCpu;
     QMap<int, CoreCpu>         m_CoreCpu;
