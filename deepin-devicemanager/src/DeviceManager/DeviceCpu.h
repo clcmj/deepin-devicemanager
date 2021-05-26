@@ -124,12 +124,6 @@ private:
     void setInfoFromDmidecode(const QMap<QString, QString> &mapInfo);
 
     /**
-     * @brief setInfoFromCatCpuinfo:设置由cat /proc/cpuinfo获取的信息
-     * @param mapInfo:由cat /proc/cpuinfo获取的信息map
-     */
-    void setInfoFromCatCpuinfo(const QMap<QString, QString> &mapInfo);
-
-    /**
      * @brief setRefreshInfoFromLscpu:刷新时重新获取cpu信息
      * @param mapInfo:由lscpu获取的信息
      */

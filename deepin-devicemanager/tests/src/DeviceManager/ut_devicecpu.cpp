@@ -118,7 +118,6 @@ TEST_F(DeviceCpu_UT, DeviceCpu_UT_setInfoFromCatCpuinfo)
     mapLshw.insert("Version", "1.0");
     mapDmidecode.insert("Name", "Loongson");
     catInfo.insert("Version", "2.0");
-    m_deviceCpu->setInfoFromCatCpuinfo(catInfo);
 }
 
 TEST_F(DeviceCpu_UT, DeviceCpu_UT_getTrNumber)

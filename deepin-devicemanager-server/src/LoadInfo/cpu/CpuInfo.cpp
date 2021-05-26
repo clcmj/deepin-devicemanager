@@ -22,15 +22,15 @@ CpuInfo::~CpuInfo()
 
 bool CpuInfo::loadCpuInfo()
 {
+    // get arch
+    readCpuArchitecture();
+
     // read /sys/devices/system/cpu
     readSysCpu();
 
     // read the file /proc/cpuinfo
     if (!readProcCpuinfo())
         return false;
-
-    // get arch
-    readCpuArchitecture();
     return true;
 }
 
@@ -119,6 +119,13 @@ bool CpuInfo::parseInfo(const QString &info)
         lcpu.setStepping(mapInfo["stepping"]);
         lcpu.setcpuFamily(mapInfo["cpu family"]);
         lcpu.setBogomips(mapInfo["bogomips"]);
+
+        // diff in loognsoon
+        if (m_Arch == "mips64") {
+            lcpu.setBogomips(mapInfo["BogoMIPS"]);
+            lcpu.setCurFreq(mapInfo["cpu MHz"]);
+            lcpu.setModel(mapInfo["cpu model"]);
+        }
     }
     return true;
 }
