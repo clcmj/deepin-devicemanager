@@ -224,7 +224,8 @@
 
 const QString LINK_STR = "<a style=\"text-decoration:none\" href=https://www.chinauos.com/home>";        // uos官网链接
 const QString COMMUNITY_LINK_STR = "<a style=\"text-decoration:none\" href=https://www.deepin.org/zh>";  // community uos官网链接
-const QString PROF_STR = "UnionTech OS Desktop 20 Professional";                                         // 桌面专业版系统名称
+const QString PROF_STR = "UnionTech OS Desktop Security 20";                                             // 桌面专业版系统名称
+// https://pms.uniontech.com/zentao/task-view-78000.html
 const QString HOME_STR = "UnionTech OS Desktop 20 Home";                                                 // 个人版系统名称
 const QString COMMUNITY_STR = "Deepin 20.2";                                                             // 社区版系统名称
 const QString EDUC_STR = "UnionTech OS Desktop 20 E";                                                    // 教育版名称
