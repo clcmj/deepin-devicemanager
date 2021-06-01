@@ -435,7 +435,11 @@ void CmdTool::loadHwinfoInfo(const QString &key, const QString &debugfile)
 
                 addMapInfo(key, mapInfo);
             }
-        } else {
+        } else if(key == "hwinfo_display"){
+            if(!item.contains("VGA"))
+                continue;
+                addMapInfo(key, mapInfo);
+        }else {
             addMapInfo(key, mapInfo);
         }
     }
