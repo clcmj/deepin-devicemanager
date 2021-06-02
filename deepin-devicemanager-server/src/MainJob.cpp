@@ -146,15 +146,15 @@ void MainJob::handleInstruction(const QString &instruction)
 
 void MainJob::updateAllDevice()
 {
-    PERF_PRINT_BEGIN("POINT-01", "MainJob::updateAllDevice()");
-    if (m_FirstUpdate)
-        mp_Pool->generateDeviceFile();
-    else
-        mp_Pool->updateDeviceFile();
-    mp_Pool->waitForDone(-1);
-    sleep(1);
-    PERF_PRINT_END("POINT-01");
-    m_FirstUpdate = false;
+//    PERF_PRINT_BEGIN("POINT-01", "MainJob::updateAllDevice()");
+//    if (m_FirstUpdate)
+//        mp_Pool->generateDeviceFile();
+//    else
+//        mp_Pool->updateDeviceFile();
+//    mp_Pool->waitForDone(-1);
+//    sleep(1);
+//    PERF_PRINT_END("POINT-01");
+//    m_FirstUpdate = false;
 }
 
 void MainJob::nullInstruction()
