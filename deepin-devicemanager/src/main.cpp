@@ -46,7 +46,6 @@ int main(int argc, char *argv[])
     Application app(argc, argv);
     app.setAutoActivateWindows(true);
 
-
     // 保证进程唯一性
     qputenv("DTK_USE_SEMAPHORE_SINGLEINSTANCE", "1");
     if (DGuiApplicationHelper::instance()->setSingleInstance("deepin-devicemanager",
