@@ -15,8 +15,6 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "../src/Page/PageListView.h"
-#include "../src/Widget/DeviceListView.h"
-
 #include "../src/DeviceManager/DeviceInput.h"
 #include "../src/Page/PageInfo.h"
 #include "../src/Page/PageMultiInfo.h"
@@ -62,15 +60,8 @@ TEST_F(PageListView_UT, PageListView_UT_paintEvent)
     m_pageListView->paintEvent(&paint);
 }
 
-QString ut_getConcatenateStrings()
+TEST_F(PageListView_UT, PageListView_UT_slotActionRefresh)
 {
-    return "/";
-}
-
-TEST_F(PageListView_UT, PageListView_UT_slotListViewItemClicked)
-{
-    Stub stub;
-    stub.set(ADDR(DeviceListView, getConcatenateStrings), ut_getConcatenateStrings);
     QModelIndex index;
     m_pageListView->slotListViewItemClicked(index);
 }

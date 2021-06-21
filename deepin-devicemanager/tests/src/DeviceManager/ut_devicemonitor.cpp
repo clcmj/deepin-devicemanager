@@ -55,7 +55,7 @@ TEST_F(DeviceMonitor_UT, DeviceMonitor_UT_parseMonitorSize)
 TEST_F(DeviceMonitor_UT, DeviceMonitor_UT_setInfoFromHwinfo)
 {
     QMap<QString, QString> mapinfo;
-    mapinfo.insert("Resolution", "/1680*720@60 @");
+    mapinfo.insert("/", "/");
     m_deviceMonitor->setInfoFromHwinfo(mapinfo);
 }
 
@@ -77,10 +77,7 @@ TEST_F(DeviceMonitor_UT, DeviceMonitor_UT_setMainInfoFromXrandr)
 {
     Stub stub;
     stub.set(ADDR(QRegExp, exactMatch), ut_exacMatch);
-    m_deviceMonitor->setMainInfoFromXrandr("VGA.*([0-9]{3,5})mm\\sx\\s([0-9]{3,5})mm");
-    m_deviceMonitor->setMainInfoFromXrandr("HDMI.*([0-9]{3,5})mm\\sx\\s([0-9]{3,5})mm");
-    m_deviceMonitor->setMainInfoFromXrandr("eDP.*([0-9]{3,5})mm\\sx\\s([0-9]{3,5})mm");
-    m_deviceMonitor->setMainInfoFromXrandr("DisplayPort.*([0-9]{3,5})mm\\sx\\s([0-9]{3,5})mm");
+    m_deviceMonitor->setMainInfoFromXrandr(".*([0-9]{3,5})mm\\sx\\s([0-9]{3,5})mm");
 }
 
 TEST_F(DeviceMonitor_UT, DeviceMonitor_UT_initFilterKey)
@@ -107,7 +104,6 @@ int ut_gcd()
 TEST_F(DeviceMonitor_UT, DeviceMonitor_UT_caculateScreenRatio)
 {
     m_deviceMonitor->gcd(2, 2);
-    m_deviceMonitor->gcd(1, 2);
     Stub stub;
     stub.set(ADDR(QRegExp, exactMatch), ut_exacMatch);
     stub.set(ADDR(DeviceMonitor, gcd), ut_gcd);
@@ -129,16 +125,9 @@ TEST_F(DeviceMonitor_UT, DeviceMonitor_UT_caculateScreenSize)
     m_deviceMonitor->caculateScreenSize("abc\n");
 }
 
-bool ut_setMainInfoFromXrandr()
-{
-    return true;
-}
-
 TEST_F(DeviceMonitor_UT, DeviceMonitor_UT_setInfoFromXradr)
 {
     m_deviceMonitor->setInfoFromXradr("connect", "/n");
-    Stub stub;
-    stub.set(ADDR(DeviceMonitor, setMainInfoFromXrandr), ut_setMainInfoFromXrandr);
 }
 
 TEST_F(DeviceMonitor_UT, DeviceMonitor_UT_setCurrentResolution)

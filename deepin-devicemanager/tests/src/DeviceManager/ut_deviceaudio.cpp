@@ -15,7 +15,6 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "../src/DeviceManager/DeviceAudio.h"
-#include "../src/DeviceManager/EnableManager.h"
 
 #include "../ut_Head.h"
 #include <QCoreApplication>
@@ -70,23 +69,10 @@ TEST_F(DeviceAudio_UT, DeviceAudio_UT_name)
     m_deviceAudio->driver();
 }
 
-EnableDeviceStatus ut_audio_enableDeviceByDriver()
-{
-    return EnableDeviceStatus::EDS_Faild;
-}
-
-bool ut_audio_enable()
-{
-    return false;
-}
-
 TEST_F(DeviceAudio_UT, DeviceAudio_UT_setEnable)
 {
     //    m_deviceAudio->enable();
-    Stub stub;
-    stub.set(ADDR(EnableManager, enableDeviceByDriver), ut_audio_enableDeviceByDriver);
-    //    stub.set(ADDR(DeviceAudio,enable),ut_audio_enable);
-    m_deviceAudio->setEnable(false);
+    //    m_deviceAudio->setEnable(false);
     m_deviceAudio->subTitle();
     m_deviceAudio->getOverviewInfo();
 }

@@ -34,7 +34,7 @@ MainJob::MainJob(QObject *parent)
         updateAllDevice();
     } else {
         qInfo() << "002 ************************************* ZhaoXin Meche";
-        QTimer::singleShot(40 * 1000, this, &MainJob::onFirstUpdate);
+        QTimer::singleShot(15 * 1000, this, &MainJob::onFirstUpdate);
     }
 }
 

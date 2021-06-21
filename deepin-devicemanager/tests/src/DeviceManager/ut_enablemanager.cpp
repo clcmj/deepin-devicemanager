@@ -73,12 +73,11 @@ TEST_F(EnableManager_UT, EnableManager_UT_enableDeviceByDriver)
     Stub stub;
     stub.set(ADDR(ZmqOrder, execDriverOrder), ut_execDriverOrder);
     ASSERT_EQ(EnableManager::instance()->enableDeviceByDriver(false, "/"), 1);
-    EnableManager::instance()->enableDeviceByDriver(true, "/");
 }
 
 QByteArray ut_readAllStandardOutput_1()
 {
-    return "filename://123 \n /abc";
+    return "";
 }
 
 TEST_F(EnableManager_UT, EnableManager_UT_enablePrinter)
@@ -86,7 +85,7 @@ TEST_F(EnableManager_UT, EnableManager_UT_enablePrinter)
     Stub stub;
     stub.set((void (QProcess::*)(const QString &, QIODevice::OpenMode))ADDR(QProcess, start), ut_start);
     stub.set(ADDR(QProcess, readAllStandardOutput), ut_readAllStandardOutput_1);
-    EnableManager::instance()->enablePrinter("/", false);
+    ASSERT_EQ(EnableManager::instance()->enablePrinter("/", false), 2);
 }
 
 bool ut_execIfconfigOrder()
@@ -101,16 +100,6 @@ TEST_F(EnableManager_UT, EnableManager_UT_enableNetworkByIfconfig)
     stub.set((void (QProcess::*)(const QString &, QIODevice::OpenMode))ADDR(QProcess, start), ut_start);
     stub.set(ADDR(QProcess, readAllStandardOutput), ut_readAllStandardOutput_1);
     ASSERT_EQ(EnableManager::instance()->enableNetworkByIfconfig("/", false), 2);
-    EnableManager::instance()->enableNetworkByIfconfig("/", true);
-}
-
-TEST_F(EnableManager_UT, EnableManager_UT_isDeviceId)
-{
-    Stub stub;
-    stub.set(ADDR(ZmqOrder, execIfconfigOrder), ut_execIfconfigOrder);
-    stub.set((void (QProcess::*)(const QString &, QIODevice::OpenMode))ADDR(QProcess, start), ut_start);
-    stub.set(ADDR(QProcess, readAllStandardOutput), ut_readAllStandardOutput_1);
-    EnableManager::instance()->isDeviceId(10, "/");
 }
 
 TEST_F(EnableManager_UT, EnableManager_UT_getDriverPath)

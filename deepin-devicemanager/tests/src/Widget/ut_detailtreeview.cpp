@@ -66,7 +66,7 @@ TEST_F(BtnWidget_UT, ut_leaveEvent)
 
 bool ut_isBaseBoard()
 {
-    return false;
+    return true;
 }
 
 TEST_F(DetailTreeView_UT, ut_setItem)
@@ -93,16 +93,8 @@ TEST_F(DetailTreeView_UT, ut_toString)
     ASSERT_TRUE(m_dTreeView->isCurDeviceEnable());
 }
 
-bool ut_hasExpendInfo()
-{
-    return true;
-}
-
 TEST_F(DetailTreeView_UT, ut_setCurDeviceState)
 {
-    m_dTreeView->m_IsExpand = true;
-    Stub stub;
-    stub.set(ADDR(DetailTreeView, hasExpendInfo), ut_hasExpendInfo);
     m_dTreeView->setCurDeviceState(false);
 }
 
@@ -126,11 +118,6 @@ TEST_F(DetailTreeView_UT, ut_paintEvent)
     QPaintEvent paint(QRect(m_dTreeView->rect()));
     Stub stub;
     stub.set(ADDR(DetailTreeView, setTableHeight), ut_setTableHeight);
-    stub.set(ADDR(DetailTreeView, hasExpendInfo), ut_hasExpendInfo);
-
-    m_dTreeView->m_IsExpand = false;
-    m_dTreeView->paintEvent(&paint);
-    m_dTreeView->m_IsExpand = true;
     m_dTreeView->paintEvent(&paint);
 }
 

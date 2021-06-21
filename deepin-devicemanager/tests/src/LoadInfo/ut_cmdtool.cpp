@@ -17,7 +17,6 @@
 #include "../src/LoadInfo/CmdTool.h"
 #include "../src/LoadInfo/DeviceFactory.h"
 #include "../src/ThreadPool/GenerateDevicePool.h"
-#include "../src/DBus/DBusInterface.h"
 
 #include "../ut_Head.h"
 #include <QCoreApplication>
@@ -79,9 +78,7 @@ TEST_F(CmdTool_UT, CmdTool_UT_loadCmdInfo)
     m_cmdTool->loadCmdInfo("bootdevice", "Model");
     m_cmdTool->loadCmdInfo("bt_device", "Model");
     m_cmdTool->loadCmdInfo("lscpu", "Model");
-    m_cmdTool->loadCmdInfo("dmesg", "Model");
-    m_cmdTool->loadCmdInfo("dr_config", "Model");
-    m_cmdTool->loadCmdInfo("dr", "Model");
+    m_cmdTool->loadCmdInfo("lscpu-", "Model");
 }
 
 bool ut_startsWith()
@@ -91,11 +88,6 @@ bool ut_startsWith()
 
 bool ut_CmdTool_exacMatch()
 {
-    return false;
-}
-
-bool ut_CmdTool_exacMatch1()
-{
     return true;
 }
 
@@ -103,7 +95,7 @@ TEST_F(CmdTool_UT, CmdTool_UT_loadXrandrInfo)
 {
     Stub stub;
     stub.set((bool (QString::*)(QChar, Qt::CaseSensitivity) const)ADDR(QString, startsWith), ut_startsWith);
-    stub.set(ADDR(QRegExp, exactMatch), ut_CmdTool_exacMatch1);
+    stub.set(ADDR(QRegExp, exactMatch), ut_CmdTool_exacMatch);
     m_cmdTool->loadXrandrInfo("/");
 }
 
@@ -131,11 +123,8 @@ TEST_F(CmdTool_UT, CmdTool_UT_loadBluetoothCtlInfo)
 
 TEST_F(CmdTool_UT, CmdTool_UT_loadHwinfoUsbInfo)
 {
-    QList<QMap<QString, QString>> list;
     QMap<QString, QString> mapInfo;
     mapInfo.insert("SysFS BusI", "model");
-    list.append(mapInfo);
-    m_cmdTool->m_cmdInfo.insert("hwinfo_usb", list);
     m_cmdTool->loadHwinfoUsbInfo("Printer", mapInfo);
 }
 
@@ -159,15 +148,8 @@ TEST_F(CmdTool_UT, CmdTool_UT_getMapInfoFromCmd)
 
 TEST_F(CmdTool_UT, CmdTool_UT_getMapInfoFromInput)
 {
-    QList<QMap<QString, QString>> list;
     QMap<QString, QString> mapInfo;
-    mapInfo.insert("SysFS BusID", "1");
-    QMap<QString, QString> mapInfo1;
-    mapInfo1.insert("SysFS BusID", "2");
-    list.append(mapInfo);
-    list.append(mapInfo1);
-    m_cmdTool->m_cmdInfo.insert("hwinfo_usb", list);
-
+    mapInfo.insert("SysFS BusI", "model");
     m_cmdTool->getMapInfoFromInput("SMBIOS\n", mapInfo, "/");
 }
 
@@ -216,44 +198,9 @@ TEST_F(CmdTool_UT, CmdTool_UT_getMapInfoFromHciconfig)
     m_cmdTool->getMapInfoFromHciconfig(mapInfo, "IO\nBUS MODEL");
 }
 
-bool ut_getDeviceInfo(QString deviceInfo, QString file)
-{
-    file = "lshw_cpu.txt";
-    deviceInfo = "/*-cpu*-disk*-storage*-bank*-diaplay*-multimedia*-network*-usb*-cdrom";
-    return true;
-}
-
-QStringList ut_lshw_split()
-{
-    return QStringList() << "cpu"
-                         << "disk"
-                         << "storage"
-                         << "bank"
-                         << "display"
-                         << "multimedia"
-                         << "network"
-                         << "usb"
-                         << "cdrom";
-}
-
-bool ut_lshw_startsWith()
-{
-    return true;
-}
-
 TEST_F(CmdTool_UT, CmdTool_UT_loadLshwInfo)
 {
-    Stub stub;
-    stub.set((QStringList(QString::*)(QChar, QString::SplitBehavior, Qt::CaseSensitivity) const)ADDR(QString, split), ut_lshw_split);
-    stub.set((bool (QString::*)(QChar, Qt::CaseSensitivity) const)ADDR(QString, startsWith), ut_lshw_startsWith);
-    m_cmdTool->loadLshwInfo("lshw_cpu.txt");
-}
-
-TEST_F(CmdTool_UT, CmdTool_UT_loadHwinfoInfo)
-{
-    Stub stub;
-    stub.set(ADDR(QString, isEmpty), ut_isEmpty);
-    m_cmdTool->loadHwinfoInfo("hwinfo_monitor", "hwinfo_monitor.txt");
+    m_cmdTool->loadLshwInfo("/");
 }
 
 bool ut_getCatDeviceInfo()
@@ -280,45 +227,4 @@ TEST_F(CmdTool_UT, CmdTool_UT_getCurNetworkLinkStatus)
 TEST_F(CmdTool_UT, CmdTool_UT_getCurPowerInfo)
 {
     m_cmdTool->getCurPowerInfo();
-}
-
-DSysInfo::UosEdition ut_CmdTool_uosEditionType()
-{
-    return DSysInfo::UosHome;
-}
-
-TEST_F(CmdTool_UT, CmdTool_UT_loadHciconfigInfo)
-{
-    Stub stub;
-    stub.set(ADDR(DSysInfo, uosEditionType), ut_CmdTool_uosEditionType);
-    m_cmdTool->loadHciconfigInfo("/");
-}
-
-bool ut_CmdTool_getDeviceInfo()
-{
-    return false;
-}
-
-TEST_F(CmdTool_UT, CmdTool_UT_getDeviceInfo)
-{
-    Stub stub;
-    stub.set(ADDR(DBusInterface, getInfo), ut_CmdTool_getDeviceInfo);
-    const QString info = "/";
-    QString it = "/";
-    m_cmdTool->getDeviceInfo(it, info);
-}
-
-TEST_F(CmdTool_UT, CmdTool_UT_loadDmidecodeInfo)
-{
-    Stub stub;
-    stub.set(ADDR(QString, isEmpty), ut_isEmpty);
-    m_cmdTool->loadDmidecodeInfo("dmidecode2", "/");
-    m_cmdTool->loadDmidecodeInfo("dmidecode3", "/");
-}
-
-TEST_F(CmdTool_UT, CmdTool_UT_loadCatInfo)
-{
-    Stub stub;
-    stub.set(ADDR(CmdTool, getCatDeviceInfo), ut_getCatDeviceInfo);
-    m_cmdTool->loadCatInfo("dmidecode2", "/");
 }

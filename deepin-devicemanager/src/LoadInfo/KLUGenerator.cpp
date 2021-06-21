@@ -200,8 +200,6 @@ void KLUGenerator::getDiskInfoFromHwinfo()
         if (device->setKLUHwinfoInfo(*dIt) && device->isValid()) {
             DeviceManager::instance()->addStorageDeivce(device);
             addBusIDFromHwinfo((*dIt)["SysFS BusID"]);
-        } else {
-            delete device;
         }
     }
 }

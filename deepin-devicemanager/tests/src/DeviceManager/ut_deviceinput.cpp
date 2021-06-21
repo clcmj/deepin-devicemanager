@@ -41,10 +41,7 @@ public:
 TEST_F(DeviceInput_UT, DeviceInput_UT_setInfoFromHwinfo)
 {
     QMap<QString, QString> map;
-    map.insert("Hotplug", "abc");
-    map.insert("Model", "Bluetooth");
-    map.insert("Device", "Bluetooth");
-    map.insert("Device File", "event3");
+    map.insert("bus info", "abc");
     m_deviceInput->m_KeyToLshw = "abcd";
     m_deviceInput->setInfoFromlshw(map);
     m_deviceInput->setInfoFromHwinfo(map);
@@ -53,24 +50,13 @@ TEST_F(DeviceInput_UT, DeviceInput_UT_setInfoFromHwinfo)
 TEST_F(DeviceInput_UT, DeviceInput_UT_setKLUInfoFromHwinfo)
 {
     QMap<QString, QString> map;
-    map.insert("Hotplug", "abc");
     map.insert("Model", "Bluetooth");
-    map.insert("Device", "Bluetooth");
-    map.insert("Device File", "event3");
-    map.insert("SysFS BusID", "/-/://");
     m_deviceInput->setKLUInfoFromHwinfo(map);
-}
-
-bool ut_isValueValid()
-{
-    return true;
 }
 
 TEST_F(DeviceInput_UT, DeviceInput_UT_setInfoFromInput)
 {
     m_deviceInput->setInfoFromInput();
-    Stub stub;
-    stub.set(ADDR(DeviceInput, isValueValid), ut_isValueValid);
     m_deviceInput->setInfoFromBluetoothctl();
 }
 
