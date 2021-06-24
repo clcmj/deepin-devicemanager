@@ -164,7 +164,6 @@ void DeviceGpu::setDmesgInfo(const QString &info)
     if (info.contains(m_UniqueKey)) {
         QString size = info;
         m_GraphicsMemory = size.replace(m_UniqueKey + "=", "");
-        qInfo() << "JJW ********************* 002 " << m_GraphicsMemory;
     }
 }
 
