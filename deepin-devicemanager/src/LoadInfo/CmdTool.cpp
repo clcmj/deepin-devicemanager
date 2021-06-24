@@ -309,6 +309,7 @@ void CmdTool::loadDmesgInfo(const QString &debugfile)
             double size = reg.cap(1).toDouble();
             QString sizeS = QString("%1GB").arg(size / 1024);
             mapInfo["Size"] = "null=" + sizeS;
+            qInfo() << "JJW ********************* 001 " << mapInfo["Size"];
         }
     }
     addMapInfo("dmesg", mapInfo);
