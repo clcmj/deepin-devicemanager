@@ -383,17 +383,9 @@ void CmdTool::loadBluetoothCtlInfo(QMap<QString, QString> &mapInfo)
 
 void CmdTool::loadPrinterInfo()
 {
-    // 先判断有没有打印机
-    QString deviceInfo;
-
-    // 通过文件获取lpstat -a信息
-    if (!getDeviceInfo(deviceInfo, "lpstat.txt"))
-        return;
-
-    if (deviceInfo.isEmpty())
-        return;
-
     // 通过cups获取打印机信息
+    //cups会识别打印机信息，之前通过文件判断概率性出现文件无信息的情况
+
     cups_dest_t *dests = nullptr;
     http_t *http = nullptr;
     int num_dests;
@@ -407,7 +399,6 @@ void CmdTool::loadPrinterInfo()
         QMap<QString, QString> mapInfo;
         dest = dests + i;
         getMapInfo(mapInfo, dest);
-
         // 这里为了和打印机管理保持一致，做出限制
         if (mapInfo.size() > 10)
             addMapInfo("printer", mapInfo);
@@ -975,6 +966,10 @@ void CmdTool::getMapInfoFromHwinfo(const QString &info, QMap<QString, QString> &
                 mapInfo[key] += value;
 
         } else {
+            // 此处如果subDevice和subVendor没有值，则过滤
+            if (words[0].trimmed() == "SubDevice" || words[0].trimmed() == "SubVendor") {
+                continue;
+            }
             if (words[0].trimmed() == "Resolution") {
                 mapInfo[words[0].trimmed()] += words[1].trimmed();
             } else {
