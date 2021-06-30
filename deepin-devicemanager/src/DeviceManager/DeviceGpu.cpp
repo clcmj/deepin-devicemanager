@@ -72,7 +72,7 @@ void DeviceGpu::setLshwInfo(const QMap<QString, QString> &mapInfo)
         return;
 
     // 设置属性
-    setAttribute(mapInfo, "product", m_Name);
+    setAttribute(mapInfo, "product", m_Name, false);
     setAttribute(mapInfo, "vendor", m_Vendor);
     setAttribute(mapInfo, "", m_Model);
     setAttribute(mapInfo, "version", m_Version);
@@ -103,7 +103,8 @@ bool DeviceGpu::setHwinfoInfo(const QMap<QString, QString> &mapInfo)
 {
     // 设置属性
     setAttribute(mapInfo, "Vendor", m_Vendor, false);
-    setAttribute(mapInfo, "Model", m_Name, false);
+    setAttribute(mapInfo, "Device", m_Name, true);
+    setAttribute(mapInfo, "SubDevice", m_Name, true); //如果subdevice有值则使用subdevice
     setAttribute(mapInfo, "Model", m_Model);
     setAttribute(mapInfo, "Revision", m_Version, false);
     setAttribute(mapInfo, "IRQ", m_IRQ, false);
@@ -154,6 +155,12 @@ void DeviceGpu::setXrandrInfo(const QMap<QString, QString> &mapInfo)
 
 void DeviceGpu::setDmesgInfo(const QString &info)
 {
+    // Bug-85049 JJW 显存特殊处理
+    if (info.contains("null")) {
+        QString size = info;
+        m_GraphicsMemory = size.replace("null=", "");
+    }
+
     // 设置显存大小
     if (info.contains(m_UniqueKey)) {
         QString size = info;
@@ -201,7 +208,7 @@ void DeviceGpu::loadOtherDeviceInfo()
 {
     // 添加其他信息,成员变量
     addOtherDeviceInfo(tr("Physical ID"), m_PhysID);
-    addOtherDeviceInfo(tr("Memory"), m_MemAddress);
+    addOtherDeviceInfo(tr("Memory Address"), m_MemAddress);
     addOtherDeviceInfo(tr("IO Port"), m_IOPort);
     addOtherDeviceInfo(tr("Bus Info"), m_BusInfo);
     addOtherDeviceInfo(tr("Maximum Resolution"), m_MaximumResolution);

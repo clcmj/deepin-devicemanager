@@ -35,6 +35,7 @@ public:
     {
         m_treeView = new DetailTreeView;
         m_dViewDelegate = new DetailViewDelegate(m_treeView);
+        m_treeView->setItemDelegate(m_dViewDelegate);
     }
     void TearDown()
     {
@@ -46,7 +47,7 @@ public:
 
 bool ut_isValid()
 {
-    return true;
+    return false;
 }
 
 int ut_detailview_pixelMetric()

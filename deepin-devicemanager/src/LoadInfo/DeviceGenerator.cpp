@@ -119,7 +119,7 @@ void DeviceGenerator::generatorCpuDevice()
     QList<QMap<QString, QString> >::const_iterator itd = dmidecode4.begin();
     for (; itd != dmidecode4.end(); ++itd) {
         coreNum += (*itd)["Core Count"].toInt();
-        logicalNum += (*itd)["Thread Count"].toInt();
+        logicalNum += (*itd)["Thread Count"].toInt() * (*itd)["Core Count"].toInt();
     }
 
     // 如果获取不到逻辑数，就按照core算 bug53921
@@ -556,19 +556,6 @@ void DeviceGenerator::getMonitorInfoFromXrandrVerbose()
             continue;
 
         DeviceManager::instance()->setMonitorInfoFromXrandr((*it)["mainInfo"], (*it)["edid"]);
-    }
-}
-
-void DeviceGenerator::getMonitorRefreshRateFromXrandr()
-{
-    // 加载从xrandr中获取的显示设备信息， 设置屏幕刷新率
-    const QList<QMap<QString, QString>> &lstMap = DeviceManager::instance()->cmdInfo("xrandr");
-    QList<QMap<QString, QString> >::const_iterator it = lstMap.begin();
-    for (; it != lstMap.end(); ++it) {
-        if ((*it).size() < 1)
-            continue;
-
-        DeviceManager::instance()->setCurrentResolution((*it)["curResolution"], (*it)["rate"], (*it)["Primary Monitor"]);
     }
 }
 

@@ -59,7 +59,16 @@ TEST_F(DeviceManager_UT, DeviceManager_UT_clear)
 
 TEST_F(DeviceManager_UT, DeviceManager_UT_getDeviceTypes)
 {
+    DeviceBios *bios = new DeviceBios;
+    DeviceAudio *audio = new DeviceAudio;
+    DeviceManager::instance()->m_CpuNum = 2;
+    DeviceManager::instance()->m_ListDeviceBios.append(bios);
+    DeviceManager::instance()->m_ListDeviceAudio.append(audio);
     DeviceManager::instance()->getDeviceTypes();
+    DeviceManager::instance()->m_ListDeviceBios.clear();
+    DeviceManager::instance()->m_ListDeviceAudio.clear();
+    delete bios;
+    delete audio;
 }
 
 TEST_F(DeviceManager_UT, DeviceManager_UT_setDeviceListClass)
@@ -181,9 +190,44 @@ TEST_F(DeviceManager_UT, DeviceManager_UT_setGpuInfoFromXrandr)
     delete gpu;
 }
 
+TEST_F(DeviceManager_UT, DeviceManager_UT_setGpuInfoFromLshw)
+{
+    QMap<QString, QString> mapinfo;
+    mapinfo.insert("/", "/");
+    DeviceGpu *gpu = new DeviceGpu;
+    DeviceManager::instance()->m_ListDeviceGPU.append(gpu);
+    DeviceManager::instance()->setGpuInfoFromLshw(mapinfo);
+    DeviceManager::instance()->m_ListDeviceGPU.clear();
+    delete gpu;
+}
+
+TEST_F(DeviceManager_UT, DeviceManager_UT_networkDriver)
+{
+    DeviceManager::instance()->networkDriver();
+}
+
+TEST_F(DeviceManager_UT, DeviceManager_UT_correctPowerInfo)
+{
+    QMap<QString, QString> map;
+    map.insert("link", "yes");
+    QMap<QString, QMap<QString, QString>> info;
+    info.insert("power", map);
+    DevicePower *p = new DevicePower;
+    DeviceManager::instance()->m_ListDevicePower.append(p);
+    DeviceManager::instance()->correctPowerInfo(info);
+    DeviceManager::instance()->m_ListDevicePower.clear();
+    delete p;
+}
+
 TEST_F(DeviceManager_UT, DeviceManager_UT_setGpuSizeFromDmesg)
 {
+    QMap<QString, QString> mapinfo;
+    mapinfo.insert("/", "/");
+    DeviceGpu *gpu = new DeviceGpu;
+    DeviceManager::instance()->m_ListDeviceGPU.append(gpu);
     DeviceManager::instance()->setGpuSizeFromDmesg("2g");
+    DeviceManager::instance()->m_ListDeviceGPU.clear();
+    delete gpu;
 }
 
 TEST_F(DeviceManager_UT, DeviceManager_UT_addMemoryDevice)
@@ -210,11 +254,6 @@ TEST_F(DeviceManager_UT, DeviceManager_UT_setMonitorInfoFromXrandr)
     DeviceManager::instance()->setMonitorInfoFromXrandr("/", "/");
 }
 
-TEST_F(DeviceManager_UT, DeviceManager_UT_setCurrentResolution)
-{
-    DeviceManager::instance()->setCurrentResolution("/", "/", "/");
-}
-
 TEST_F(DeviceManager_UT, DeviceManager_UT_addBiosDevice)
 {
     DeviceBios *bios = new DeviceBios;
@@ -238,6 +277,17 @@ TEST_F(DeviceManager_UT, DeviceManager_UT_addBluetoothDevice)
     delete b;
 }
 
+TEST_F(DeviceManager_UT, DeviceManager_UT_setBluetoothInfoFromHwinfo)
+{
+    DeviceBluetooth *b = new DeviceBluetooth;
+    DeviceManager::instance()->m_ListDeviceBluetooth.append(b);
+    QMap<QString, QString> mapinfo;
+    mapinfo.insert("/", "/");
+    DeviceManager::instance()->setBluetoothInfoFromHwinfo(mapinfo);
+    DeviceManager::instance()->m_ListDeviceBluetooth.clear();
+    delete b;
+}
+
 TEST_F(DeviceManager_UT, DeviceManager_UT_setBluetoothInfoFromLshw)
 {
     QMap<QString, QString> mapinfo;
@@ -257,7 +307,11 @@ TEST_F(DeviceManager_UT, DeviceManager_UT_setAudioInfoFromLshw)
 {
     QMap<QString, QString> mapinfo;
     mapinfo.insert("/", "/");
+    DeviceAudio *a = new DeviceAudio;
+    DeviceManager::instance()->m_ListDeviceAudio.append(a);
     DeviceManager::instance()->setAudioInfoFromLshw(mapinfo);
+    DeviceManager::instance()->m_ListDeviceAudio.clear();
+    delete a;
 }
 
 TEST_F(DeviceManager_UT, DeviceManager_UT_setAudioChipFromDmesg)
@@ -297,6 +351,18 @@ TEST_F(DeviceManager_UT, DeviceManager_UT_setKeyboardInfoFromLshw)
     QMap<QString, QString> mapinfo;
     mapinfo.insert("/", "/");
     DeviceManager::instance()->setKeyboardInfoFromLshw(mapinfo);
+}
+
+TEST_F(DeviceManager_UT, DeviceManager_UT_correctNetworkLinkStatus)
+{
+    QMap<QString, QString> mapinfo;
+    mapinfo.insert("/", "/");
+    DeviceNetwork *n = new DeviceNetwork;
+    DeviceManager::instance()->m_ListDeviceNetwork.append(n);
+    DeviceManager::instance()->correctNetworkLinkStatus("yes", "en2sp0");
+    DeviceManager::instance()->networkDriver();
+    DeviceManager::instance()->m_ListDeviceNetwork.clear();
+    delete n;
 }
 
 TEST_F(DeviceManager_UT, DeviceManager_UT_addOthersDevice)
@@ -423,7 +489,7 @@ TEST_F(DeviceManager_UT, DeviceManager_UT_overviewToHtml)
 TEST_F(DeviceManager_UT, DeviceManager_UT_overviewToDoc)
 {
     Docx::Document doc;
-    //    DeviceManager::instance()->overviewToDoc(doc);
+    //        DeviceManager::instance()->overviewToDoc(doc);
 }
 
 TEST_F(DeviceManager_UT, DeviceManager_UT_overviewToXlsx)
