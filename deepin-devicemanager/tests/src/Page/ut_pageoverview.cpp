@@ -70,12 +70,12 @@ DSysInfo::UosEdition ut_uosEditionType()
 
 DSysInfo::UosEdition ut_uosEditionType1()
 {
-    return DSysInfo::UosCommunity;
+    return DSysInfo::UosEnterprise;
 }
 
 DSysInfo::UosEdition ut_uosEditionType2()
 {
-    return DSysInfo::UosEducation;
+    return DSysInfo::UosEnterprise;
 }
 
 DSysInfo::UosEdition ut_uosEditionType3()
@@ -85,17 +85,17 @@ DSysInfo::UosEdition ut_uosEditionType3()
 
 DSysInfo::UosEdition ut_uosEditionType4()
 {
-    return DSysInfo::UosEnterpriseC;
+    return DSysInfo::UosEnterprise;
 }
 
 DSysInfo::UosEdition ut_uosEditionType5()
 {
-    return DSysInfo::UosEuler;
+    return DSysInfo::UosEnterprise;
 }
 
 DSysInfo::UosEdition ut_uosEditionType6()
 {
-    return DSysInfo::UosEditionCount;
+    return DSysInfo::UosEnterprise;
 }
 
 TEST_F(PageOverview_UT, PageOverview_UT_setLabel)
