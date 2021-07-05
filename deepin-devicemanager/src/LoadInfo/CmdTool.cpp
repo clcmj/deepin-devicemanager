@@ -562,6 +562,13 @@ void CmdTool::loadLscpuInfo(const QString &key, const QString &debugfile)
         getMapInfoFromCmd(item, mapInfo, " : ");
         addMapInfo(key, mapInfo);
     }
+
+    QString info;
+    if (!DBusInterface::getInstance()->getInfo("lscpu_num", info))
+        return;
+    QMap<QString, QString> mapInfo;
+    getMapInfoFromCmd(info, mapInfo, " : ");
+    addMapInfo("lscpu_num", mapInfo);
 }
 
 void CmdTool::loadCatInfo(const QString &key, const QString &debugfile)
