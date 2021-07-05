@@ -1,5 +1,21 @@
 // 项目自身文件
 #include "MainWindow.h"
+#include "WaitingWidget.h"
+#include "DeviceWidget.h"
+#include "MacroDefinition.h"
+#include "DeviceManager.h"
+#include "DebugTimeManager.h"
+#include "commondefine.h"
+#include "LoadInfoThread.h"
+#include "DeviceFactory.h"
+#include "ThreadExecXrandr.h"
+#include "LoadCpuInfoThread.h"
+#include "CmdTool.h"
+
+// Dtk头文件
+#include <DFileDialog>
+#include <DApplication>
+#include <DFontSizeManager>
 
 // Qt库文件
 #include <QResizeEvent>
@@ -11,23 +27,6 @@
 #include <QProcess>
 #include <QDir>
 #include <QVBoxLayout>
-
-// Dtk头文件
-#include <DFileDialog>
-#include <DApplication>
-#include <DFontSizeManager>
-
-// 其它头文件
-#include "WaitingWidget.h"
-#include "DeviceWidget.h"
-#include "MacroDefinition.h"
-#include "DeviceManager.h"
-#include "DebugTimeManager.h"
-#include "commondefine.h"
-#include "LoadInfoThread.h"
-#include "DeviceFactory.h"
-#include "ThreadExecXrandr.h"
-
 
 DWIDGET_USE_NAMESPACE
 
@@ -56,11 +55,11 @@ MainWindow::MainWindow(QWidget *parent)
     refreshDataBase();
 
     // 关联信号槽
-    connect(mp_WorkingThread, &LoadInfoThread::finished, this, &MainWindow::loadingFinishSlot);
+    connect(mp_WorkingThread, &LoadInfoThread::finished, this, &MainWindow::slotLoadingFinish);
     connect(mp_DeviceWidget, &DeviceWidget::itemClicked, this, &MainWindow::slotListItemClicked);
     connect(mp_DeviceWidget, &DeviceWidget::refreshInfo, this, &MainWindow::slotRefreshInfo);
     connect(mp_DeviceWidget, &DeviceWidget::exportInfo, this, &MainWindow::slotExportInfo);
-    connect(this, &MainWindow::fontChange, this, &MainWindow::changeUI);
+    connect(this, &MainWindow::fontChange, this, &MainWindow::slotChangeUI);
 }
 
 MainWindow::~MainWindow()
@@ -226,20 +225,18 @@ QString MainWindow::getArchString()
     bool res = inputDeviceFile.open(QIODevice::ReadOnly);
 
     // 读取架构信息
-    if (res) {
+    if (res)
         struction = inputDeviceFile.readAll().trimmed();
-    } else {
+    else
         struction = "x86_64";
-    }
 
     inputDeviceFile.close();
 
     // 华为机器需要区分KLU与PanGuV
     if (struction == "aarch64") {
         QString hw = loadGeneratorKey();
-        if (!hw.isEmpty()) {
+        if (!hw.isEmpty())
             struction = hw;
-        }
     }
 
     return struction;
@@ -253,18 +250,16 @@ QString MainWindow::loadGeneratorKey()
 
     // gdbus introspect -y -d com.deepin.system.SystemInfo -o /com/deepin/system/SystemInfo -p
     QFile inputDeviceFile(DEVICEINFO_PATH + "/gdbus.txt");
-    if (false == inputDeviceFile.open(QIODevice::ReadOnly)) {
+    if (false == inputDeviceFile.open(QIODevice::ReadOnly))
         return key;
-    }
 
     deviceInfo = inputDeviceFile.readAll();
     inputDeviceFile.close();
 
-    if (deviceInfo.contains("klu")) { // klu 华为确认将判断条件改为L410 KLVU-WDU0
+    if (deviceInfo.contains("klu")) // klu 华为确认将判断条件改为L410 KLVU-WDU0
         key = "KLU";
-    } else if (deviceInfo.contains("panguV")) { // panguv
+    else if (deviceInfo.contains("panguV")) // panguv
         key = "PanGuV";
-    }
 
     return key;
 }
@@ -313,18 +308,16 @@ void MainWindow::refreshDataBase()
     // 设置应用程序强制光标为cursor
     DApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
-    if (mp_WorkingThread) {
+    if (mp_WorkingThread)
         mp_WorkingThread->start();
-    }
 }
 
-void MainWindow::loadingFinishSlot(const QString &message)
+void MainWindow::slotLoadingFinish(const QString &message)
 {
     static bool begin = true;
 
-    if (begin) {
+    if (begin)
         begin = false;
-    }
 
     // finish 表示所有设备信息加载完成
     if (message == "finish") {
@@ -351,24 +344,35 @@ void MainWindow::loadingFinishSlot(const QString &message)
         m_refreshing = false;
 
         //
-        if (m_IsFirstRefresh) {
-            PERF_PRINT_END("POINT-01");
+        if (m_IsFirstRefresh)
             m_IsFirstRefresh = false;
-        }
     }
 }
 
 void MainWindow::slotListItemClicked(const QString &itemStr)
 {
     // xrandr would be execed later
-    if (tr("Monitor") == itemStr) {
+    if (tr("Monitor") == itemStr) { //点击显示设备，执行线程加载信息
         ThreadExecXrandr tx(false);
         tx.start();
         tx.wait();
-    } else if (tr("Display Adapter") == itemStr) {
+    } else if (tr("Display Adapter") == itemStr) { //点击显示适配器，执行线程加载信息
         ThreadExecXrandr tx(true);
         tx.start();
         tx.wait();
+    } else if (tr("CPU") == itemStr) { //点击处理器，执行加载处理器信息线程
+        LoadCpuInfoThread lct;
+        lct.start();
+        lct.wait();
+    } else if (tr("Network Adapter") == itemStr) { //点击网络适配器，更新网络连接的信息
+        CmdTool tool;
+        QStringList networkDriver = DeviceManager::instance()->networkDriver();
+        //判断所有网卡的连接情况
+        for (int i = 0; i < networkDriver.size(); i++)
+            DeviceManager::instance()->correctNetworkLinkStatus(tool.getCurNetworkLinkStatus(networkDriver.at(i)), networkDriver.at(i));
+    } else if (tr("Power") == itemStr) { //点击电池，重新加载电池显示信息
+        CmdTool tool;
+        DeviceManager::instance()->correctPowerInfo(tool.getCurPowerInfo());
     }
 
     QList<DeviceBaseInfo *> lst;
@@ -394,7 +398,7 @@ void MainWindow::slotExportInfo()
     exportTo();
 }
 
-void MainWindow::changeUI()
+void MainWindow::slotChangeUI()
 {
     // 更新当前设备界面设备
     slotListItemClicked(mp_DeviceWidget->currentIndex());

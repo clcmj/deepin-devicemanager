@@ -1,9 +1,8 @@
 // 项目自身文件
 #include "PageSingleInfo.h"
-
-// Qt库文件
-#include <QVBoxLayout>
-#include <QClipboard>
+#include "MacroDefinition.h"
+#include "DeviceInfo.h"
+#include "PageTableWidget.h"
 
 // Dtk头文件
 #include <DApplication>
@@ -14,10 +13,10 @@
 #include <DNotifySender>
 #include <DMessageBox>
 
-// 其它头文件
-#include "MacroDefinition.h"
-#include "DeviceInfo.h"
-#include "PageTableWidget.h"
+// Qt库文件
+#include <QVBoxLayout>
+#include <QClipboard>
+
 
 PageSingleInfo::PageSingleInfo(QWidget *parent)
     : PageInfo(parent)
@@ -130,6 +129,13 @@ void PageSingleInfo::clearContent()
     mp_Content->clear();
 }
 
+bool PageSingleInfo::isExpanded()
+{
+    if (mp_Content)
+        return mp_Content->isExpanded();
+    return false;
+}
+
 void PageSingleInfo::slotShowMenu(const QPoint &)
 {
     // 显示右键菜单
@@ -212,7 +218,7 @@ void PageSingleInfo::initWidgets()
     hLayout->addSpacing(LABEL_MARGIN);
 
     hLayout->addWidget(mp_Content);
-    hLayout->addStretch(1);          // 考虑禁用后表格只有一行，靠上显示
+    hLayout->addStretch(1); // 考虑禁用后表格只有一行，靠上显示
     setLayout(hLayout);
 }
 

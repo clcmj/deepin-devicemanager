@@ -126,9 +126,6 @@ void DetailTreeView::clear()
         delete mp_CommandBtn;
         mp_CommandBtn = nullptr;
     }
-
-    //清空页面内容时,需要保存页面的展开收起状态
-    //m_IsExpand = false;
 }
 
 void DetailTreeView::setCommanLinkButton(int row)
@@ -142,9 +139,6 @@ void DetailTreeView::setCommanLinkButton(int row)
     }
     // 设置字号
     DFontSizeManager::instance()->bind(mp_CommandBtn, DFontSizeManager::T8);
-
-    //mp_CommandBtn->setMinimumSize(150, 100);
-
     //  合并最后一行
     this->setSpan(row - 1, 0, 1, 2);
 
@@ -209,7 +203,7 @@ int DetailTreeView::setTableHeight(int paintHeight)
 
     // 信息行 <= m_LimitRow + 1 不影响表格大小
     if (rowCount() <= m_LimitRow + 1) {
-        this->setFixedHeight((rowCount() - 1)*ROW_HEIGHT);
+        this->setFixedHeight((rowCount() - 1) * ROW_HEIGHT);
         return (rowCount() - 1) * ROW_HEIGHT;
     } else {
         // 未展开,窗口高度始终等于ROW_HEIGHT * (m_LimitRow+1)
@@ -330,6 +324,11 @@ void DetailTreeView::setCurDeviceState(bool state)
             this->hideRow(this->rowCount() - 1);
         }
     }
+}
+
+bool DetailTreeView::isExpanded()
+{
+    return m_IsExpand;
 }
 
 void DetailTreeView::expandCommandLinkClicked()
@@ -461,7 +460,6 @@ void DetailTreeView::paintEvent(QPaintEvent *event)
         }
 
     } else if (hasExpendInfo() && m_IsExpand) {
-
         QTableWidgetItem *it = this->itemAt(QPoint(this->rect().bottomLeft().x(), this->rect().bottomLeft().y()));
         if (nullptr == it) {
             // 由于展开按钮行是DWidget无法获取item，所以，再在这种情况下，展开按钮行开始出现再可视区域

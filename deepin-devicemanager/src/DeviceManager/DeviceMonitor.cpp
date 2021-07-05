@@ -1,5 +1,6 @@
 // 项目自身文件
 #include "DeviceMonitor.h"
+#include "EDIDParser.h"
 
 // Qt库文件
 #include <QDebug>
@@ -95,7 +96,6 @@ void DeviceMonitor::setInfoFromHwinfo(const QMap<QString, QString> &mapInfo)
 
     // 获取当前分辨率 和 当前支持分辨率
     QStringList listResolution = m_SupportResolution.split(" ");
-    m_CurrentResolution = listResolution.last();
     m_SupportResolution = "";
     foreach (const QString &word, listResolution) {
         if (word.contains("@")) {
@@ -145,7 +145,7 @@ QString DeviceMonitor::transWeekToDate(const QString &year, const QString &week)
     return date.toString("yyyy-MM");
 }
 
-bool DeviceMonitor::setInfoFromXradr(const QString &main, const QString &edid)
+bool DeviceMonitor::setInfoFromXradr(const QString &main, const QString &edid, const QString &rate)
 {
     // 判断该显示器设备是否已经设置过从xrandr获取的消息
     if (!m_Interface.isEmpty())
@@ -154,27 +154,17 @@ bool DeviceMonitor::setInfoFromXradr(const QString &main, const QString &edid)
     if (main.contains("disconnected"))
         return false;
 
+    // 根据edid计算屏幕大小
+    if (edid.isEmpty())
+        return false;
+    if (!caculateScreenSize(edid))
+        return false;
+
     // 获取屏幕的主要信息，包括借口(HDMI VGA)/是否主显示器和屏幕大小，
     // 但是这里计算的屏幕大小仅仅用来匹配是否是同一个显示器,真正的屏幕大小计算是根据edid计算的
-    if (!setMainInfoFromXrandr(main))
+    if (!setMainInfoFromXrandr(main, rate))
         return false;
 
-    // 根据edid计算屏幕大小
-    if (false == edid.isEmpty())
-        caculateScreenSize(edid);
-
-    return true;
-}
-
-bool DeviceMonitor::setCurrentResolution(const QString &resolution, const QString &rate)
-{
-    // 判断该显示器设备是否已经设置过从xrandr获取的消息
-    if (m_CurrentResolution.contains("@")) {
-        return false;
-    }
-
-    m_CurrentResolution = QString("%1@%2Hz").arg(resolution).arg(rate);
-    m_CurrentResolution.replace(" ", "");
     return true;
 }
 
@@ -221,9 +211,11 @@ void DeviceMonitor::loadOtherDeviceInfo()
 {
     // 添加其他信息,成员变量
     addOtherDeviceInfo(tr("Support Resolution"), m_SupportResolution);
-    addOtherDeviceInfo(tr("Current Resolution"), m_CurrentResolution);
+    if (m_CurrentResolution != "@Hz") {
+        addOtherDeviceInfo(tr("Current Resolution"), m_CurrentResolution);
+        addOtherDeviceInfo(tr("Display Ratio"), m_AspectRatio);
+    }
     addOtherDeviceInfo(tr("Primary Monitor"), m_MainScreen);
-    addOtherDeviceInfo(tr("Display Ratio"), m_AspectRatio);
     addOtherDeviceInfo(tr("Size"), m_ScreenSize);
     addOtherDeviceInfo(tr("Serial Number"), m_SerialNumber);
     addOtherDeviceInfo(tr("Product Date"), m_ProductionWeek);
@@ -238,23 +230,8 @@ void DeviceMonitor::loadTableData()
     m_TableData.append(m_Model);
 }
 
-bool DeviceMonitor::setMainInfoFromXrandr(const QString &info)
+bool DeviceMonitor::setMainInfoFromXrandr(const QString &info, const QString &rate)
 {
-    // 判断是否是同一个设备
-    // 这个代码一开始是有的，但是后来被删除了(目前没有搞清楚为什么被删除了)，现在有加上了(为了解决Bug37377)
-    // 代码的主要作用是判断是否是同一个设备，如果需要删除这个，请务必考虑到Bug37377
-    QString mInfo = info;
-    mInfo.replace(QRegExp("\\(.*\\)"), "");
-    QRegExp re(".*([0-9]{3,5})mm\\sx\\s([0-9]{3,5})mm");
-    if (!re.exactMatch(mInfo))
-        return false;
-
-    if (m_Width != re.cap(1).toInt())
-        return false;
-
-    if (m_Height != re.cap(2).toInt())
-        return false;
-
     // 设置用的是哪个接口
     if (info.startsWith("VGA"))
         m_Interface = "VGA";
@@ -270,6 +247,15 @@ bool DeviceMonitor::setMainInfoFromXrandr(const QString &info)
         m_MainScreen = "Yes";
     else
         m_MainScreen = "NO";
+
+    // 设置当前分辨率
+    QRegExp reScreenSize(".*([0-9]{1,5}x[0-9]{1,5}).*");
+    if (reScreenSize.exactMatch(info)) {
+        if (!rate.isEmpty())
+            m_CurrentResolution = QString("%1@%2").arg(reScreenSize.cap(1)).arg(rate);
+        else
+            m_CurrentResolution = QString("%1").arg(reScreenSize.cap(1));
+    }
 
     return true;
 }
@@ -329,37 +315,32 @@ void DeviceMonitor::caculateScreenSize()
         m_Height = re.cap(2).toInt();
 
         double inch = std::sqrt((m_Width / 2.54) * (m_Width / 2.54) + (m_Height / 2.54) * (m_Height / 2.54)) / 10.0;
-//        m_ScreenSize = QString("%1英寸(%2mm X %3mm)").arg(QString::number(inch, 'f', 1)).arg(m_Width).arg(m_Height);
         m_ScreenSize = QString("%1 %2(%3mm X %4mm)").arg(QString::number(inch, 'f', 1)).arg(QObject::tr("inch")).arg(m_Width).arg(m_Height);
     }
 }
 
-void DeviceMonitor::caculateScreenSize(const QString &edid)
+bool DeviceMonitor::caculateScreenSize(const QString &edid)
 {
-    QStringList list = edid.split('\n');
-    if (list.size() < 2)
-        return;
+    // edid parse
+    EDIDParser edidParse;
+    QString errormsg;
+    if (!edidParse.setEdid(edid, errormsg))
+        return false;
+    double height = edidParse.height();
+    double width = edidParse.width();
+    if (height <= 0 || width <= 0)
+        return false;
 
-    QString secondItem = list.at(1);
-    QString width_field = secondItem.mid(10, 2);
-    QString height_field = secondItem.mid(12, 2);
+    // 比对从hwinfo和xrandr里面获取日期，不一致返回
+    if (m_ProductionWeek != edidParse.releaseDate())
+        return false;
 
-    double width = 0;
-    bool trWidthOk = false;
-    double height = 0;
-    bool trHeightOk = false;
-    width = width_field.toInt(&trWidthOk, 16);
-    height = height_field.toInt(&trHeightOk, 16);
-    if (false == trWidthOk || false == trHeightOk)
-        return;
-
-    if (height <= 0)
-        return;
-
-    if (width <= 0)
-        return;
+    // 如果从hwinfo和edid里面获取的信息差距很小则使用hwinfo里面的
+    // 如果从hwinfo和edid里面获取的信息差距很大则使用edid里面的
+    if (fabs(width * 10 - m_Width) < 10 && fabs(height * 10 - m_Height) < 10)
+        return true;
 
     double inch = std::sqrt(height * height + width * width) / 2.54;
-//    m_ScreenSize = QString("%1英寸(%2cm X %3cm)").arg(QString::number(inch, 'f', 1)).arg(width).arg(height);
     m_ScreenSize = QString("%1 %2(%3cm X %4cm)").arg(QString::number(inch, '0', 1)).arg(QObject::tr("inch")).arg(width).arg(height);
+    return true;
 }

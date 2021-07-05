@@ -1,30 +1,29 @@
 // 项目自身文件
 #include "DeviceGenerator.h"
 
-// Qt库文件
-#include <QDebug>
-
 // 其它头文件
 #include "CmdTool.h"
-#include "../DeviceManager/DeviceManager.h"
-#include "../DeviceManager/DeviceCpu.h"
-#include "../DeviceManager/DeviceGpu.h"
-#include "../DeviceManager/DeviceStorage.h"
-#include "../DeviceManager/DeviceMemory.h"
-#include "../DeviceManager/DeviceMonitor.h"
-#include "../DeviceManager/DeviceBios.h"
-#include "../DeviceManager/DeviceAudio.h"
-#include "../DeviceManager/DeviceBluetooth.h"
-#include "../DeviceManager/DeviceNetwork.h"
-#include "../DeviceManager/DeviceImage.h"
-#include "../DeviceManager/DeviceOthers.h"
-#include "../DeviceManager/DeviceComputer.h"
-#include "../DeviceManager/DevicePower.h"
-#include "../DeviceManager/DeviceCdrom.h"
-#include "../DeviceManager/DevicePrint.h"
-#include "../DeviceManager/DeviceInput.h"
+#include "DeviceManager/DeviceManager.h"
+#include "DeviceManager/DeviceCpu.h"
+#include "DeviceManager/DeviceGpu.h"
+#include "DeviceManager/DeviceStorage.h"
+#include "DeviceManager/DeviceMemory.h"
+#include "DeviceManager/DeviceMonitor.h"
+#include "DeviceManager/DeviceBios.h"
+#include "DeviceManager/DeviceAudio.h"
+#include "DeviceManager/DeviceBluetooth.h"
+#include "DeviceManager/DeviceNetwork.h"
+#include "DeviceManager/DeviceImage.h"
+#include "DeviceManager/DeviceOthers.h"
+#include "DeviceManager/DeviceComputer.h"
+#include "DeviceManager/DevicePower.h"
+#include "DeviceManager/DeviceCdrom.h"
+#include "DeviceManager/DevicePrint.h"
+#include "DeviceManager/DeviceInput.h"
 #include "MacroDefinition.h"
 
+// Qt库文件
+#include <QDebug>
 
 DeviceGenerator::DeviceGenerator(QObject *parent)
     : QObject(parent)
@@ -100,13 +99,9 @@ void DeviceGenerator::generatorComputerDevice()
 void DeviceGenerator::generatorCpuDevice()
 {
     // 生成CPU
-    const QList<QMap<QString, QString> >  &lstCatCpu = DeviceManager::instance()->cmdInfo("cat_cpuinfo");
-    if (lstCatCpu.size() == 0)
-        return;
-
     // get info from lscpu
     const QList<QMap<QString, QString> >  &lsCpu = DeviceManager::instance()->cmdInfo("lscpu");
-    const QMap<QString, QString> &lscpu = lsCpu.size() > 0 ? lsCpu[0] : QMap<QString, QString>();
+//    const QMap<QString, QString> &lscpu = lsCpu.size() > 0 ? lsCpu[0] : QMap<QString, QString>();
 
     // get info from lshw
     const QList<QMap<QString, QString> >  &lshwCpu = DeviceManager::instance()->cmdInfo("lshw_cpu");
@@ -124,17 +119,17 @@ void DeviceGenerator::generatorCpuDevice()
     QList<QMap<QString, QString> >::const_iterator itd = dmidecode4.begin();
     for (; itd != dmidecode4.end(); ++itd) {
         coreNum += (*itd)["Core Count"].toInt();
-        logicalNum += (*itd)["Thread Count"].toInt();
+        logicalNum += (*itd)["Thread Count"].toInt() * (*itd)["Core Count"].toInt();
     }
 
     // 如果获取不到逻辑数，就按照core算 bug53921
     if (logicalNum == 0)
         logicalNum = coreNum;
 
-    QList<QMap<QString, QString> >::const_iterator it = lstCatCpu.begin();
-    for (; it != lstCatCpu.end(); ++it) {
+    QList<QMap<QString, QString> >::const_iterator it = lsCpu.begin();
+    for (; it != lsCpu.end(); ++it) {
         DeviceCpu *device = new DeviceCpu;
-        device->setCpuInfo(lscpu, lshw, dmidecode, *it, coreNum, logicalNum);
+        device->setCpuInfo(*it, lshw, dmidecode, coreNum, logicalNum);
         DeviceManager::instance()->addCpuDevice(device);
     }
 }
@@ -421,8 +416,12 @@ void DeviceGenerator::getDiskInfoFromHwinfo()
             continue;
 
         DeviceStorage *device = new DeviceStorage();
-        if (device->setHwinfoInfo(*dIt) && device->isValid())
+        if (device->setHwinfoInfo(*dIt) && device->isValid()) {
             DeviceManager::instance()->addStorageDeivce(device);
+        } else {
+            delete device;
+            device = nullptr;
+        }
 
         // Add all disk including no size disk to filter list
         if ((*dIt).find("SysFS BusID") != (*dIt).end())
@@ -557,19 +556,6 @@ void DeviceGenerator::getMonitorInfoFromXrandrVerbose()
             continue;
 
         DeviceManager::instance()->setMonitorInfoFromXrandr((*it)["mainInfo"], (*it)["edid"]);
-    }
-}
-
-void DeviceGenerator::getMonitorRefreshRateFromXrandr()
-{
-    // 加载从xrandr中获取的显示设备信息， 设置屏幕刷新率
-    const QList<QMap<QString, QString>> &lstMap = DeviceManager::instance()->cmdInfo("xrandr");
-    QList<QMap<QString, QString> >::const_iterator it = lstMap.begin();
-    for (; it != lstMap.end(); ++it) {
-        if ((*it).size() < 1)
-            continue;
-
-        DeviceManager::instance()->setCurrentResolution((*it)["curResolution"], (*it)["rate"]);
     }
 }
 
@@ -708,7 +694,6 @@ void DeviceGenerator::getKeyboardInfoFromLshw()
 
 void DeviceGenerator::getKeyboardInfoFromCatDevices()
 {
-
 }
 
 void DeviceGenerator::getMouseInfoFromHwinfo()

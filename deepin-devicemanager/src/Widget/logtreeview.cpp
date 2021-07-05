@@ -46,7 +46,6 @@ LogTreeView::LogTreeView(QWidget *parent)
     , mp_HeaderView(nullptr)
 {
     initUI();
-
 }
 
 void LogTreeView::setHeaderLabels(const QStringList &lst)
@@ -70,6 +69,9 @@ void LogTreeView::setColumnAverage()
     }
     // 设置每一行等宽
     int colCount = mp_HeaderView->count();
+    if (colCount == 0)
+        return;
+
     int avgColWidth = width() / colCount;
     for (int i = 0; i < colCount; i++) {
         setColumnWidth(i, avgColWidth);
@@ -80,7 +82,9 @@ bool LogTreeView::currentRowEnable()
 {
     QModelIndex index = currentIndex();
     int row = index.row();
-    if (row < 0) {return false;}
+    if (row < 0) {
+        return false;
+    }
     QStandardItem *item = mp_Model->item(row, 0);
     if (item) {
         QString str = item->text();
@@ -216,7 +220,13 @@ void LogTreeView::paintEvent(QPaintEvent *event)
     painter.restore();
 
     DTreeView::paintEvent(event);
+}
 
+void LogTreeView::showEvent(QShowEvent *event)
+{
+    //在show之前平均分布表头 Bug-73605
+    setColumnAverage();
+    return QTreeView::showEvent(event);
 }
 
 void LogTreeView::drawRow(QPainter *painter, const QStyleOptionViewItem &options, const QModelIndex &index) const

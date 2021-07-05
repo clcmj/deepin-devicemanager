@@ -1,6 +1,7 @@
 #include "ThreadExecXrandr.h"
 
 #include <QProcess>
+#include <QDebug>
 
 #include <DeviceManager.h>
 
@@ -16,7 +17,6 @@ void ThreadExecXrandr::run()
         getGpuInfoFromXrandr();
     } else {
         getMonitorInfoFromXrandrVerbose();
-        getMonitorRefreshRateFromXrandr();
     }
 }
 
@@ -32,38 +32,31 @@ void ThreadExecXrandr::loadXrandrInfo(QList<QMap<QString, QString>> &lstMap, con
 {
     QString deviceInfo;
     runCmd(deviceInfo, cmd);
-
-    QMap<QString, QString> mapInfo;
     QStringList lines = deviceInfo.split("\n");
     foreach (const QString &line, lines) {
-        // 刷新率
-        QRegExp reResolution("^[\\s]{3}([0-9]{3,5}x[0-9]{3,5}).*([0-9]{2,3}.[0-9]{2,3}\\*).*");
-        if (reResolution.exactMatch(line)) {
-            QString rate = reResolution.cap(2).replace("*", "");
-            mapInfo.insert("rate", rate);
+        if (line.startsWith("Screen")) {
+            lstMap.append(QMap<QString, QString>());
+            QRegExp re(".*([0-9]{1,5}\\sx\\s[0-9]{1,5}).*([0-9]{1,5}\\sx\\s[0-9]{1,5}).*([0-9]{1,5}\\sx\\s[0-9]{1,5}).*");
+            if (re.exactMatch(line)) {
+                lstMap[lstMap.count() - 1].insert("minResolution", re.cap(1));
+                lstMap[lstMap.count() - 1].insert("curResolution", re.cap(2));
+                lstMap[lstMap.count() - 1].insert("maxResolution", re.cap(3));
+            }
+            continue;
         }
 
-        // 最大,最小,当前分辨率
-        if (line.startsWith("Screen")) {
-            QRegExp re(".*([0-9]{3,5}\\sx\\s[0-9]{3,5}).*([0-9]{3,5}\\sx\\s[0-9]{3,5}).*([0-9]{3,5}\\sx\\s[0-9]{3,5}).*");
-            if (re.exactMatch(line)) {
-                mapInfo["minResolution"] = re.cap(1);
-                mapInfo["curResolution"] = re.cap(2);
-                mapInfo["maxResolution"] = re.cap(3);
-            }
-        } else if (line.startsWith("HDMI")) {
-            mapInfo["HDMI"] = "Enable";
+        if (line.startsWith("HDMI")) {
+            lstMap[lstMap.count() - 1].insert("HDMI", "Enable");
         } else if (line.startsWith("VGA")) {
-            mapInfo["VGA"] = "Enable";
-        } else if (line.startsWith("DP") || line.startsWith("DisplayPort"))  {
-            mapInfo["DP"] = "Enable";
+            lstMap[lstMap.count() - 1].insert("VGA", "Enable");
+        } else if (line.startsWith("DP") || line.startsWith("DisplayPort")) {
+            lstMap[lstMap.count() - 1].insert("DP", "Enable");
         } else if (line.startsWith("eDP")) {
-            mapInfo["eDP"] = "Enable";
+            lstMap[lstMap.count() - 1].insert("eDP", "Enable");
         } else if (line.startsWith("DVI")) {
-            mapInfo["DVI"] = "Enable";
+            lstMap[lstMap.count() - 1].insert("DVI", "Enable");
         }
     }
-    lstMap.append(mapInfo);
 }
 
 void ThreadExecXrandr::loadXrandrVerboseInfo(QList<QMap<QString, QString>> &lstMap, const QString &cmd)
@@ -71,43 +64,49 @@ void ThreadExecXrandr::loadXrandrVerboseInfo(QList<QMap<QString, QString>> &lstM
     QString deviceInfo;
     runCmd(deviceInfo, cmd);
 
-    QStringList lines = deviceInfo.split(QRegExp("\n"));
-    QString mainInfo("");
-    QString edid("");
-    foreach (QString line, lines) {
-        if (line.startsWith("Screen"))
+    QStringList lines = deviceInfo.split("\n");
+    QStringList::iterator it = lines.begin();
+    for (; it != lines.end(); ++it) {
+        if ((*it).startsWith("Screen"))
             continue;
 
-        QRegExp reResolution("^[\\s]{2}([0-9]{3,4}x[0-9]{3,4}).*");
-        if (reResolution.exactMatch(line))
-            continue;
-
-        // 主屏幕信息
-        QRegExp reMain("^[a-zA-Z].*");
-        if (reMain.exactMatch(line)) {
-            if (!mainInfo.isEmpty()) {
-                QMap<QString, QString> mapInfo;
-                mapInfo.insert("mainInfo", mainInfo.trimmed());
-                mapInfo.insert("edid", edid.trimmed());
-                lstMap.append(mapInfo);
-            }
-            mainInfo = line;
-            edid = "";
+        //获取 HDMI-1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 527mm x 296mm
+        QRegExp reg("^[A-Za-z].*");
+        if (reg.exactMatch(*it) && !(*it).contains("disconnected")) {
+            // 新的显示屏
+            QMap<QString, QString> newMap;
+            newMap.insert("mainInfo", (*it).trimmed());
+            lstMap.append(newMap);
             continue;
         }
 
-        // edid信息
-        QRegExp reEdid("^[\\t]{2}[0-9]{1}.*");
-        if (reEdid.exactMatch(line)) {
-            edid.append(line.trimmed());
-            edid.append("\n");
+        QMap<QString, QString> &last = lstMap.last();
+        // 获取edid信息
+        QString edid;
+        QRegExp reEdid("^[\\t]{2}([0-9a-f]{32}).*");
+        if (reEdid.exactMatch(*it)) {
+            while (true) {
+                edid.append(reEdid.cap(1));
+                edid.append("\n");
+                if (++it == lines.end())
+                    return;
+                if (!reEdid.exactMatch(*it)) {
+                    last.insert("edid", edid);
+                    break;
+                }
+            }
             continue;
+        }
+
+        // 获取当前频率
+        if ((*it).contains("*current")) {
+            if ((it += 2) >= lines.end())
+                return;
+            QRegExp regRate(".*([0-9]{2}\\.[0-9]{2}Hz).*");
+            if (regRate.exactMatch(*it))
+                last.insert("rate", regRate.cap(1));
         }
     }
-    QMap<QString, QString> mapInfo;
-    mapInfo.insert("mainInfo", mainInfo.trimmed());
-    mapInfo.insert("edid", edid.trimmed());
-    lstMap.append(mapInfo);
 }
 
 void ThreadExecXrandr::getMonitorInfoFromXrandrVerbose()
@@ -119,20 +118,7 @@ void ThreadExecXrandr::getMonitorInfoFromXrandrVerbose()
         if ((*it).size() < 1)
             continue;
 
-        DeviceManager::instance()->setMonitorInfoFromXrandr((*it)["mainInfo"], (*it)["edid"]);
-    }
-}
-
-void ThreadExecXrandr::getMonitorRefreshRateFromXrandr()
-{
-    QList<QMap<QString, QString>> lstMap;
-    loadXrandrInfo(lstMap, "xrandr");
-    QList<QMap<QString, QString> >::const_iterator it = lstMap.begin();
-    for (; it != lstMap.end(); ++it) {
-        if ((*it).size() < 1)
-            continue;
-
-        DeviceManager::instance()->setCurrentResolution((*it)["curResolution"], (*it)["rate"]);
+        DeviceManager::instance()->setMonitorInfoFromXrandr((*it)["mainInfo"], (*it)["edid"], (*it)["rate"]);
     }
 }
 

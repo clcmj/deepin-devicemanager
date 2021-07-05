@@ -63,6 +63,9 @@ else()
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O2 -Wl,-O1 -Wl,--gc-sections")
 endif()
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -fsanitize=undefined,address -O2")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fsanitize=undefined,address -O2")
+
 #Generate the qm file
 #message(${CMAKE_CURRENT_SOURCE_DIR})
 execute_process(COMMAND bash ${APP_TRANS_SCRIPT} WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/")
@@ -119,8 +122,7 @@ include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 # Tell CMake to create the executable
 add_executable(${PROJECT_NAME} ${DEVICE_SRC} ${THIRD_PARTY} ${APP_QRC})
 
-target_include_directories(${APP_BIN_NAME}
-    PUBLIC ${DtkWidget_INCLUDE_DIRS} ${OBJECT_BINARY_DIR})
+target_include_directories(${APP_BIN_NAME} PUBLIC ${DtkWidget_INCLUDE_DIRS} ${OBJECT_BINARY_DIR})
 
 target_link_libraries(${APP_BIN_NAME}
     ${DtkWidget_LIBRARIES}
@@ -145,3 +147,9 @@ install(FILES ${APP_QM_FILES} DESTINATION share/deepin-devicemanager/translation
 install(FILES ${APP_DESKTOP} DESTINATION share/applications)
 install(FILES ${APP_ICON_FILE} DESTINATION /usr/share/icons/hicolor/scalable/apps)
 install(DIRECTORY ${APP_RES_DIR}/deepin-devicemanager DESTINATION /usr/share/deepin-manual/manual-assets/application/)
+
+
+#add_subdirectory(${CMAKE_SOURCE_DIR}/deepin-devicemanager/tests/)
+# Test--------deepin-devicemanager
+
+add_subdirectory(./tests)

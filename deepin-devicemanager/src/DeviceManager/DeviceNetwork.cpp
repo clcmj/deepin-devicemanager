@@ -116,6 +116,17 @@ bool DeviceNetwork::enable()
     return m_Enable;
 }
 
+void DeviceNetwork::correctCurrentLinkStatus(QString linkStatus)
+{
+    if (m_Link != linkStatus)
+        m_Link = linkStatus;
+}
+
+QString DeviceNetwork::logicalName()
+{
+    return m_LogicalName;
+}
+
 void DeviceNetwork::initFilterKey()
 {
     // 初始化可显示属性

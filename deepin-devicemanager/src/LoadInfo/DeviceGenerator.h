@@ -23,10 +23,12 @@
 #ifndef DEVICEGENERATOR_H
 #define DEVICEGENERATOR_H
 
-#include <QObject>
 #include <DApplication>
 #include <DSysInfo>
+
+#include <QObject>
 #include <QMutex>
+
 DWIDGET_USE_NAMESPACE
 DCORE_USE_NAMESPACE
 
@@ -226,11 +228,6 @@ protected:
      * @brief getMonitorInfoFromXrandrVerbose:从xrandr --verbose获取显示设备信息
      */
     virtual void getMonitorInfoFromXrandrVerbose();
-
-    /**
-     * @brief getMonitorRefreshRateFromXrandr:从xrandr获取显示设备刷新率
-     */
-    virtual void getMonitorRefreshRateFromXrandr();
 
     /**@brief:generator audio info*/
     /**
