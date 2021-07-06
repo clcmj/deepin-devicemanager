@@ -667,9 +667,8 @@ void DeviceGenerator::getKeyboardInfoFromHwinfo()
     for (; it != lstMap.end(); ++it) {
         if ((*it).size() < 1)
             continue;
-
-        // 下面这句代码忘了这么写的原因，先去掉
-        //if ((*it).contains("Device Files")) {}
+        if ((*it)["Vendor"] == "0x0001")
+            continue;
 
         DeviceInput *device = new DeviceInput();
         device->setInfoFromHwinfo(*it);
