@@ -103,12 +103,10 @@ const QString DeviceCpu::getOverviewInfo()
     // 获取阿拉伯数字的英文翻译
     getTrNumber();
 
-    QString ov = QString("%1 (%2%3 / %4%5)") \
+    QString ov = QString("%1 (%2%3)") \
                  .arg(m_Name) \
                  .arg(m_trNumber[m_CPUCoreNum]) \
-                 .arg(tr("Core(s)")) \
-                 .arg(m_trNumber[m_LogicalCPUNum]) \
-                 .arg(tr("Processor"));
+                 .arg(tr("Core(s)"));
 
     return ov;
 }
