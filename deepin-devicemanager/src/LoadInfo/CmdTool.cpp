@@ -423,6 +423,10 @@ void CmdTool::loadHwinfoInfo(const QString &key, const QString &debugfile)
         QMap<QString, QString> mapInfo;
         getMapInfoFromHwinfo(item, mapInfo);
 
+        // 添加显卡位宽
+        if (key == "hwinfo_display")
+            addWidthToMap(mapInfo);
+
         // hwinfo --usb 里面有很多的无用信息，需要特殊处理
         if (key == "hwinfo_usb") {
             loadHwinfoUsbInfo(item, mapInfo);
@@ -1007,7 +1011,8 @@ void CmdTool::addWidthToMap(QMap<QString, QString> &mapInfo)
                 continue;
             mapWidth.insert(kv[0], kv[1]);
         }
-        mapInfo.insert("Width", mapWidth[pci] + " bits");
+        if(mapWidth.find(pci) != mapWidth.end())
+            mapInfo.insert("Width", mapWidth[pci] + " bits");
     }
 }
 
