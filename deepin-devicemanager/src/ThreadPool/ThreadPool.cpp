@@ -163,6 +163,7 @@ void ThreadPool::finishedGenerateDevice(const QStringList &lst)
 
 void ThreadPool::setFramework(const QString &arch)
 {
+    qInfo() << "klu arch ***********************" << arch;
     m_Arch = arch;
 }
 
