@@ -67,6 +67,12 @@ public:
 
 private:
     /**
+     * @brief runCmdToCache
+     * @param cmd
+     */
+    void runCmdToCache(const Cmd &cmd);
+
+    /**
      * @brief initCmd init all cmd
      */
     void initCmd();
@@ -74,6 +80,7 @@ private:
 private:
     QList<Cmd>        m_ListCmd;             // all cmd
     QList<Cmd>        m_ListUpdate;          // update cmd
+    QList<Cmd>        m_ListHwinfo;          // hwinfo cmd
 };
 
 #endif // THREADPOOL_H
