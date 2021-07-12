@@ -586,7 +586,7 @@ QString MainWindow::getArchString()
     inputDeviceFile.close();
 #endif
 
-    if (struction == "klu") {
+    if (struction == "aarch64") {
         QString hw = DeviceInfoParser::Instance().loadGeneratorKey();
         if (!hw.isEmpty()) {
             struction = hw;
