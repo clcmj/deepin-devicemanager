@@ -298,9 +298,17 @@ void KLUGenerator::getDiskInfoFromSmartCtl()
 void KLUGenerator::getAudioInfoFromCatAudio()
 {
     const QList<QMap<QString, QString>> lstAudio = DeviceManager::instance()->cmdInfo("cat_audio");
+    qInfo() << " audio size ************************* " << lstAudio.size();
 
     QList<QMap<QString, QString> >::const_iterator it = lstAudio.begin();
     for (; it != lstAudio.end(); ++it) {
+
+        qInfo() << " *****************************************001 ";
+        qInfo() << "Name : " << (*it)["Name"];
+        qInfo() << "Vendor : " << (*it)["Vendor"];
+        qInfo() << "Model : " << (*it)["Model"];
+        qInfo() << " *****************************************002 ";
+
         if ((*it).size() < 2) {
             continue;
         }

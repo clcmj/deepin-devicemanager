@@ -619,14 +619,9 @@ void CmdTool::loadCatAudioInfo(const QString &key, const QString &cmd, const QSt
             continue;
         }
 
-        qInfo() << "loadCatAudioInfo ***********************" << item;
         QMap<QString, QString> mapInfo;
         getMapInfoFromCmd(item, mapInfo, ":");
         addMapInfo(key, mapInfo);
-        qInfo() << "key ************ " << key;
-        qInfo() << "Name : " << mapInfo["Name"];
-        qInfo() << "Vendor : " << mapInfo["Vendor"];
-        qInfo() << "Model : " << mapInfo["Model"];
     }
 }
 
