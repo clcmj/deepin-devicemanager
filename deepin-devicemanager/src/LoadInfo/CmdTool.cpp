@@ -613,16 +613,20 @@ void CmdTool::loadCatAudioInfo(const QString &key, const QString &cmd, const QSt
     if (!getDeviceInfo(cmd, deviceInfo, debugfile)) {
         return;
     }
-    qInfo() << "loadCatAudioInfo ***********************" << deviceInfo;
     QStringList items = deviceInfo.split("\n\n");
     foreach (const QString &item, items) {
         if (item.isEmpty()) {
             continue;
         }
 
+        qInfo() << "loadCatAudioInfo ***********************" << item;
         QMap<QString, QString> mapInfo;
         getMapInfoFromCmd(item, mapInfo, ":");
         addMapInfo(key, mapInfo);
+        qInfo() << "key ************ " << key;
+        qInfo() << "Name : " << mapInfo["Name"];
+        qInfo() << "Vendor : " << mapInfo["Vendor"];
+        qInfo() << "Model : " << mapInfo["Model"];
     }
 }
 
