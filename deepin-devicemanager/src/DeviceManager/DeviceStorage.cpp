@@ -115,6 +115,7 @@ bool DeviceStorage::setKLUHwinfoInfo(const QMap<QString, QString> &mapInfo)
     QFile file(Path);
     if (file.open(QIODevice::ReadOnly)) {
         QString value = file.readAll();
+        qInfo() << "value ********* " << value;
         const char *pstr = value.toStdString().c_str();
         unsigned long long serialN = 0;
         memset(&serialN, 0, sizeof(serialN));
