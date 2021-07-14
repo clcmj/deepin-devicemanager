@@ -89,7 +89,6 @@ public:
     const QList<DeviceBluetooth> &getBluetoothDevices();
     void setBluetoothInfoFromLshw(const QMap<QString, QString> &mapInfo);
     bool setBluetoothInfoFromHwinfo(const QMap<QString, QString> &mapInfo);
-    bool setBluetoothInfoFromWifiInfo(const QMap<QString, QString> &mapInfo);
 
     // 音频设备相关
     void addAudioDevice(const DeviceAudio &device);
@@ -101,7 +100,6 @@ public:
     void addNetworkDevice(const DeviceNetwork &device);
     const QList<DeviceNetwork> &getNetworkDevices();
     void setNetworkInfoFromHwinfo(const QMap<QString, QString> &mapInfo);
-    bool setNetworkInfoFromWifiInfo(const QMap<QString, QString> &mapInfo);
 
     // 图像设备相关
     void addImageDevice(const DeviceImage &device);

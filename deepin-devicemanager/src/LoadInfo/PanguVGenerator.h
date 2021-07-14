@@ -21,12 +21,6 @@ public:
     /**@brief:generator computer info*/
     virtual void generatorComputerDevice();
 
-    /**@brief:generator bluetooth info*/
-    virtual void generatorBluetoothDevice();
-
-    /**@brief:generator network info*/
-    virtual void generatorNetworkDevice();
-
 };
 
 #endif // PANGUVGENERATOR_H

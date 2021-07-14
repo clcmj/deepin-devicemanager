@@ -147,13 +147,3 @@ void PanguVGenerator::generatorComputerDevice()
     DeviceManager::instance()->addComputerDevice(device);
 }
 
-void PanguVGenerator::generatorBluetoothDevice()
-{
-    DeviceGenerator::generatorBluetoothDevice();
-}
-
-void PanguVGenerator::generatorNetworkDevice()
-{
-    DeviceGenerator::generatorNetworkDevice();
-}
-

@@ -77,7 +77,7 @@ DeviceInfoParser::~DeviceInfoParser()
 QString DeviceInfoParser::loadGeneratorKey()
 {
     // 获取设备信息
-    QString key = "KLU";
+    QString key = "";
     QString deviceInfo;
     // According to Huawei's requirements , Modify the way of judging klu and panguv
     if (!getDeviceInfo(QString("gdbus introspect -y -d com.deepin.system.SystemInfo -o /com/deepin/system/SystemInfo -p"), deviceInfo, "gdbus.txt")) {
@@ -87,10 +87,7 @@ QString DeviceInfoParser::loadGeneratorKey()
         key = "KLU";
     }  else if (deviceInfo.contains("PGUV")) { // panguv PGUV-WBX0/PGUV-WBY0包含PGUV即为PanGuV机器
         key = "PanGuV";
-    } else if (deviceInfo.contains("KLV")) { // klv L420
-        key = "KLV";
     }
-
 
     return key;
 }
