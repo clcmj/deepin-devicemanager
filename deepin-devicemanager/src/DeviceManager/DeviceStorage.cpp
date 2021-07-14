@@ -120,6 +120,8 @@ bool DeviceStorage::setKLUHwinfoInfo(const QMap<QString, QString> &mapInfo)
         memset(&serialN, 0, sizeof(serialN));
         memcpy(&serialN, pstr, strlen(pstr));
         m_SerialNumber = QString::number(serialN);
+        qInfo() << "pstr ********* " << pstr;
+        qInfo() << "serial ******** " << m_SerialNumber;
     } else {
         setAttribute(mapInfo, "Serial ID", m_SerialNumber);
     }
