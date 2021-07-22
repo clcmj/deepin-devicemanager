@@ -30,11 +30,7 @@ MainJob::MainJob(QObject *parent)
 {
     // 守护进程启动的时候加载所有信息
     if (!isZhaoXin()) {
-        qInfo() << "001 ************************************* Not ZhaoXin Meche";
         updateAllDevice();
-    } else {
-        qInfo() << "002 ************************************* ZhaoXin Meche";
-        QTimer::singleShot(40 * 1000, this, &MainJob::onFirstUpdate);
     }
 }
 
@@ -148,9 +144,9 @@ void MainJob::updateAllDevice()
 {
     PERF_PRINT_BEGIN("POINT-01", "MainJob::updateAllDevice()");
     if (m_FirstUpdate)
-        mp_Pool->generateDeviceFile();
+        mp_Pool->loadDeviceInfo();
     else
-        mp_Pool->updateDeviceFile();
+        mp_Pool->updateDeviceInfo();
     mp_Pool->waitForDone(-1);
     sleep(1);
     PERF_PRINT_END("POINT-01");

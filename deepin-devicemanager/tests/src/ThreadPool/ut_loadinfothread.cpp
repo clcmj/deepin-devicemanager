@@ -14,10 +14,10 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "../src/Page/DeviceWidget.h"
-#include "../src/ThreadPool/LoadInfoThread.h"
-#include "../src/ThreadPool/ThreadExecXrandr.h"
-#include "../src/ThreadPool/GenerateDevicePool.h"
+#include "DeviceWidget.h"
+#include "LoadInfoThread.h"
+#include "ThreadExecXrandr.h"
+#include "GenerateDevicePool.h"
 
 #include "../ut_Head.h"
 #include <QCoreApplication>
@@ -55,20 +55,18 @@ public:
     ThreadExecXrandr *m_threadExecXrandr;
 };
 
-TEST_F(LoadInfoThread_UT,LoadInfoThread_UT_run)
+TEST_F(LoadInfoThread_UT, LoadInfoThread_UT_run)
 {
     m_loadInfoThread->m_FinishedReadFilePool = true;
-    m_loadInfoThread->mp_GenerateDevicePool = nullptr;
-    m_loadInfoThread->mp_ReadFilePool = nullptr;
-    //    m_loadInfoThread->run();
 }
 
-TEST_F(LoadInfoThread_UT,LoadInfoThread_UT_slotFinishedReadFilePool)
+TEST_F(LoadInfoThread_UT, LoadInfoThread_UT_slotFinishedReadFilePool)
 {
     m_loadInfoThread->slotFinishedReadFilePool("/");
+    m_loadInfoThread->setFramework("/");
 }
 
-TEST_F(ThreadExecXrandr_UT,ThreadExecXrandr_UT_getGpuInfoFromXrandr)
+TEST_F(ThreadExecXrandr_UT, ThreadExecXrandr_UT_getGpuInfoFromXrandr)
 {
     m_threadExecXrandr->getGpuInfoFromXrandr();
 }

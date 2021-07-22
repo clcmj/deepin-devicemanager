@@ -14,9 +14,10 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "../src/LoadInfo/DeviceGenerator.h"
-#include "../src/LoadInfo/DeviceFactory.h"
-#include "../src/ThreadPool/GenerateDevicePool.h"
+#include "DeviceGenerator.h"
+#include "DeviceFactory.h"
+#include "GenerateDevicePool.h"
+#include "DeviceManager.h"
 
 #include "../ut_Head.h"
 #include <QCoreApplication>
@@ -40,98 +41,173 @@ public:
     DeviceGenerator *m_deviceGenerator = nullptr;
 };
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorComputerDevice)
+QList<QMap<QString, QString>> ut_generator_cmdInfo()
 {
+    QList<QMap<QString, QString>> info;
+    QMap<QString, QString> map;
+    map.insert("name", "/");
+    map.insert("type", "/");
+    map.insert("name", "/");
+    map.insert("type", "/");
+    map.insert("name", "/");
+    map.insert("type", "/");
+    info.append(map);
+    return info;
+}
+
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorComputerDevice)
+{
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorComputerDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorCpuDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorCpuDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorCpuDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorBiosDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_getMemoryInfoFromDmidecode)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
+    m_deviceGenerator = DeviceFactory::getDeviceGenerator();
+    m_deviceGenerator->getMemoryInfoFromDmidecode();
+    m_deviceGenerator->getGpuInfoFromLshw();
+    m_deviceGenerator->getMonitorInfoFromXrandrVerbose();
+    m_deviceGenerator->getAudioInfoFromHwinfo();
+    m_deviceGenerator->getAudioInfoFromLshw();
+    m_deviceGenerator->getAudioInfoFromCatInput();
+    m_deviceGenerator->getAudioChipInfoFromDmesg();
+    m_deviceGenerator->getBluetoothInfoFromLshw();
+    m_deviceGenerator->getOthersInfoFromLshw();
+    m_deviceGenerator->getCdromInfoFromLshw();
+    m_deviceGenerator->getImageInfoFromLshw();
+    m_deviceGenerator->getGpuInfoFromXrandr();
+    m_deviceGenerator->getImageInfoFromHwinfo();
+}
+
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorBiosDevice)
+{
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorBiosDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorDiskDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorDiskDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorDiskDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorGpuDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorGpuDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorGpuDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorMonitorDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorMonitorDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorMonitorDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorNetworkDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorNetworkDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorNetworkDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorAudioDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorAudioDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorAudioDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorBluetoothDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorBluetoothDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorBluetoothDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorKeyboardDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorKeyboardDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorKeyboardDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorMouseDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorMouseDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorMouseDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorPrinterDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorPrinterDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorPrinterDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorCameraDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorCameraDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorCameraDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorCdromDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorCdromDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorCdromDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorOthersDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorOthersDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorOthersDevice();
 }
 
-TEST_F(DeviceGenerator_UT,DeviceGenerator_UT_generatorPowerDevice)
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_generatorPowerDevice)
 {
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
     m_deviceGenerator = DeviceFactory::getDeviceGenerator();
     m_deviceGenerator->generatorPowerDevice();
+}
+
+TEST_F(DeviceGenerator_UT, DeviceGenerator_UT_getOthersInfoFromLshw)
+{
+    Stub stub;
+    stub.set(ADDR(DeviceManager, cmdInfo), ut_generator_cmdInfo);
+    m_deviceGenerator = DeviceFactory::getDeviceGenerator();
+    m_deviceGenerator->getOthersInfoFromLshw();
+    m_deviceGenerator->getOthersInfoFromHwinfo();
 }

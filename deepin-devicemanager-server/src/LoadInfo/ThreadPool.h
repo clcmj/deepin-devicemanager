@@ -58,14 +58,25 @@ public:
     /**
      * @brief generateDeviceFile : load device info
      */
-    void generateDeviceFile();
+    void loadDeviceInfo();
 
     /**
      * @brief updateDeviceFile
      */
-    void updateDeviceFile();
+    void updateDeviceInfo();
 
 private:
+    /**
+     * @brief runHwinfoCmd run hwinfo command
+     */
+    void runHwinfoCmd();
+
+    /**
+     * @brief runCmdToCache
+     * @param cmd
+     */
+    void runCmdToCache(const Cmd &cmd);
+
     /**
      * @brief initCmd init all cmd
      */
@@ -74,6 +85,7 @@ private:
 private:
     QList<Cmd>        m_ListCmd;             // all cmd
     QList<Cmd>        m_ListUpdate;          // update cmd
+    QList<Cmd>        m_ListHwinfo;          // hwinfo cmd
 };
 
 #endif // THREADPOOL_H
