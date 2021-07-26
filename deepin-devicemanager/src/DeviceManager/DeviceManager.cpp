@@ -152,6 +152,7 @@ bool DeviceManager::setKLUStorageDeviceMediaType(const QString &name, const QStr
 void DeviceManager::addGpuDevice(const DeviceGpu &device)
 {
     m_ListDeviceGPU.append(device);
+    qInfo() << "m_ListDeviceGPU.size() ******************** " << m_ListDeviceGPU.size();
 }
 
 const QList<DeviceGpu> &DeviceManager::getGPUDevices()

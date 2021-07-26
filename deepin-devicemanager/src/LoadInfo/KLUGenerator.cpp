@@ -79,7 +79,6 @@ void KLUGenerator::generatorComputerDevice()
 void KLUGenerator::generatorGpuDevice()
 {
     const QList<QMap<QString, QString>> lstMap = DeviceManager::instance()->cmdInfo("gpuinfo");
-    qInfo() << "KLUGenerator::generatorGpuDevice() ********************* " << lstMap;
     QList<QMap<QString, QString> >::const_iterator it = lstMap.begin();
     for (; it != lstMap.end(); ++it) {
         if ((*it).size() < 2) {
