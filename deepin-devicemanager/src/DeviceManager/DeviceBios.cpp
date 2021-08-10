@@ -39,7 +39,9 @@ bool DeviceBios::setBaseBoardInfo(const QMap<QString, QString> &mapInfo)
     m_Name = QObject::tr("Base Board Information");
     setAttribute(mapInfo, "Manufacturer", m_Vendor);
     setAttribute(mapInfo, "Version", m_Version);
-    setAttribute(mapInfo, "Product Name", m_ProductName);
+//    setAttribute(mapInfo, "Product Name", m_ProductName);
+    // 根据panguW送测要求修改 m_ProductName 写死
+    m_ProductName = "SP1PGUWM";
     setAttribute(mapInfo, "Board name", m_ProductName, false);
     setAttribute(mapInfo, "chipset", m_ChipsetFamily);
     m_IsBoard = true;
@@ -160,7 +162,7 @@ void DeviceBios::initFilterKey()
     addFilterKey(QObject::tr("Error Correction Type"));
     addFilterKey(QObject::tr("Maximum Capacity"));
     addFilterKey(QObject::tr("Error Information Handle"));
-    addFilterKey(QObject::tr("Number Of Devices"));
+//    addFilterKey(QObject::tr("Number Of Devices"));
 
     addFilterKey(QObject::tr("BIOS ROMSIZE"));
     addFilterKey(QObject::tr("Release date"));

@@ -149,7 +149,9 @@ void DeviceGpu::setGpuInfo(const QMap<QString, QString> &mapInfo)
     m_eDP = "";
     m_DVI = "";
 
-    setAttribute(mapInfo, "Name", m_Name);
+    // 华为panguw定制
+//    setAttribute(mapInfo, "Name", m_Name);
+    m_Name = "HUAWEI PANGU M900 Integrated Graphics";
     loadOtherDeviceInfo(mapInfo);
 }
 

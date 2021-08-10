@@ -205,14 +205,14 @@ void DeviceCpu::setInfoFromLscpu(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Stepping", m_Step);
     setAttribute(mapInfo, "步进", m_Step);              // 服务器欧拉版
 
-    setAttribute(mapInfo, "L1d cache", m_CacheL1Data);
-    setAttribute(mapInfo, "L1d 缓存", m_CacheL1Data);
-    setAttribute(mapInfo, "L1i cache", m_CacheL1Order);
-    setAttribute(mapInfo, "L1i 缓存", m_CacheL1Order);
-    setAttribute(mapInfo, "L2 cache", m_CacheL2);
-    setAttribute(mapInfo, "L2 缓存", m_CacheL2);
-    setAttribute(mapInfo, "L3 cache", m_CacheL3);
-    setAttribute(mapInfo, "L3 缓存", m_CacheL3);
+//    setAttribute(mapInfo, "L1d cache", m_CacheL1Data);
+//    setAttribute(mapInfo, "L1d 缓存", m_CacheL1Data);
+//    setAttribute(mapInfo, "L1i cache", m_CacheL1Order);
+//    setAttribute(mapInfo, "L1i 缓存", m_CacheL1Order);
+//    setAttribute(mapInfo, "L2 cache", m_CacheL2);
+//    setAttribute(mapInfo, "L2 缓存", m_CacheL2);
+//    setAttribute(mapInfo, "L3 cache", m_CacheL3);
+//    setAttribute(mapInfo, "L3 缓存", m_CacheL3);
 
     setAttribute(mapInfo, "Flags", m_Flags);
     setAttribute(mapInfo, "标记", m_Flags);
