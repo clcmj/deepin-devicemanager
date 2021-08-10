@@ -43,8 +43,12 @@ void DeviceKeyboard::setInfoFromHwinfo(const QMap<QString, QString> &mapInfo)
 {
     // 设置设备基本属性
     setAttribute(mapInfo, "Device", m_Name);
+    if (m_Name == "HW CD30 Wired Keyboard")
+        m_Name = "HUAWEI CD30 Wired Keyboard";
     setAttribute(mapInfo, "Vendor", m_Vendor);
     setAttribute(mapInfo, "Model", m_Model);
+    if (m_Model == "Huawei HW CD30 Wired Keyboard")
+        m_Model = "HUAWEI CD30 Wired Keyboard";
     setAttribute(mapInfo, "Revision", m_Version);
 
     // 获取键盘的接口类型
@@ -100,6 +104,9 @@ void DeviceKeyboard::setKLUInfoFromHwinfo(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Device", m_Name);
     setAttribute(mapInfo, "Vendor", m_Vendor);
     setAttribute(mapInfo, "Model", m_Model);
+    // 华为panguW定制信息
+    if (m_Model == "Huawei HW CD30 Wired Keyboard")
+        m_Model = "HUAWEI CD30 Wired Keyboard";
     setAttribute(mapInfo, "Revision", m_Version);
     if (mapInfo.find("Hotplug") != mapInfo.end()) {
         setAttribute(mapInfo, "Hotplug", m_Interface);

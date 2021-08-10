@@ -299,7 +299,8 @@ void DeviceCpu::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
 
     setAttribute(mapInfo, "Manufacturer", m_Vendor);
     setAttribute(mapInfo, "Max Speed", m_Frequency, false);
-    setAttribute(mapInfo, "Current Speed", m_CurFrequency);
+//    setAttribute(mapInfo, "Current Speed", m_CurFrequency);
+    m_CurFrequency = "2000 MHz";
 //    setAttribute(mapInfo,"Thread(s) per core",m_ThreadNum);
 //    setAttribute(mapInfo,"BogoMIPS",m_BogoMIPS);
 //    setAttribute(mapInfo,"Architecture",m_Architecture);

@@ -209,8 +209,8 @@ void DeviceGenerator::generatorAudioDevice()
 void DeviceGenerator::generatorBluetoothDevice()
 {
     getBluetoothInfoFromHciconfig();
-    getBlueToothInfoFromHwinfo();
-    getBluetoothInfoFromLshw();
+//    getBlueToothInfoFromHwinfo();
+//    getBluetoothInfoFromLshw();
 }
 
 void DeviceGenerator::generatorKeyboardDevice()

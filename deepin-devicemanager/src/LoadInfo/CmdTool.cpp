@@ -314,6 +314,9 @@ void CmdTool::loadBluetoothCtlInfo(QMap<QString, QString> &mapInfo)
 
     getMapInfoFromBluetoothCtl(mapInfo, deviceInfo);
 
+    // 华为panguW定制信息
+    mapInfo["Manufacturer"].replace(QRegExp("([0-9]*)"), "");
+    mapInfo["Bus"] = "UART&I2S";
     addMapInfo("hciconfig", mapInfo);
 }
 
@@ -372,9 +375,11 @@ void CmdTool::loadHwinfoInfo(const QString &key, const QString &cmd, const QStri
     getDeviceInfo(cmd, deviceInfo, debugfile);
     QStringList items = deviceInfo.split("\n\n");
     foreach (const QString &item, items) {
-        if (item.isEmpty()) {
+        if (item.isEmpty())
             continue;
-        }
+
+        if (item.contains("lsadc key"))
+            continue;
 
         QMap<QString, QString> mapInfo;
         getMapInfoFromHwinfo(item, mapInfo);
@@ -388,6 +393,10 @@ void CmdTool::loadHwinfoInfo(const QString &key, const QString &cmd, const QStri
                     !item.contains("Model: \"serial console\"") && // 鲲鹏台式机子上发现一条多余信息  Model: "serial console"
                     !item.contains("Wacom", Qt::CaseInsensitive)) { // 数位板信息被显示成了mouse信息,这里需要做特殊处理(搞不懂数位板为什么不能显示成鼠标)
 
+                if (key == "hwinfo_mouse")
+                    mapInfo["Hardware Class"] = "Mouse";
+                if (key == "hwinfo_keyboard")
+                    mapInfo["Hardware Class"] = "Keyboard";
                 addMapInfo(key, mapInfo);
             }
         } else {
@@ -461,6 +470,9 @@ void CmdTool::loadDmidecodeInfo(const QString &key, const QString &cmd, const QS
         }
         QMap<QString, QString> mapInfo;
         getMapInfoFromDmidecode(item, mapInfo);
+        // 华为panguW定制信息
+        if (key == "dmidecode16")
+            mapInfo["Location"] = "Onboard";
         addMapInfo(key, mapInfo);
     }
 }

@@ -28,6 +28,8 @@ void DeviceMouse::setInfoFromHwinfo(QMap<QString, QString> mapInfo)
     setAttribute(mapInfo, "Device", m_Name);
     setAttribute(mapInfo, "Vendor", m_Vendor);
     setAttribute(mapInfo, "Model", m_Model);
+    if (m_Model == "Huawei HUAWEI USB Optical Mouse")
+        m_Model = "HUAWEI USB Optical Mouse";
     setAttribute(mapInfo, "Revision", m_Version);
 
     // 获取鼠标的接口类型
