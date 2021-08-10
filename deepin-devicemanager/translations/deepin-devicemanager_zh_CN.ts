@@ -266,7 +266,7 @@
     </message>
     <message>
         <source>Current Speed</source>
-        <translation>当前频率</translation>
+        <translation>最大频率</translation>
     </message>
     <message>
         <source>BogoMIPS</source>

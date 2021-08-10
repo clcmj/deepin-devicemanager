@@ -315,7 +315,7 @@ void CmdTool::loadBluetoothCtlInfo(QMap<QString, QString> &mapInfo)
     getMapInfoFromBluetoothCtl(mapInfo, deviceInfo);
 
     // 华为panguW定制信息
-    mapInfo["Manufacturer"].replace(QRegExp("([0-9]*)"), "");
+    mapInfo["Manufacturer"].replace(QRegExp("(\\([0-9]*\\)"), "");
     mapInfo["Bus"] = "UART&I2S";
     addMapInfo("hciconfig", mapInfo);
 }
