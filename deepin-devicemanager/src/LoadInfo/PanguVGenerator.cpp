@@ -115,8 +115,7 @@ void PanguVGenerator::generatorComputerDevice()
     QString os = "UnionTech OS";
     DSysInfo::UosEdition type = DSysInfo::uosEditionType();
     if (DSysInfo::UosProfessional == type) {
-//        os =  "UnionTech OS Desktop 20 Professional";
-        os = "UOS";
+        os = "UOS 20";
     } else if (DSysInfo::UosHome == type) {
         os =  "UnionTech OS Desktop 20 Home";
     } else if (DSysInfo::UosCommunity == type) {

@@ -39,7 +39,7 @@ void KLUGenerator::generatorComputerDevice()
     }
 
     // setOsDescription
-    QString os = "UOS";
+    QString os = "UOS 20";
     DSysInfo::DeepinType type = DSysInfo::deepinType();
     if (DSysInfo::DeepinProfessional == type) {
         os =  "UOS 20";
