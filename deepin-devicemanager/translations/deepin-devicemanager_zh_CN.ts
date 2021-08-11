@@ -2426,6 +2426,11 @@
         <translation>一百二十八</translation>
     </message>
     <message>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="405"/>
+        <source>Two hundred and Fifty-six</source>
+        <translation>二百五十六</translation>
+    </message>
+    <message>
         <location filename="../src/DeviceManager/DeviceGpu.cpp" line="46"/>
         <source>GDDR capacity</source>
         <translation>GDDR容量</translation>

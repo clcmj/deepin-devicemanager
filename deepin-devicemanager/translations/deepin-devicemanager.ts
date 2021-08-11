@@ -27,13 +27,13 @@
     <name>DetailTreeView</name>
     <message>
         <location filename="../src/Widget/DetailTreeView.cpp" line="137"/>
-        <location filename="../src/Widget/DetailTreeView.cpp" line="339"/>
+        <location filename="../src/Widget/DetailTreeView.cpp" line="344"/>
         <source>More</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/Widget/DetailTreeView.cpp" line="141"/>
-        <location filename="../src/Widget/DetailTreeView.cpp" line="346"/>
+        <location filename="../src/Widget/DetailTreeView.cpp" line="351"/>
         <source>Collapse</source>
         <translation type="unfinished"></translation>
     </message>
@@ -285,116 +285,116 @@
 <context>
     <name>DeviceCpu</name>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="65"/>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="250"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="66"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="310"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="66"/>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="251"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="67"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="311"/>
         <source>Vendor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="67"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="68"/>
         <source>CPU ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="68"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="69"/>
         <source>Core ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="69"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="70"/>
         <source>Threads</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="70"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="71"/>
         <source>Current Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="71"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="72"/>
         <source>BogoMIPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="72"/>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="253"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="73"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="313"/>
         <source>Architecture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="73"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="74"/>
         <source>CPU Family</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="74"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="75"/>
         <source>Model</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="99"/>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="112"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="100"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="113"/>
         <source>Processor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="110"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="111"/>
         <source>Core(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="234"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="294"/>
         <source>Virtualization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="235"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="295"/>
         <source>Flags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="236"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="296"/>
         <source>Extensions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="237"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="297"/>
         <source>L3 Cache</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="238"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="298"/>
         <source>L2 Cache</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="239"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="299"/>
         <source>L1i Cache</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="240"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="300"/>
         <source>L1d Cache</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="241"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="301"/>
         <source>Stepping</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="252"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="312"/>
         <source>Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="252"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="312"/>
         <source>Max Speed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1540,24 +1540,24 @@
     </message>
     <message>
         <location filename="../src/Page/PageSingleInfo.cpp" line="29"/>
-        <location filename="../src/Page/PageSingleInfo.cpp" line="149"/>
-        <location filename="../src/Page/PageSingleInfo.cpp" line="176"/>
+        <location filename="../src/Page/PageSingleInfo.cpp" line="156"/>
+        <location filename="../src/Page/PageSingleInfo.cpp" line="183"/>
         <source>Enable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Page/PageSingleInfo.cpp" line="147"/>
-        <location filename="../src/Page/PageSingleInfo.cpp" line="190"/>
+        <location filename="../src/Page/PageSingleInfo.cpp" line="154"/>
+        <location filename="../src/Page/PageSingleInfo.cpp" line="197"/>
         <source>Disable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Page/PageSingleInfo.cpp" line="179"/>
+        <location filename="../src/Page/PageSingleInfo.cpp" line="186"/>
         <source>Failed to disable the device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/Page/PageSingleInfo.cpp" line="193"/>
+        <location filename="../src/Page/PageSingleInfo.cpp" line="200"/>
         <source>Failed to enable the device</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2078,353 +2078,358 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="55"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="56"/>
         <source>CPU implementer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="56"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="57"/>
         <source>CPU architecture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="57"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="58"/>
         <source>CPU variant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="58"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="59"/>
         <source>CPU part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="59"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="60"/>
         <source>CPU revision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="268"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="328"/>
         <source>One</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="269"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="329"/>
         <source>Two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="270"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="330"/>
         <source>Four</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="271"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="331"/>
         <source>Six</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="272"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="332"/>
         <source>Eight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="274"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="334"/>
         <source>Ten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="275"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="335"/>
         <source>Twelve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="276"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="336"/>
         <source>Fourteen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="277"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="337"/>
         <source>Sixteen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="278"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="338"/>
         <source>Eighteen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="280"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="340"/>
         <source>Twenty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="281"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="341"/>
         <source>Twenty-two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="282"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="342"/>
         <source>Twenty-four</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="283"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="343"/>
         <source>Twenty-six</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="284"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="344"/>
         <source>Twenty-eight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="286"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="346"/>
         <source>Thirty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="287"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="347"/>
         <source>Thirty-two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="288"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="348"/>
         <source>Thirty-four</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="289"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="349"/>
         <source>Thirty-six</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="290"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="350"/>
         <source>Thirty-eight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="292"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="352"/>
         <source>Forty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="293"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="353"/>
         <source>Forty-two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="294"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="354"/>
         <source>Forty-four</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="295"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="355"/>
         <source>Forty-six</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="296"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="356"/>
         <source>Forty-eight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="298"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="358"/>
         <source>Fifty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="299"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="359"/>
         <source>Fifty-two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="300"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="360"/>
         <source>Fifty-four</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="301"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="361"/>
         <source>Fifty-six</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="302"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="362"/>
         <source>Fifty-eight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="304"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="364"/>
         <source>Sixty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="305"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="365"/>
         <source>Sixty-two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="306"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="366"/>
         <source>Sixty-four</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="307"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="367"/>
         <source>Sixty-six</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="308"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="368"/>
         <source>Sixty-eight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="310"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="370"/>
         <source>Seventy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="311"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="371"/>
         <source>Seventy-two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="312"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="372"/>
         <source>Seventy-four</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="313"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="373"/>
         <source>Seventy-six</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="314"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="374"/>
         <source>Seventy-eight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="316"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="376"/>
         <source>Eighty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="317"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="377"/>
         <source>Eighty-two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="318"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="378"/>
         <source>Eighty-four</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="319"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="379"/>
         <source>Eighty-six</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="320"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="380"/>
         <source>Eighty-eight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="322"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="382"/>
         <source>Ninety</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="323"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="383"/>
         <source>Ninety-two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="324"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="384"/>
         <source>Ninety-four</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="325"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="385"/>
         <source>Ninety-six</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="326"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="386"/>
         <source>Ninety-eight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="328"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="388"/>
         <source>One hundred</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="329"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="389"/>
         <source>One hundred and Two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="330"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="390"/>
         <source>One hundred and four</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="331"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="391"/>
         <source>One hundred and Six</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="332"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="392"/>
         <source>One hundred and Eight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="334"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="394"/>
         <source>One hundred and Ten</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="335"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="395"/>
         <source>One hundred and Twelve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="336"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="396"/>
         <source>One hundred and Fourteen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="337"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="397"/>
         <source>One hundred and Sixteen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="338"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="398"/>
         <source>One hundred and Eighteen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="340"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="400"/>
         <source>One hundred and Twenty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="341"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="401"/>
         <source>One hundred and Twenty-two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="342"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="402"/>
         <source>One hundred and Twenty-four</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="343"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="403"/>
         <source>One hundred and Twenty-six</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="344"/>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="404"/>
         <source>One hundred and Twenty-eight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/DeviceManager/DeviceCpu.cpp" line="405"/>
+        <source>Two hundred and Fifty-six</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
