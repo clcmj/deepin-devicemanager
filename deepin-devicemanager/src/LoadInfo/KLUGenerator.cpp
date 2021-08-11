@@ -48,7 +48,8 @@ void KLUGenerator::generatorComputerDevice()
     } else if (DSysInfo::DeepinDesktop == type) {
         os =  "Deepin 20 Beta";
     }
-    device.setOsDescription(os);
+//    device.setOsDescription(os);
+    device.setOsDescription("UOS");
 
     // os
     const QList<QMap<QString, QString> >  &verInfo = DeviceManager::instance()->cmdInfo("cat_version");

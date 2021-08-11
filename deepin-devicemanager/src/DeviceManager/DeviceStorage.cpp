@@ -148,6 +148,8 @@ bool DeviceStorage::addInfoFromlshw(const QMap<QString, QString> &mapInfo)
     // 更新接口
     setAttribute(mapInfo, "interface", m_Interface, false);
 
+    setAttribute(mapInfo, "vendor", m_Vendor, true);
+
 
     // 获取基本信息
     getInfoFromLshw(mapInfo);
