@@ -6,6 +6,7 @@
 #include "KLVGenerator.h"
 #include "PanguGenerator.h"
 #include "PanguVGenerator.h"
+#include "PanguWGenerator.h"
 #include <QProcess>
 #include <QFile>
 #include "../commondefine.h"
@@ -35,6 +36,8 @@ DeviceGenerator *DeviceFactory::getDeviceGenerator()
             generator = new PanguGenerator();
         }  else if (s_GeneratorKey == "PanGuV") {
             generator = new PanguVGenerator();
+        } else if (s_GeneratorKey == "PanGuW") {
+            generator = new PanguWGenerator();
         } else {
             generator = new X86Generator();
         }

@@ -249,7 +249,7 @@ void ThreadPool::getCmdList(QList<QStringList> &cmdList, const QString &arch)
     cmdList.append({ "dmesg",                "sudo dmesg",              "dmesg.txt",              tr("Loading Power Info...")});
     cmdList.append({ "hciconfig",            "hciconfig -a",            "hciconfig.txt",          tr("Loading Printer Info...")});
 
-    if (arch == "KLU" || arch == "PanGuV") {
+    if (arch == "KLU" || arch == "PanGuV" || arch == "PanGuW") {
         cmdList.append({ "gpuinfo",              "gpuinfo",                 "gpuinfo.txt",            ""});
         cmdList.append({ "bootdevice",           "cat /proc/bootdevice/product_name",                 "bootdevice.txt",            ""});
     }
@@ -262,7 +262,7 @@ void ThreadPool::getCmdList(QList<QStringList> &cmdList, const QString &arch)
     cmdList.append({ "cat_audio",            "cat /proc/asound/card0/codec#0", "cat_audio.txt",     ""});
 //    cmdList.append({ "bt_device",            "bluetoothctl paired-devices",    "bt_device.txt",     ""});   // 蓝牙设备配对信息
 
-    if (arch == "PanGuV") {
+    if (arch == "PanGuV" || arch == "PanGuW") {
         cmdList.append({ "EDID_HDMI",            "hexdump /sys/devices/platform/hisi-drm/drm/card0/card0-HDMI-A-1/edid", "EDID_HDMI.txt",     ""});
         cmdList.append({ "EDID_VGA",             "hexdump /sys/devices/platform/hisi-drm/drm/card0/card0-VGA-1/edid", "EDID_VGA.txt",     ""});
         cmdList.append({ "EDID_HDMI",            "hexdump /sys/devices/platform/hldrm/drm/card0/card0-HDMI-A-1/edid", "EDID_HDMI.txt",     ""});
