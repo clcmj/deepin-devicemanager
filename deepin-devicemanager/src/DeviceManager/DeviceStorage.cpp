@@ -16,6 +16,7 @@ DeviceStorage::DeviceStorage()
     , m_Description("")
     , m_KeyToLshw("")
     , m_KeyFromStorage("")
+    , m_NvmeKey("")
 {
     initFilterKey();
 }
@@ -119,6 +120,10 @@ bool DeviceStorage::setKLUHwinfoInfo(const QMap<QString, QString> &mapInfo)
         m_MediaType = "USB";
     }
 
+    if (m_KeyToLshw.contains("nvme0", Qt::CaseInsensitive)) {
+        setAttribute(mapInfo, "SysFS Device Link", m_NvmeKey);
+    }
+
     loadOtherDeviceInfo(mapInfo);
     return true;
 }
@@ -133,10 +138,16 @@ bool DeviceStorage::addInfoFromlshw(const QMap<QString, QString> &mapInfo)
     }
     QString key = keys[1].trimmed();
     key.replace(".", ":");
+
+    if (!m_NvmeKey.isEmpty()) {
+        if (!addNVMEInfoFromlshw(mapInfo)) {
+            return false;
+        }
+    }
+
     if (key != m_KeyToLshw) {
         return false;
     }
-
 
     // 获取唯一key
     QStringList words = mapInfo["bus info"].split(":");
@@ -171,6 +182,14 @@ bool DeviceStorage::addNVMEInfoFromlshw(const QMap<QString, QString> &mapInfo)
     if (m_NvmeKey.contains(key, Qt::CaseInsensitive)) {
         setAttribute(mapInfo, "vendor", m_Vendor);
     }
+
+    // 更新接口
+    setAttribute(mapInfo, "interface", m_Interface, false);
+    // 获取基本信息
+    getInfoFromLshw(mapInfo);
+
+    // 获取其它设备信息
+    loadOtherDeviceInfo(mapInfo);
 
     return true;
 
