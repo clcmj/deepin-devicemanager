@@ -37,6 +37,7 @@ const QString &DeviceComputer::name()
     if (m_Name.contains("None", Qt::CaseInsensitive)) {
         m_Name = "";
     }
+    m_Name.replace("(N/A)", "");
     return m_Name;
 }
 

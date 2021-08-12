@@ -38,7 +38,8 @@ bool DeviceBios::setBaseBoardInfo(const QMap<QString, QString> &mapInfo)
     }
     m_Name = QObject::tr("Base Board Information");
     setAttribute(mapInfo, "Manufacturer", m_Vendor);
-    setAttribute(mapInfo, "Version", m_Version);
+//    setAttribute(mapInfo, "Version", m_Version);
+    m_Version = "VB";
 //    setAttribute(mapInfo, "Product Name", m_ProductName);
     // 根据panguW送测要求修改 m_ProductName 写死
     m_ProductName = "SP1PGUWM";
@@ -56,7 +57,8 @@ bool DeviceBios::setSystemInfo(const QMap<QString, QString> &mapInfo)
     }
     m_Name = QObject::tr("System Information");
     setAttribute(mapInfo, "Manufacturer", m_Vendor);
-    setAttribute(mapInfo, "Version", m_Version);
+//    setAttribute(mapInfo, "Version", m_Version);
+    m_Version = "V1.0";
     loadOtherDeviceInfo(mapInfo);
     return true;
 }
@@ -68,7 +70,8 @@ bool DeviceBios::setChassisInfo(const QMap<QString, QString> &mapInfo)
     }
     m_Name = QObject::tr("Chassis Information");
     setAttribute(mapInfo, "Manufacturer", m_Vendor);
-    setAttribute(mapInfo, "Version", m_Version);
+//    setAttribute(mapInfo, "Version", m_Version);
+    m_Version = "V1.0";
     loadOtherDeviceInfo(mapInfo);
     return true;
 }

@@ -46,9 +46,10 @@ void ComputerOverviewWidget::setOverviewInfos(const QList<ArticleStruct> &others
     }
 
     ArticleStruct model(tr("Device"));
-    model.value += device.vendor() + QString(" ");
-    model.value += device.name() + QString(" ");
-    model.value += device.type() + QString(" ");
+//    model.value += device.vendor() + QString(" ");
+//    model.value += device.name() + QString(" ");
+//    model.value += device.type() + QString(" ");
+    model.value = "HUAWEI QingYun W525 PGUW-WBX0 Desktop Computer";
     articles.push_back(model);
 
     // 添加操作系统信息
