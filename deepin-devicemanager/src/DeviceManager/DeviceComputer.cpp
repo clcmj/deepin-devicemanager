@@ -37,7 +37,13 @@ const QString &DeviceComputer::name()
     if (m_Name.contains("None", Qt::CaseInsensitive)) {
         m_Name = "";
     }
-    m_Name.replace("(N/A)", "");
+
+    // HW 要求去除名称中的括号信息
+    QRegExp reg("[\\s\\S]*(\\([\\s\\S]*\\))[\\s\\S]*");
+    if (reg.exactMatch(m_Name)){
+        m_Name.replace(reg.cap(1),"");
+    }
+
     return m_Name;
 }
 

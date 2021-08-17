@@ -49,7 +49,6 @@ void ComputerOverviewWidget::setOverviewInfos(const QList<ArticleStruct> &others
     model.value += device.vendor() + QString(" ");
     model.value += device.name() + QString(" ");
     model.value += device.type() + QString(" ");
-    model.value.replace("(N/A)","");
 //    model.value = "HUAWEI QingYun W525 PGUW-WBX0 Desktop Computer";
     articles.push_back(model);
 
