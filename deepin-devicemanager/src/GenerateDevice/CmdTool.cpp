@@ -114,11 +114,7 @@ void CmdTool::loadLshwInfo(const QString &debugFile)
         } else if (item.startsWith("storage")) {
             getMapInfoFromLshw(item, mapInfo);
             addMapInfo("lshw_storage", mapInfo);
-#ifdef __sw_64__
-        } else if ((item.startsWith("memory") && !item.startsWith("memory UNCLAIMED")) || item.startsWith("bank")) {      // 内存信息
-#else
         } else if (item.startsWith("bank")) {      // 内存信息
-#endif
             getMapInfoFromLshw(item, mapInfo);
             addMapInfo("lshw_memory", mapInfo);
         } else if (item.startsWith("display")) {      // 显卡信息
@@ -412,38 +408,84 @@ void CmdTool::loadPrinterInfo()
 
 void CmdTool::loadHwinfoInfo(const QString &key, const QString &debugfile)
 {
-    // 获取文件信息
+    // 显示屏信息从前台直接获取
     QString deviceInfo;
-    if (key == "hwinfo_monitor")
+    if (key == "hwinfo_monitor") {
         getDeviceInfoFromCmd(deviceInfo, "hwinfo --monitor");
-    else
+        QStringList items = deviceInfo.split("\n\n");
+        foreach (const QString &item, items) {
+            if (item.isEmpty())
+                continue;
+            QMap<QString, QString> mapInfo;
+            getMapInfoFromHwinfo(item, mapInfo);
+            addMapInfo(key, mapInfo);
+        }
+    } else { // 处理其它信息 mouse sound keyboard usb display cdrom disk
         getDeviceInfo(deviceInfo, debugfile);
+        getHwinfoMapLstMapInfo(deviceInfo);
+    }
+//    // 获取文件信息
+//    QString deviceInfo;
+//    if (key == "hwinfo_monitor")
+//        getDeviceInfoFromCmd(deviceInfo, "hwinfo --monitor");
+//    else
+//        getDeviceInfo(deviceInfo, debugfile);
 
-    QStringList items = deviceInfo.split("\n\n");
+//    QStringList items = deviceInfo.split("\n\n");
+//    foreach (const QString &item, items) {
+//        if (item.isEmpty())
+//            continue;
+
+//        QMap<QString, QString> mapInfo;
+//        getMapInfoFromHwinfo(item, mapInfo);
+
+//        // hwinfo --usb 里面有很多的无用信息，需要特殊处理
+//        if (key == "hwinfo_usb") {
+//            loadHwinfoUsbInfo(item, mapInfo);
+//        } else if (key == "hwinfo_mouse" || key == "hwinfo_keyboard") {
+//            if (!item.contains("Linux Foundation") && // 在服务器版本中发现，hwinfo --mouse 和 hwinfo --keyboard获取的信息里面有多余的无用信息，需要过滤
+//                    !item.contains("Elite Remote Control Driver") && // 在笔记本中发现了一个多余信息，做特殊处理 Elite Remote Control Driver
+//                    !item.contains("Model: \"serial console\"") && // 鲲鹏台式机子上发现一条多余信息  Model: "serial console"
+//                    !item.contains("Wacom", Qt::CaseInsensitive)) { // 数位板信息被显示成了mouse信息,这里需要做特殊处理(搞不懂数位板为什么不能显示成鼠标)
+//                addMapInfo(key, mapInfo);
+//            }
+//        } else if (key == "hwinfo_display") {
+//            // 过滤龙心显卡中的处理单元信息
+//            if (mapInfo["Device"].contains("Graphics Processing Unit"))
+//                continue;
+//            addMapInfo(key, mapInfo);
+//        } else {
+//            addMapInfo(key, mapInfo);
+//        }
+//    }
+}
+
+void CmdTool::getHwinfoMapLstMapInfo(const QString &info)
+{
+    QStringList items = info.split("\n\n");
     foreach (const QString &item, items) {
         if (item.isEmpty())
             continue;
-
         QMap<QString, QString> mapInfo;
         getMapInfoFromHwinfo(item, mapInfo);
-
-        // hwinfo --usb 里面有很多的无用信息，需要特殊处理
-        if (key == "hwinfo_usb") {
-            loadHwinfoUsbInfo(item, mapInfo);
-        } else if (key == "hwinfo_mouse" || key == "hwinfo_keyboard") {
-            if (!item.contains("Linux Foundation") && // 在服务器版本中发现，hwinfo --mouse 和 hwinfo --keyboard获取的信息里面有多余的无用信息，需要过滤
-                    !item.contains("Elite Remote Control Driver") && // 在笔记本中发现了一个多余信息，做特殊处理 Elite Remote Control Driver
-                    !item.contains("Model: \"serial console\"") && // 鲲鹏台式机子上发现一条多余信息  Model: "serial console"
-                    !item.contains("Wacom", Qt::CaseInsensitive)) { // 数位板信息被显示成了mouse信息,这里需要做特殊处理(搞不懂数位板为什么不能显示成鼠标)
-                addMapInfo(key, mapInfo);
-            }
-        } else if (key == "hwinfo_display") {
-            // 过滤龙心显卡中的处理单元信息
+        if (mapInfo["Hardware Class"] == "sound") {
+            addMapInfo("hwinfo_sound", mapInfo);
+        } else if (mapInfo["Hardware Class"] == "network interface") {
+            addMapInfo("hwinfo_network", mapInfo);
+        } else if (mapInfo["Hardware Class"] == "keyboard") {
+            addMapInfo("hwinfo_keyboard", mapInfo);
+        } else if (mapInfo["Hardware Class"] == "mouse") {
+            addMapInfo("hwinfo_mouse", mapInfo);
+        } else if (mapInfo["Hardware Class"] == "cdrom") {
+            addMapInfo("hwinfo_cdrom", mapInfo);
+        } else if (mapInfo["Hardware Class"] == "disk") {
+            addMapInfo("hwinfo_disk", mapInfo);
+        } else if (mapInfo["Hardware Class"] == "display") {
             if (mapInfo["Device"].contains("Graphics Processing Unit"))
                 continue;
-            addMapInfo(key, mapInfo);
+            addMapInfo("hwinfo_display", mapInfo);
         } else {
-            addMapInfo(key, mapInfo);
+            addMapInfo("hwinfo_usb", mapInfo);
         }
     }
 }

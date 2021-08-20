@@ -140,6 +140,12 @@ private:
     void loadHwinfoInfo(const QString &key, const QString &debugfile);
 
     /**
+     * @brief getHwinfoMapLstMapInfo : 解析 hwinfo --sound --network --keyboard --cdrom --disk --display --mouse --usb
+     * @param mapLstMap
+     */
+    void getHwinfoMapLstMapInfo(const QString &info);
+
+    /**
      * @brief loadHwinfoUsbInfo
      * @param item
      * @param mapInfo
