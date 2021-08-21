@@ -94,13 +94,13 @@ TEST_F(DeviceListView_UT, UT_keyPressEvent)
     QCoreApplication::sendEvent(m_deviceListView, &keyPressEvent1);
 }
 
-//TEST_F(DeviceListviewDelegate_UT, ut_paint)
-//{
-//    QPainter painter(m_listView);
-//    QStyleOptionViewItem option;
-//    QModelIndex index = m_listView->model()->index(0, 0);
-//    m_deviceListViewDelegate->paint(&painter, option, index);
-//}
+TEST_F(DeviceListviewDelegate_UT, ut_paint)
+{
+    QPainter painter(m_listView);
+    QStyleOptionViewItem option;
+    QModelIndex index = m_listView->model()->index(0, 0);
+    m_deviceListViewDelegate->paint(&painter, option, index);
+}
 
 //TEST_F(DeviceListviewDelegate_UT, ut_paintSeparator)
 //{
