@@ -27,9 +27,9 @@ DeviceListviewDelegate::DeviceListviewDelegate(QAbstractItemView *parent)
 
 void DeviceListviewDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (index.data().toString() == "Separator") {
-        return paintSeparator(painter, option);
-    }
+//    if (index.data().toString() == "Separator") {
+//        return paintSeparator(painter, option);
+//    }
     return DStyledItemDelegate::paint(painter, option, index);
 }
 
