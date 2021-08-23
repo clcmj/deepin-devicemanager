@@ -665,6 +665,9 @@ void DeviceGenerator::getKeyboardInfoFromHwinfo()
             continue;
         if ((*it)["Vendor"] == "0x0001")
             continue;
+        // 按照同方要求，定制该要求
+        if ((*it)["Model"] == "AT Raw Set 2 keyboard")
+            continue;
 
         DeviceInput *device = new DeviceInput();
         device->setInfoFromHwinfo(*it);
