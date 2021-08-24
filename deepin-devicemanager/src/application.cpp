@@ -21,6 +21,7 @@
 
 #include <QMetaType>
 
+
 Application::Application(int &argc, char **argv)
     : DApplication(argc, argv)
 {
