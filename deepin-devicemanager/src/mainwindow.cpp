@@ -234,7 +234,7 @@ void MainWindow::addAllDeviceinfoWidget()
 
     addDeviceWidget(new BluetoothWidget(mainWidget_), "bluetooth.svg");
     addDeviceWidget(new OtherPciDeviceWidget(mainWidget_), "otherpcidevices.svg");
-    addDeviceWidget(new PowerWidget(mainWidget_), "battery.svg");
+//    addDeviceWidget(new PowerWidget(mainWidget_), "battery.svg");   //bug 91350 pgw去除电池模块
     if (firstAdd_ == true) {
         leftDeviceView_->addSeperator();
     }
