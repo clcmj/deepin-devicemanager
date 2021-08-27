@@ -14,7 +14,8 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "../src/DeviceManager/DeviceImage.h"
+#include "DeviceImage.h"
+#include "EnableManager.h"
 
 #include "../ut_Head.h"
 #include <QCoreApplication>
@@ -49,7 +50,7 @@ TEST_F(DeviceImage_UT, DeviceImage_UT_setInfoFromLshw)
 TEST_F(DeviceImage_UT, DeviceImage_UT_setInfoFromHwinfo)
 {
     QMap<QString, QString> mapinfo;
-    mapinfo.insert("SysFS BusID", "//:");
+    mapinfo.insert("SysFS BusID", "/-/://");
     m_deviceImage->setInfoFromHwinfo(mapinfo);
 }
 
@@ -60,10 +61,18 @@ TEST_F(DeviceImage_UT, DeviceImage_UT_name)
     m_deviceImage->subTitle();
 }
 
+EnableDeviceStatus ut_image_enableDeviceByDriver()
+{
+    return EnableDeviceStatus::EDS_Faild;
+}
+
 TEST_F(DeviceImage_UT, DeviceImage_UT_getOverviewInfo)
 {
     m_deviceImage->getOverviewInfo();
-    //    m_deviceImage->setEnable(true);
+
+    Stub stub;
+    stub.set(ADDR(EnableManager, enableDeviceByDriver), ut_image_enableDeviceByDriver);
+    m_deviceImage->setEnable(true);
     //    m_deviceImage->enable();
 }
 

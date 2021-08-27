@@ -14,7 +14,8 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "../src/DeviceManager/DeviceBluetooth.h"
+#include "DeviceBluetooth.h"
+#include "EnableManager.h"
 
 #include "../ut_Head.h"
 #include <QCoreApplication>
@@ -65,12 +66,19 @@ TEST_F(DeviceBluetooth_UT, DeviceBluetooth_UT_name)
     m_deviceBluetooth->driver();
 }
 
+EnableDeviceStatus ut_tooth_enableDeviceByDriver()
+{
+    return EnableDeviceStatus::EDS_Faild;
+}
+
 TEST_F(DeviceBluetooth_UT, DeviceBluetooth_UT_subTitle)
 {
     m_deviceBluetooth->subTitle();
     m_deviceBluetooth->getOverviewInfo();
     //    m_deviceBluetooth->enable();
-    //    m_deviceBluetooth->setEnable(true);
+    Stub stub;
+    stub.set(ADDR(EnableManager, enableDeviceByDriver), ut_tooth_enableDeviceByDriver);
+    m_deviceBluetooth->setEnable(false);
 }
 
 TEST_F(DeviceBluetooth_UT, DeviceBluetooth_UT_initFilterKey)

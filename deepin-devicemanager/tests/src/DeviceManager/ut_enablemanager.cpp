@@ -14,8 +14,8 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "../src/DeviceManager/EnableManager.h"
-#include "../src/ZeroMQ/ZmqOrder.h"
+#include "EnableManager.h"
+#include "DBusInterface.h"
 #include "../ut_Head.h"
 #include <QCoreApplication>
 #include <QPaintEvent>
@@ -71,13 +71,14 @@ bool ut_execDriverOrder()
 TEST_F(EnableManager_UT, EnableManager_UT_enableDeviceByDriver)
 {
     Stub stub;
-    stub.set(ADDR(ZmqOrder, execDriverOrder), ut_execDriverOrder);
+    stub.set(ADDR(DBusInterface, execDriverOrder), ut_execDriverOrder);
     ASSERT_EQ(EnableManager::instance()->enableDeviceByDriver(false, "/"), 1);
+    EnableManager::instance()->enableDeviceByDriver(true, "/");
 }
 
 QByteArray ut_readAllStandardOutput_1()
 {
-    return "";
+    return "filename://123 \n /abc";
 }
 
 TEST_F(EnableManager_UT, EnableManager_UT_enablePrinter)
@@ -85,7 +86,7 @@ TEST_F(EnableManager_UT, EnableManager_UT_enablePrinter)
     Stub stub;
     stub.set((void (QProcess::*)(const QString &, QIODevice::OpenMode))ADDR(QProcess, start), ut_start);
     stub.set(ADDR(QProcess, readAllStandardOutput), ut_readAllStandardOutput_1);
-    ASSERT_EQ(EnableManager::instance()->enablePrinter("/", false), 2);
+    EnableManager::instance()->enablePrinter("/", false);
 }
 
 bool ut_execIfconfigOrder()
@@ -96,10 +97,20 @@ bool ut_execIfconfigOrder()
 TEST_F(EnableManager_UT, EnableManager_UT_enableNetworkByIfconfig)
 {
     Stub stub;
-    stub.set(ADDR(ZmqOrder, execIfconfigOrder), ut_execIfconfigOrder);
+    stub.set(ADDR(DBusInterface, execIfconfigOrder), ut_execIfconfigOrder);
     stub.set((void (QProcess::*)(const QString &, QIODevice::OpenMode))ADDR(QProcess, start), ut_start);
     stub.set(ADDR(QProcess, readAllStandardOutput), ut_readAllStandardOutput_1);
     ASSERT_EQ(EnableManager::instance()->enableNetworkByIfconfig("/", false), 2);
+    EnableManager::instance()->enableNetworkByIfconfig("/", true);
+}
+
+TEST_F(EnableManager_UT, EnableManager_UT_isDeviceId)
+{
+    Stub stub;
+    stub.set(ADDR(DBusInterface, execIfconfigOrder), ut_execIfconfigOrder);
+    stub.set((void (QProcess::*)(const QString &, QIODevice::OpenMode))ADDR(QProcess, start), ut_start);
+    stub.set(ADDR(QProcess, readAllStandardOutput), ut_readAllStandardOutput_1);
+    EnableManager::instance()->isDeviceId(10, "/");
 }
 
 TEST_F(EnableManager_UT, EnableManager_UT_getDriverPath)

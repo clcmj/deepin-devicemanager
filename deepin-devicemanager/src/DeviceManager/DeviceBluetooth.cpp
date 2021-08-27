@@ -46,7 +46,7 @@ bool DeviceBluetooth::setInfoFromHwinfo(const QMap<QString, QString> &mapInfo)
     if (vendor.size() < 1)
         return false;
 
-    if (!m_Vendor.isEmpty() && !m_Vendor.contains(vendor[0]))
+    if (!m_Vendor.contains(vendor[0]))
         return false;
 
     // 获取设备基本信息

@@ -22,15 +22,16 @@
 
 #ifndef DEVICEMANAGER_H
 #define DEVICEMANAGER_H
+
+#include "document.h"
+#include "xlsxdocument.h"
+
 #include <QList>
 #include <QMap>
 #include <QMutex>
 #include <QDomDocument>
 #include <QObject>
 #include <QFile>
-
-#include "document.h"
-#include "xlsxdocument.h"
 
 //class DeviceMouse;
 class DeviceCpu;
@@ -203,15 +204,7 @@ public:
      * @param main:主显示器信息
      * @param edid:edid信息
      */
-    void setMonitorInfoFromXrandr(const QString &main, const QString &edid);
-
-    /**
-     * @brief setCurrentResolution:设置当前分辨率
-     * @param resolution:分辨率
-     * @param rate:刷新率
-     */
-    void setCurrentResolution(const QString &resolution, const QString &rate);
-
+    void setMonitorInfoFromXrandr(const QString &main, const QString &edid, const QString &rate = "");
 
     // Bios设备相关 ************************************************************************************
     /**
@@ -276,7 +269,13 @@ public:
      * @brief correctNetworkLinkStatus:校正网络连接状态
      * @param linkStatus:连接状态
      */
-    void correctNetworkLinkStatus(QString linkStatus);
+    void correctNetworkLinkStatus(QString linkStatus, QString networkDriver);
+
+    /**
+     * @brief networkDriver:获取所有网络驱动
+     * @return
+     */
+    QStringList networkDriver();
 
     /**
      * @brief correctPowerOtherInfo:校正电池信息
@@ -531,6 +530,7 @@ private:
     int                                            m_CpuNum;               //<! 物理cpu个数
 
     static int m_CurrentXlsRow;       //<! xlsx表格当前行
+    QStringList m_networkDriver; //网络驱动
 };
 
 #endif // DEVICEMANAGER_H
