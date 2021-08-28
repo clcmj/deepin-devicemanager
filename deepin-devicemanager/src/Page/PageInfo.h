@@ -52,12 +52,6 @@ public:
      */
     virtual void updateInfo(const QMap<QString, QString> &map);
 
-
-    /**
-     * @brief clearWidgets clear widgets
-     */
-    virtual void clearWidgets() = 0;
-
     /**
      * @brief setLabel:设置Label
      * @param itemstr:Label信息

@@ -1,9 +1,11 @@
 // 项目自身文件
 #include "WaitingWidget.h"
-#include "MacroDefinition.h"
 
 // Qt库文件
 #include <QHBoxLayout>
+
+// 其它头文件
+#include "MacroDefinition.h"
 
 
 #define SPINNER_WIDTH  32  // 小圈圈的宽度
@@ -53,13 +55,13 @@ WaitingWidget::~WaitingWidget()
 
 void WaitingWidget::start()
 {
-    // 开始转动
-    if (mp_Spinner)
+    if (mp_Spinner) {
         mp_Spinner->start();
+    }
 }
 void WaitingWidget::stop()
 {
-    // 停止转动
-    if (mp_Spinner)
+    if (mp_Spinner) {
         mp_Spinner->stop();
+    }
 }

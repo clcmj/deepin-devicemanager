@@ -128,6 +128,29 @@ void TextBrowser::paintEvent(QPaintEvent *event)
     return DTextBrowser::paintEvent(event);
 }
 
+void TextBrowser::contextMenuEvent(QContextMenuEvent *event)
+{
+//    QMenu *standMenu = new QMenu(this);
+
+//    QString str = QTextEdit::textCursor().selectedText();
+
+//    QAction *copyAction = new QAction(QIcon::fromTheme("edit-copy"), tr("Copy (C)"), this);
+//    if (str.isEmpty()) {
+//        copyAction->setDisabled(true);
+//    } else {
+//        connect(copyAction, &QAction::triggered, this, &TextBrowser::fillClipboard);
+//    }
+//    standMenu->addAction(copyAction);
+//    standMenu->addSeparator();
+
+//    standMenu->addAction(m_pDeviceInfoWidget->refreshAction_);
+//    standMenu->addAction(m_pDeviceInfoWidget->exportAction_);
+
+//    standMenu->exec(event->globalPos());
+
+//    delete standMenu;
+}
+
 void TextBrowser::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_C) {
@@ -179,7 +202,13 @@ void TextBrowser::focusOutEvent(QFocusEvent *e)
 
 void TextBrowser::slotShowMenu(const QPoint &)
 {
-    // 右键菜单
+//    QString str = QTextEdit::textCursor().selectedText();
+//    if (str.isEmpty()) {
+//        mp_Copy->setText(tr("Copy (C)"));
+//    } else {
+//        mp_Copy->setText(tr("Copy Selected Text"));
+//    }
+
     mp_Menu->clear();
     mp_Menu->addAction(mp_Copy);
     mp_Menu->addAction(mp_Refresh);
@@ -223,9 +252,9 @@ void TextBrowser::domTitleInfo(QDomDocument &doc, DeviceBaseInfo *info)
 
         if (!info->enable()) {
             title = "(" + tr("Disable") + ")" + title;
-            h3.setAttribute("style", "text-indent:2px;text-align:left;font-weight:504;padding:10px;color:#FF5736;");
+            h3.setAttribute("style", "text-indent:17px;text-align:left;font-weight:504;padding:10px;color:#FF5736;");
         } else {
-            h3.setAttribute("style", "text-indent:2px;text-align:left;font-weight:504;padding:10px;");
+            h3.setAttribute("style", "text-indent:17px;text-align:left;font-weight:504;padding:10px;");
         }
         QDomText valueText = doc.createTextNode(title);
         h3.appendChild(valueText);
@@ -247,7 +276,7 @@ void TextBrowser::domTableInfo(QDomDocument &doc, const QList<QPair<QString, QSt
         // 该行的第一列
         QDomElement td = doc.createElement("th");
         td.setAttribute("width", "20%");
-        td.setAttribute("style", "text-indent:0px;text-align:left;font-weight:504;");
+        td.setAttribute("style", "text-indent:15px;text-align:left;font-weight:504;");
         QDomText nameText = doc.createTextNode(pair.first + ":");
         td.appendChild(nameText);
         tr.appendChild(td);

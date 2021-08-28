@@ -62,22 +62,24 @@ void DeviceGpu::loadBaseDeviceInfo()
     addBaseDeviceInfo(tr("Graphics Memory"), m_GraphicsMemory);
 }
 
+
 void DeviceGpu::setLshwInfo(const QMap<QString, QString> &mapInfo)
 {
     // 判断是否是同一个gpu
     QRegExp re(":[0-9]{2}:[0-9]{2}");
     int index = mapInfo["bus info"].indexOf(re);
     QString uniqueKey = mapInfo["bus info"].mid(index + 1);
-    if (!uniqueKey.contains(m_UniqueKey))
+    if (!uniqueKey.contains(m_UniqueKey)) {
         return;
+    }
 
     // 设置属性
-    setAttribute(mapInfo, "product", m_Name, false);
+    setAttribute(mapInfo, "product", m_Name);
     setAttribute(mapInfo, "vendor", m_Vendor);
     setAttribute(mapInfo, "", m_Model);
     setAttribute(mapInfo, "version", m_Version);
     setAttribute(mapInfo, "", m_GraphicsMemory);
-    setAttribute(mapInfo, "width", m_Width, false);
+    setAttribute(mapInfo, "width", m_Width);
     setAttribute(mapInfo, "", m_DisplayPort);
     setAttribute(mapInfo, "clock", m_Clock);
     setAttribute(mapInfo, "irq", m_IRQ);
@@ -103,13 +105,11 @@ bool DeviceGpu::setHwinfoInfo(const QMap<QString, QString> &mapInfo)
 {
     // 设置属性
     setAttribute(mapInfo, "Vendor", m_Vendor, false);
-    setAttribute(mapInfo, "Device", m_Name, true);
-    setAttribute(mapInfo, "SubDevice", m_Name, true); //如果subdevice有值则使用subdevice
+    setAttribute(mapInfo, "Model", m_Name, false);
     setAttribute(mapInfo, "Model", m_Model);
     setAttribute(mapInfo, "Revision", m_Version, false);
     setAttribute(mapInfo, "IRQ", m_IRQ, false);
     setAttribute(mapInfo, "Driver", m_Driver, false);
-    setAttribute(mapInfo, "Width", m_Width);
     setAttribute(mapInfo, "", m_GraphicsMemory);
     setAttribute(mapInfo, "", m_DisplayOutput);
     setAttribute(mapInfo, "", m_VGA);
@@ -137,35 +137,31 @@ void DeviceGpu::setXrandrInfo(const QMap<QString, QString> &mapInfo)
     m_MaximumResolution = mapInfo["maxResolution"];
 
     // 设置显卡支持的接口
-    if (mapInfo.find("HDMI") != mapInfo.end())
+    if (mapInfo.find("HDMI") != mapInfo.end()) {
         m_HDMI = mapInfo["HDMI"];
+    }
 
-    if (mapInfo.find("VGA") != mapInfo.end())
+    if (mapInfo.find("VGA") != mapInfo.end()) {
         m_VGA = mapInfo["VGA"];
+    }
 
-    if (mapInfo.find("DP") != mapInfo.end())
+    if (mapInfo.find("DP") != mapInfo.end()) {
         m_DisplayPort = mapInfo["DP"];
+    }
 
-    if (mapInfo.find("eDP") != mapInfo.end())
+    if (mapInfo.find("eDP") != mapInfo.end()) {
         m_eDP = mapInfo["eDP"];
+    }
 
-    if (mapInfo.find("DVI") != mapInfo.end())
+    if (mapInfo.find("DVI") != mapInfo.end()) {
         m_DVI = mapInfo["DVI"];
+    }
 }
 
 void DeviceGpu::setDmesgInfo(const QString &info)
 {
-    // Bug-85049 JJW 显存特殊处理
-    if (info.contains("null")) {
-        QString size = info;
-        m_GraphicsMemory = size.replace("null=", "");
-    }
-
     // 设置显存大小
-    if (info.contains(m_UniqueKey)) {
-        QString size = info;
-        m_GraphicsMemory = size.replace(m_UniqueKey + "=", "");
-    }
+    m_GraphicsMemory = info;
 }
 
 void DeviceGpu::setGpuInfo(const QMap<QString, QString> &mapInfo)
@@ -208,7 +204,7 @@ void DeviceGpu::loadOtherDeviceInfo()
 {
     // 添加其他信息,成员变量
     addOtherDeviceInfo(tr("Physical ID"), m_PhysID);
-    addOtherDeviceInfo(tr("Memory Address"), m_MemAddress);
+    addOtherDeviceInfo(tr("Memory"), m_MemAddress);
     addOtherDeviceInfo(tr("IO Port"), m_IOPort);
     addOtherDeviceInfo(tr("Bus Info"), m_BusInfo);
     addOtherDeviceInfo(tr("Maximum Resolution"), m_MaximumResolution);

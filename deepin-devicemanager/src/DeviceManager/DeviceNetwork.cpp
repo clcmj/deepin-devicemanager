@@ -31,16 +31,13 @@ DeviceNetwork::DeviceNetwork()
     , m_Latency("")
     , m_Multicast("")
 {
-    // 初始化可显示属性
     initFilterKey();
-
-    // 设备可禁用
     m_CanEnable = true;
 }
 
 void DeviceNetwork::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
 {
-    // 设置由lshw获取的信息
+    //
     setAttribute(mapInfo, "description", m_Model);
     setAttribute(mapInfo, "product", m_Name);
     setAttribute(mapInfo, "description", m_Name, false);
@@ -68,15 +65,14 @@ void DeviceNetwork::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "latency", m_Latency);
     setAttribute(mapInfo, "multicast", m_Multicast);
 
-    // 加载其他信息
     getOtherMapInfo(mapInfo);
 }
 
 bool DeviceNetwork::setInfoFromHwinfo(const QMap<QString, QString> &mapInfo)
 {
-    // 设置由hwinfo获取的信息
-    if (mapInfo["Device File"] != m_LogicalName)
+    if (mapInfo["Device File"] != m_LogicalName) {
         return false;
+    }
 
     setAttribute(mapInfo, "Model", m_Name);
     return true;
@@ -99,37 +95,23 @@ QString DeviceNetwork::subTitle()
 
 const QString DeviceNetwork::getOverviewInfo()
 {
-    // 获取概况信息
     return m_Name.isEmpty() ? m_Model : m_Name;
 }
 
 EnableDeviceStatus DeviceNetwork::setEnable(bool e)
 {
-    // 设置网卡禁用启用
     return EnableManager::instance()->enableNetworkByIfconfig(m_LogicalName, e);
 }
 
 bool DeviceNetwork::enable()
 {
-    // 通过ifconfig配置网卡禁用启用
+//    m_Enable = EnableManager::instance()->isDeviceEnableByDriver(m_Driver);
     m_Enable = EnableManager::instance()->isNetworkEnableByIfconfig(m_LogicalName);
     return m_Enable;
 }
 
-void DeviceNetwork::correctCurrentLinkStatus(QString linkStatus)
-{
-    if (m_Link != linkStatus)
-        m_Link = linkStatus;
-}
-
-QString DeviceNetwork::logicalName()
-{
-    return m_LogicalName;
-}
-
 void DeviceNetwork::initFilterKey()
 {
-    // 初始化可显示属性
     addFilterKey(QObject::tr("ioport"));
     addFilterKey(QObject::tr("physical id"));
     addFilterKey(QObject::tr("network"));
@@ -175,14 +157,12 @@ void DeviceNetwork::loadOtherDeviceInfo()
 
 void DeviceNetwork::loadTableData()
 {
-    // 根据是否禁用设置设备名称
     QString name;
-    if (!enable())
+    if (!enable()) {
         name = "(" + tr("Disable") + ") " + m_Name;
-    else
+    } else {
         name = m_Name;
-
-    // 加载表格数据信息
+    }
     m_TableData.append(name);
     m_TableData.append(m_Vendor);
     m_TableData.append(m_Model);

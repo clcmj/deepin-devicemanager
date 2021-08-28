@@ -27,9 +27,6 @@
 #include <QRunnable>
 #include <QFile>
 
-//#define PATH "/home/liujun/device-info/"
-#define PATH "/tmp/device-info/"  // 设备文件存放的目录
-
 /**
  * @brief The ThreadPoolTask class
  */
@@ -57,71 +54,16 @@ private:
     void runCmd(const QString &cmd);
 
     /**
-     * @brief runCmd
-     * @param cmd
-     * @param info
-     */
-    void runCmd(const QString &cmd, QString &info);
-
-    /**
-     * @brief runCmdToCache
-     * @param cmd
-     */
-    void runCmdToCache(const QString &cmd);
-
-    /**
-     * @brief loadSmartCtlInfoToCache
-     * @param info
-     */
-    void loadSmartCtlInfoToCache(const QString &info);
-
-    /**
-     * @brief loadCpuInfo
-     */
-    void loadCpuInfo();
-
-    /**
-     * @brief loadSgSmartCtlInfoToCache
-     * @param info
-     */
-    void loadSgSmartCtlInfoToCache(const QString &info);
-
-    /**
-     * @brief loadLspciVSInfoToCache
-     * @param info
-     */
-    void loadLspciVSInfoToCache(const QString &info);
-
-    /**
-     * @brief loadDisplayWidth
-     * @param info
-     */
-    void loadDisplayWidth(const QString &info);
-
-    /**
-     * @brief getDisplayWidthFromLspci
-     * @param info
-     * @return
-     */
-    int getDisplayWidthFromLspci(const QString &info);
-
-    /**
-     * @brief runCmdToTxt
-     * @param cmd
-     */
-    void runCmdToFile(const QString &cmd);
-
-    /**
-     * @brief loadSmartctlInfoToFile
+     * @brief loadSmartctlFile : smartctl needs handing
      * @param file
      */
-    void loadSmartctlInfoToFile(QFile &file);
+    void loadSmartctlFile(QFile &file);
 
     /**
-     * @brief loadLspciVSInfoToFile
+     * @brief loadLspciVSFile : smartctl needs handing
      * @param file
      */
-    void loadLspciVSInfoToFile(QFile &file);
+    void loadLspciVSFile(QFile &file);
 
 private:
     QString   m_Cmd;                  //<! cmd

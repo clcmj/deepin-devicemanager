@@ -20,19 +20,15 @@
  */
 
 #include "logtreeview.h"
-
 #include <DApplication>
 #include <DApplicationHelper>
 #include <DStyledItemDelegate>
-
 #include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QHeaderView>
 #include <QScrollBar>
-#include <QPainterPath>
-
 #include "MacroDefinition.h"
 #include "TableWidget.h"
 
@@ -46,6 +42,7 @@ LogTreeView::LogTreeView(QWidget *parent)
     , mp_HeaderView(nullptr)
 {
     initUI();
+
 }
 
 void LogTreeView::setHeaderLabels(const QStringList &lst)
@@ -69,9 +66,6 @@ void LogTreeView::setColumnAverage()
     }
     // 设置每一行等宽
     int colCount = mp_HeaderView->count();
-    if (colCount == 0)
-        return;
-
     int avgColWidth = width() / colCount;
     for (int i = 0; i < colCount; i++) {
         setColumnWidth(i, avgColWidth);
@@ -82,9 +76,7 @@ bool LogTreeView::currentRowEnable()
 {
     QModelIndex index = currentIndex();
     int row = index.row();
-    if (row < 0) {
-        return false;
-    }
+    if (row < 0) {return false;}
     QStandardItem *item = mp_Model->item(row, 0);
     if (item) {
         QString str = item->text();
@@ -182,6 +174,8 @@ void LogTreeView::initUI()
 
     setAlternatingRowColors(false);
     setAllColumnsShowFocus(false);
+    //  setFocusPolicy(Qt::TabFocus);
+
 }
 
 void LogTreeView::paintEvent(QPaintEvent *event)
@@ -200,6 +194,7 @@ void LogTreeView::paintEvent(QPaintEvent *event)
         cg = DPalette::Active;
     }
 
+    //    auto style = dynamic_cast<DStyle *>(DApplication::style());
     auto *dAppHelper = DApplicationHelper::instance();
     auto palette = dAppHelper->applicationPalette();
 
@@ -220,13 +215,7 @@ void LogTreeView::paintEvent(QPaintEvent *event)
     painter.restore();
 
     DTreeView::paintEvent(event);
-}
 
-void LogTreeView::showEvent(QShowEvent *event)
-{
-    //在show之前平均分布表头 Bug-73605
-    setColumnAverage();
-    return QTreeView::showEvent(event);
 }
 
 void LogTreeView::drawRow(QPainter *painter, const QStyleOptionViewItem &options, const QModelIndex &index) const
@@ -257,20 +246,17 @@ void LogTreeView::drawRow(QPainter *painter, const QStyleOptionViewItem &options
     }
 
     auto *style = dynamic_cast<DStyle *>(DApplication::style());
-    if (!style)
-        return;
+
     // 圆角以及边距
     auto radius = style->pixelMetric(DStyle::PM_FrameRadius, &options);
     auto margin = style->pixelMetric(DStyle::PM_ContentsMargins, &options);
 
-    // modify background color acorrding to UI designer
-    DApplicationHelper *dAppHelper = DApplicationHelper::instance();
-    DPalette palette = dAppHelper->applicationPalette();
+    auto palette = options.palette;
     QBrush background;
 
     // 隔行变色
     if (!(index.row() & 1)) {
-        background = palette.color(cg, DPalette::ItemBackground);
+        background = palette.color(cg, DPalette::AlternateBase);
     } else {
         background = palette.color(cg, DPalette::Base);
     }
@@ -297,6 +283,7 @@ void LogTreeView::drawRow(QPainter *painter, const QStyleOptionViewItem &options
     painter->restore();
 
     QTreeView::drawRow(painter, options, index);
+
 }
 
 void LogTreeView::keyPressEvent(QKeyEvent *event)

@@ -1,21 +1,22 @@
 // 项目自身文件
 #include "PageMultiInfo.h"
-#include "PageTableHeader.h"
-#include "PageDetail.h"
-#include "MacroDefinition.h"
-#include "DeviceInfo.h"
-
-// Dtk头文件
-#include <DFontSizeManager>
-#include <DMessageBox>
-#include <DMenu>
-#include <DMessageManager>
 
 // Qt库文件
 #include <QVBoxLayout>
 #include <QAction>
 #include <QIcon>
 #include <QDebug>
+
+// Dtk头文件
+#include <DFontSizeManager>
+#include <DMessageBox>
+#include <DMenu>
+
+// 其它头文件
+#include "PageTableHeader.h"
+#include "PageDetail.h"
+#include "MacroDefinition.h"
+#include "DeviceManager/DeviceInfo.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -30,26 +31,22 @@ PageMultiInfo::PageMultiInfo(QWidget *parent)
 
     // 连接槽函数
     connect(mp_Table, &PageTableHeader::itemClicked, this, &PageMultiInfo::slotItemClicked);
-    connect(mp_Table, &PageTableHeader::refreshInfo, this, &PageMultiInfo::refreshInfo);
-    connect(mp_Table, &PageTableHeader::exportInfo, this, &PageMultiInfo::exportInfo);
-    connect(mp_Detail, &PageDetail::refreshInfo, this, &PageMultiInfo::refreshInfo);
-    connect(mp_Detail, &PageDetail::exportInfo, this, &PageMultiInfo::exportInfo);
+    connect(mp_Table, &PageTableHeader::refreshInfo, this, &PageMultiInfo::slotRefreshInfo);
+    connect(mp_Table, &PageTableHeader::exportInfo, this, &PageMultiInfo::slotExportInfo);
+    connect(mp_Detail, &PageDetail::refreshInfo, this, &PageMultiInfo::slotRefreshInfo);
+    connect(mp_Detail, &PageDetail::exportInfo, this, &PageMultiInfo::slotExportInfo);
     connect(mp_Table, &PageTableHeader::enableDevice, this, &PageMultiInfo::slotEnableDevice);
-    emit refreshInfo();
 }
 
 PageMultiInfo::~PageMultiInfo()
 {
     // 清空指针
-    DELETE_PTR(mp_Table)
-    DELETE_PTR(mp_Detail)
+    DELETE_PTR(mp_Table);
+    DELETE_PTR(mp_Detail);
 }
 
 void PageMultiInfo::updateInfo(const QList<DeviceBaseInfo *> &lst)
 {
-    if (lst.size() < 1)
-        return;
-
     //  获取多个设备界面表格信息
     QList<QStringList> deviceList;
     deviceList.append(lst[0]->getTableHeader());
@@ -79,22 +76,30 @@ void PageMultiInfo::setLabel(const QString &itemstr)
     }
 }
 
-void PageMultiInfo::clearWidgets()
-{
-    mp_Detail->clearWidget();
-}
-
 void PageMultiInfo::slotItemClicked(int row)
 {
     // 显示表格中选择设备的详细信息
-    if (mp_Detail)
+    if (mp_Detail) {
         mp_Detail->showInfoOfNum(row);
+    }
+}
+
+void PageMultiInfo::slotRefreshInfo()
+{
+    // 刷新
+    emit refreshInfo();
+}
+void PageMultiInfo::slotExportInfo()
+{
+    // 导出
+    emit exportInfo();
 }
 
 void PageMultiInfo::slotEnableDevice(int row, bool enable)
 {
-    if (!mp_Detail)
+    if (!mp_Detail) {
         return;
+    }
 
     // 禁用/启用设备
     EnableDeviceStatus res = mp_Detail->enableDevice(row, enable);
@@ -106,16 +111,14 @@ void PageMultiInfo::slotEnableDevice(int row, bool enable)
     } else {
         // 设置失败
         QString con;
-        if (enable)
+        if (enable) {
             // 无法启用设备
             con = tr("Failed to enable the device");
-        else
+        } else {
             // 无法禁用设备
             con = tr("Failed to disable the device");
-
-        // 禁用、启用失败提示
-        DMessageManager::instance()->sendMessage(this->window(), QIcon::fromTheme("warning"), con);
-
+        }
+        DMessageBox::information(this, tr(""), con, DMessageBox::StandardButton::Ok);
     }
 }
 

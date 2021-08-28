@@ -1,17 +1,17 @@
 // 项目自身文件
 #include "PageInfo.h"
-#include "MacroDefinition.h"
-
-// Dtk头文件
-#include <DApplicationHelper>
-#include <DApplication>
 
 // Qt库文件
 #include <QPainter>
 #include <QStyleOptionFrame>
 #include <QDebug>
-#include <QPainterPath>
 
+// Dtk头文件
+#include <DApplicationHelper>
+#include <DApplication>
+
+// 其它头文件
+#include "MacroDefinition.h"
 
 DWIDGET_USE_NAMESPACE
 PageInfo::PageInfo(QWidget *parent)
@@ -21,12 +21,12 @@ PageInfo::PageInfo(QWidget *parent)
 
 }
 
-void PageInfo::updateInfo(const QMap<QString, QString> &)
+void PageInfo::updateInfo(const QMap<QString, QString> &map)
 {
 
 }
 
-void PageInfo::setLabel(const QString &, const QString &)
+void PageInfo::setLabel(const QString &str1, const QString &str2)
 {
 
 }
@@ -62,15 +62,20 @@ void PageInfo::paintEvent(QPaintEvent *e)
     DPalette palette = dAppHelper->applicationPalette();
 
     // 获取系统默认的圆角半径
+//    QStyleOptionFrame option;
+//    initStyleOption(&option);
+//    DStyle *style = dynamic_cast<DStyle *>(DApplication::style());
+//    int radius = style->pixelMetric(DStyle::PM_FrameRadius, &option);
     int radius = 8;
 
     // 获取窗口当前的状态,激活，禁用，未激活
     DPalette::ColorGroup cg;
     DWidget *wid = DApplication::activeWindow();
-    if (wid /* && wid == this*/)
+    if (wid/* && wid == this*/) {
         cg = DPalette::Active;
-    else
+    } else {
         cg = DPalette::Inactive;
+    }
 
     // 开始绘制边框 *********************************************************
     // 计算绘制区域

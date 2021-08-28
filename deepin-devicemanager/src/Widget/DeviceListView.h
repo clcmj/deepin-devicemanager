@@ -70,6 +70,12 @@ public:
     void addItem(const QString &name, const QString &iconFile);
 
     /**
+     * @brief:判断当前是否启用
+     * @return : 返回是否启用
+     */
+    bool curItemEnable();
+
+    /**
      * @brief:设置当前是否启用
      * @param[enable] : 是否启用
      */
@@ -99,12 +105,6 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
     void mouseMoveEvent(QMouseEvent *event) override;
-
-    /**
-     * @brief keyPressEvent:相应键盘按键事件
-     * @param keyEvent:按键：上，下键
-     */
-    void keyPressEvent(QKeyEvent *keyEvent) override;
 
 private:
     QStandardItemModel        *mp_ItemModel;                   // Model View 模式里面的 Model

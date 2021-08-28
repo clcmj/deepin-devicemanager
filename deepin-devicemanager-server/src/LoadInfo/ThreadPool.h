@@ -58,34 +58,19 @@ public:
     /**
      * @brief generateDeviceFile : load device info
      */
-    void loadDeviceInfo();
+    void generateDeviceFile();
 
     /**
-     * @brief updateDeviceFile
+     * @brief generateMonitor : generator xrandr hwinfo --monitor
      */
-    void updateDeviceInfo();
+    void generateMonitor();
 
 private:
-    /**
-     * @brief runHwinfoCmd run hwinfo command
-     */
-    void runHwinfoCmd();
-
-    /**
-     * @brief runCmdToCache
-     * @param cmd
-     */
-    void runCmdToCache(const Cmd &cmd);
-
-    /**
-     * @brief initCmd init all cmd
-     */
     void initCmd();
 
 private:
     QList<Cmd>        m_ListCmd;             // all cmd
-    QList<Cmd>        m_ListUpdate;          // update cmd
-    QList<Cmd>        m_ListHwinfo;          // hwinfo cmd
+    QList<Cmd>        m_ListCmdMonitor;      // monitor cmd
 };
 
 #endif // THREADPOOL_H

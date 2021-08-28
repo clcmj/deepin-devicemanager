@@ -33,15 +33,13 @@
 #include "environments.h"
 #include "DebugTimeManager.h"
 #include "application.h"
+#include "zmq.h"
+#include "zhelpers.h"
 
 DWIDGET_USE_NAMESPACE
 
 int main(int argc, char *argv[])
 {
-    if (!QString(qgetenv("XDG_CURRENT_DESKTOP")).toLower().startsWith("deepin")) {
-        setenv("XDG_CURRENT_DESKTOP", "Deepin", 1);
-    }
-
     PERF_PRINT_BEGIN("POINT-01", "");
 
     QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
@@ -76,7 +74,7 @@ int main(int argc, char *argv[])
 
         QIcon appIcon = QIcon::fromTheme("deepin-devicemanager");
 
-        if (false == appIcon.isNull()) {
+        if (appIcon.isNull() == false) {
             app.setProductIcon(appIcon);
             app.setWindowIcon(appIcon);
             w.titlebar()->setIcon(appIcon);

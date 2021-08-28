@@ -33,13 +33,11 @@ DevicePower::DevicePower()
     , m_Temp("")
 
 {
-    // 初始化可显示属性
     initFilterKey();
 }
 
 bool DevicePower::setInfoFromUpower(const QMap<QString, QString> &mapInfo)
 {
-    // 设置upower中获取的信息
     if (mapInfo["Device"].contains("line_power", Qt::CaseInsensitive)) {
         return false;
     }
@@ -66,15 +64,11 @@ bool DevicePower::setInfoFromUpower(const QMap<QString, QString> &mapInfo)
 
     // 添加电池温度
     setAttribute(mapInfo, "temperature", m_Temp);
-    /*
-     * 温度底层的获取方式是/sys/class/power_supply/BAT0下面的temp文件
-     * 以前向temp文件写温度时如果是28度 会写2.8(需要做*10的处理)  但是现在会直接写28
-     * 处理方法：取消*10的操作
-     * if (!m_Temp.isEmpty()) {
+    if (!m_Temp.isEmpty()) {
         double temp = m_Temp.replace("degrees C", "").trimmed().toDouble();
         temp = temp * 10;
         m_Temp = QString("%1 degrees C").arg(temp);
-    }*/
+    }
 
     getOtherMapInfo(mapInfo);
     return true;
@@ -82,7 +76,6 @@ bool DevicePower::setInfoFromUpower(const QMap<QString, QString> &mapInfo)
 
 void DevicePower::setDaemonInfo(const QMap<QString, QString> &mapInfo)
 {
-    // 设置守护进程信息
     if (m_Name == QObject::tr("battery"))
         getOtherMapInfo(mapInfo);
 }
@@ -104,14 +97,12 @@ QString DevicePower::subTitle()
 
 const QString DevicePower::getOverviewInfo()
 {
-    // 获取概况信息
     QString value = DApplication::translate("ManulTrack", m_Name.trimmed().toStdString().data(), "");
     return value;
 }
 
 void DevicePower::initFilterKey()
 {
-    // 初始化可显示属性
     addFilterKey(QObject::tr("native-path"));
     addFilterKey(QObject::tr("power supply"));
     addFilterKey(QObject::tr("updated"));
@@ -156,7 +147,7 @@ void DevicePower::loadBaseDeviceInfo()
     addBaseDeviceInfo(tr("SBDS Serial Number"), m_SBDSSerialNumber);
     addBaseDeviceInfo(tr("SBDS Manufacture Date"), m_SBDSManufactureDate);
     addBaseDeviceInfo(tr("SBDS Chemistry"), m_SBDSChemistry);
-    addBaseDeviceInfo(tr("Temperature"), m_Temp);
+    addBaseDeviceInfo(tr("Temprature"), m_Temp);
 }
 
 void DevicePower::loadOtherDeviceInfo()
@@ -167,7 +158,6 @@ void DevicePower::loadOtherDeviceInfo()
 
 void DevicePower::loadTableData()
 {
-    // 加载表格信息
     m_TableData.append(m_Name);
     m_TableData.append(m_Vendor);
     m_TableData.append(m_Model);

@@ -143,12 +143,6 @@ public:
      */
     void setCurDeviceState(bool state);
 
-    /**
-     * @brief isExpanded 判断是否展开
-     * @return 是否展开
-     */
-    bool isExpanded();
-
 public slots:
     /**
      * @brief expandCommandLinkClicked:展开button点击槽函数
@@ -186,25 +180,9 @@ protected:
     void leaveEvent(QEvent *event)override;
 
 private slots:
-    /**
-     * @brief slotTimeOut
-     */
     void slotTimeOut();
-
-    /**
-     * @brief slotItemEnterd
-     * @param item
-     */
     void slotItemEnterd(QTableWidgetItem *item);
-
-    /**
-     * @brief slotEnterBtnWidget
-     */
     void slotEnterBtnWidget();
-
-    /**
-     * @brief slotLeaveBtnWidget
-     */
     void slotLeaveBtnWidget();
 
 private:
@@ -213,11 +191,6 @@ private:
      * @param txt
      */
     void showTips(QTableWidgetItem *item);
-
-    /**
-     * @brief initBtnWidget
-     */
-    void initBtnWidget();
 
 private:
     DetailViewDelegate        *mp_ItemDelegate;   // Item自定义代理

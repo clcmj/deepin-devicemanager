@@ -24,7 +24,6 @@
 #define DETAILWIDGET_H
 
 #include <QObject>
-#include <QHBoxLayout>
 #include <DWidget>
 #include <DSplitter>
 
@@ -60,9 +59,10 @@ public:
 
     /**
      * @brief updateOverview:更新概况界面
+     * @param itemStr:概况
      * @param map:概况信息map
      */
-    void updateOverview(const QMap<QString, QString> &map);
+    void updateOverview(const QString &itemStr, const QMap<QString, QString> &map);
 
     /**
      * @brief currentIndex:当前设备类型
@@ -96,6 +96,16 @@ private slots:
     void slotListViewWidgetItemClicked(const QString &itemStr);
 
     /**
+     * @brief slotRefreshInfo:刷新信息槽函数
+     */
+    void slotRefreshInfo();
+
+    /**
+     * @brief slotExportInfo:导出信息槽函数
+     */
+    void slotExportInfo();
+
+    /**
      * @brief slotUpdateUI:更新UI界面
      */
     void slotUpdateUI();
@@ -114,7 +124,6 @@ private:
     PageListView              *mp_ListView;          //<! 左边的list
     PageInfoWidget            *mp_PageInfo;          //<! 右边的详细内容
     QString                   m_CurItemStr;          //<! 当前Item内容
-    QHBoxLayout               *m_Layout;             //<! layout
 };
 
 #endif // DETAILWIDGET_H

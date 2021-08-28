@@ -1,13 +1,5 @@
 // 项目自身文件
 #include "PageTableWidget.h"
-#include "DetailTreeView.h"
-#include "PageInfo.h"
-#include "RichTextDelegate.h"
-
-// Dtk头文件
-#include <DApplicationHelper>
-#include <DPalette>
-#include <DApplication>
 
 // Qt库文件
 #include <QHBoxLayout>
@@ -15,6 +7,16 @@
 #include <QPainter>
 #include <QDebug>
 #include <QHeaderView>
+
+// Dtk头文件
+#include <DApplicationHelper>
+#include <DPalette>
+#include <DApplication>
+
+// 其它头文件
+#include "DetailTreeView.h"
+#include "PageInfo.h"
+#include "RichTextDelegate.h"
 
 PageTableWidget::PageTableWidget(DWidget *parent)
     : DWidget(parent)
@@ -95,15 +97,9 @@ void PageTableWidget::setCurDeviceState(bool state)
 void PageTableWidget::expandTable()
 {
     // 表格展开
-    if (mp_Table)
+    if (mp_Table) {
         mp_Table->expandCommandLinkClicked();
-}
-
-bool PageTableWidget::isExpanded()
-{
-    if (mp_Table)
-        return mp_Table->isExpanded();
-    return false;
+    }
 }
 
 void PageTableWidget::setDeviceEnable(bool e)
@@ -121,10 +117,6 @@ void PageTableWidget::initUI()
 {
     // 初始化页面布局
     QVBoxLayout *whLayout = new QVBoxLayout();
-
-    // set Contents margin 0,bug66137
-    whLayout->setContentsMargins(0, 0, 0, 0);
     whLayout->addWidget(mp_Table);
-    whLayout->addStretch();
     this->setLayout(whLayout);
 }

@@ -13,7 +13,6 @@
 #include <QPainter>
 #include <QDebug>
 #include <QHBoxLayout>
-#include <QPainterPath>
 
 // 其它头文件
 #include "MacroDefinition.h"
@@ -25,7 +24,6 @@
 TableWidget::TableWidget(QWidget *parent)
     : DWidget(parent)
     , mp_Table(new LogTreeView(this))
-    , m_HLayout(nullptr)
     , mp_Enable(new QAction(tr("Disable"), this))
     , mp_Refresh(new QAction(/*QIcon::fromTheme("view-refresh"), */tr("Refresh"), this))
     , mp_Export(new QAction(/*QIcon::fromTheme("document-new"), */tr("Export"), this))
@@ -38,45 +36,11 @@ TableWidget::TableWidget(QWidget *parent)
     // 连接信号和曹函数
     connect(mp_Table, &LogTreeView::clicked, this, &TableWidget::slotItemClicked);
     setContextMenuPolicy(Qt::CustomContextMenu);
-
     connect(this, SIGNAL(customContextMenuRequested(const QPoint &)),
             this, SLOT(slotShowMenu(const QPoint &)));
     connect(mp_Refresh, &QAction::triggered, this, &TableWidget::slotActionRefresh);
     connect(mp_Export, &QAction::triggered, this, &TableWidget::slotActionExport);
     connect(mp_Enable, &QAction::triggered, this, &TableWidget::slotActionEnable);
-}
-
-TableWidget::~TableWidget()
-{
-    if (mp_Table) {
-        delete mp_Table;
-        mp_Table = nullptr;
-    }
-
-    if (m_HLayout) {
-        delete m_HLayout;
-        m_HLayout = nullptr;
-    }
-
-    if (mp_Enable) {
-        delete mp_Enable;
-        mp_Enable = nullptr;
-    }
-
-    if (mp_Refresh) {
-        delete mp_Refresh;
-        mp_Refresh = nullptr;
-    }
-
-    if (mp_Export) {
-        delete mp_Export;
-        mp_Export = nullptr;
-    }
-
-    if (mp_Menu) {
-        delete mp_Menu;
-        mp_Menu = nullptr;
-    }
 }
 
 void TableWidget::setHeaderLabels(const QStringList &lst)
@@ -89,7 +53,6 @@ void TableWidget::setHeaderLabels(const QStringList &lst)
             m_Enable = lst[i] == "yes" ? true : false;
         }
     }
-
     if (mp_Table) {
         mp_Table->setHeaderLabels(headers);
     }
@@ -167,7 +130,7 @@ void TableWidget::paintEvent(QPaintEvent *e)
 
     paintPath = paintPathOut.subtracted(paintPathIn);
 
-    QBrush bgBrush(palette.color(cg, DPalette::FrameBorder));
+    QBrush bgBrush(palette.color(cg, DPalette::FrameShadowBorder));
     painter.fillPath(paintPath, bgBrush);
 
     painter.restore();
@@ -176,20 +139,16 @@ void TableWidget::paintEvent(QPaintEvent *e)
 
 void TableWidget::slotShowMenu(const QPoint &)
 {
-    // right-click menu
     mp_Menu->clear();
     QModelIndex index = mp_Table->currentIndex();
-
     if (m_Enable && index.row() >= 0) {
         if (mp_Table->currentRowEnable()) {
             mp_Enable->setText(tr("Disable"));
         } else {
             mp_Enable->setText(tr("Enable"));
         }
-
         mp_Menu->addAction(mp_Enable);
     }
-
     mp_Menu->addAction(mp_Refresh);
     mp_Menu->addAction(mp_Export);
     mp_Menu->exec(QCursor::pos());
@@ -210,19 +169,15 @@ void TableWidget::slotActionEnable()
     if (!mp_Table) {
         return;
     }
-
-    // enble device
     if (mp_Enable->text() == tr("Enable")) {
         emit enableDevice(mp_Table->currentRow(), true);
     } else {
-        // unenable device
         emit enableDevice(mp_Table->currentRow(), false);
     }
 }
 
 void TableWidget::slotItemClicked(const QModelIndex &index)
 {
-    // click table item
     int row = index.row();
     if (row >= 0) {
         emit itemClicked(row);
@@ -231,10 +186,9 @@ void TableWidget::slotItemClicked(const QModelIndex &index)
 
 void TableWidget::initWidget()
 {
-    // init widget layout
-    m_HLayout = new QHBoxLayout(this);
+    QHBoxLayout *hLayout = new QHBoxLayout();
     int margin = 2;
-    m_HLayout->setContentsMargins(margin, margin, margin, margin);
-    m_HLayout->addWidget(mp_Table);
-    setLayout(m_HLayout);
+    hLayout->setContentsMargins(margin, margin, margin, margin);
+    hLayout->addWidget(mp_Table);
+    setLayout(hLayout);
 }

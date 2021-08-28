@@ -6,7 +6,6 @@
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QDebug>
-#include <QPainterPath>
 
 // Dtk头文件
 #include <DFontSizeManager>
@@ -21,7 +20,13 @@ CmdButtonWidget::CmdButtonWidget(DetailTreeView *parent)
     initUI();
 
     // 连接槽函数
-    connect(mp_cmdButton, &DCommandLinkButton::clicked, this, &CmdButtonWidget::cmdButtonClicked);
+    connect(mp_cmdButton, &DCommandLinkButton::clicked, this, &CmdButtonWidget::expandCommandLinkClicked);
+}
+
+void CmdButtonWidget::expandCommandLinkClicked()
+{
+    // Button点击信号发送
+    emit cmdButtonClicked();
 }
 
 void CmdButtonWidget::paintEvent(QPaintEvent *event)

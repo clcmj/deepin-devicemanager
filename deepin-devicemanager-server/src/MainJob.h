@@ -3,18 +3,10 @@
 
 #include <QObject>
 #include <QMutex>
-#include <QTimer>
 
 class ThreadPool;
+class RRServer;
 class DetectThread;
-class DBusInterface;
-
-enum INSTRUCTION_RES {
-    IR_NULL = 0,
-    IR_FAILED = 1,
-    IR_SUCCESS = 2,
-    IR_UPDATE = 3
-};
 
 class MainJob : public QObject
 {
@@ -29,19 +21,7 @@ public:
      * @brief executeClientInstruction
      * @param instructions
      */
-    INSTRUCTION_RES executeClientInstruction(const QString &instructions);
-
-    /**
-     * @brief isZhaoXin
-     * @return
-     */
-    bool isZhaoXin();
-
-    /**
-     * @brief isServerRunning
-     * @return server running
-     */
-    bool isServerRunning();
+    void executeClientInstruction(const QString &instructions);
 
 private slots:
     /**
@@ -50,11 +30,17 @@ private slots:
     void slotUsbChanged();
 
     /**
-     * @brief onFirstUpdate
+     * @brief slotExecuteClientInstructions
+     * @param instructions
      */
-    void onFirstUpdate();
-
+    void slotExecuteClientInstructions(const QString &instructions);
 private:
+
+    /**
+     * @brief handleInstruction : 处理命令的方法
+     * @param instruction : 需要处理的命令
+     */
+    void handleInstruction(const QString &instruction);
 
     /**
      * @brief updateAllDevice
@@ -62,32 +48,40 @@ private:
     void updateAllDevice();
 
     /**
+     * @brief updateDevice : 更新设备
+     */
+    void updateMonitor();
+
+    /**
+     * @brief nullInstruction
+     */
+    void nullInstruction();
+
+    /**
      * @brief driverInstruction
      * @param instruction
      */
-    INSTRUCTION_RES driverInstruction(const QString &instruction);
+    void driverInstruction(const QString &instruction);
 
     /**
      * @brief ifconfigInstruction
      * @param instruction
      */
-    INSTRUCTION_RES ifconfigInstruction(const QString &instruction);
+    void ifconfigInstruction(const QString &instruction);
 
     /**
-     * @brief initDBus : 初始化dbus
-     * @return : 返回bool
+     * @brief getDriverPath
+     * @param driver
+     * @return
      */
-    bool initDBus();
+    QString getDriverPath(const QString &driver);
 
 private:
-    ThreadPool            *mp_Pool;               //<! 生成文件的线程池
-    DetectThread          *mp_DetectThread;       //<! 检测usb的线程
-    QTimer                *mp_Timer;              //<! 定时器
-    DBusInterface         *mp_IFace;              //<! Dbus interface
-    bool                  m_ClientIsUpdating;     //<! 前台正在更新中
-    bool                  m_ServerIsUpdating;     //<! 后台正在更新中
-    bool                  m_FirstUpdate;          //<! 是否是第一次更新
-
+    ThreadPool   *mp_Pool;               //<! 生成文件的线程池
+    RRServer     *mp_ZmqServer;          //<! 监听后台的服务端
+    DetectThread *mp_DetectThread;       //<! 检测usb的线程
+    qint64       m_UpdateTime;           //<! 更新时间
+    bool         m_Delay;                //<! 延迟时间
 };
 
 #endif // MAINJOB_H

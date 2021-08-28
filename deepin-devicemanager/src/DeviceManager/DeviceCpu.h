@@ -41,7 +41,8 @@ public:
      * @param mapDmidecode:由dmidecode -t 4获取的信息的map
      * @param catInfo:由cat /proc/cpuinfo获取的信息
      */
-    void setCpuInfo(const QMap<QString, QString> &mapLscpu, const QMap<QString, QString> &mapLshw, const QMap<QString, QString> &mapDmidecode, int coreNum, int logicalNum);
+    void setCpuInfo(const QMap<QString, QString> &mapLscpu, const QMap<QString, QString> &mapLshw, const QMap<QString, QString> &mapDmidecode, const QMap<QString, QString> &catInfo);
+
     /**
      * @brief vendor:获取制造商属性值
      * @return QString:制造商属性值
@@ -73,18 +74,6 @@ public:
      * @return 概况信息
      */
     const QString getOverviewInfo() override;
-
-    /**
-     * @brief setInfoFromLscpu:设置由lscpu获取的CPU信息
-     * @param mapInfo:由lscpu获取的CPU信息map
-     */
-    void setInfoFromLscpu(const QMap<QString, QString> &mapInfo);
-
-    /**
-     * @brief setCurFreq
-     * @param curFreq
-     */
-    void setCurFreq(const QString &curFreq);
 
 protected:
 
@@ -118,6 +107,12 @@ protected:
 private:
 
     /**
+     * @brief setInfoFromLscpu:设置由lscpu获取的CPU信息
+     * @param mapInfo:由lscpu获取的CPU信息map
+     */
+    void setInfoFromLscpu(const QMap<QString, QString> &mapInfo);
+
+    /**
      * @brief setInfoFromLshw:设置由lshw获取的CPU信息
      * @param mapInfo:由lshw获取的CPU信息map
      */
@@ -130,10 +125,10 @@ private:
     void setInfoFromDmidecode(const QMap<QString, QString> &mapInfo);
 
     /**
-     * @brief setRefreshInfoFromLscpu:刷新时重新获取cpu信息
-     * @param mapInfo:由lscpu获取的信息
+     * @brief setInfoFromCatCpuinfo:设置由cat /proc/cpuinfo获取的信息
+     * @param mapInfo:由cat /proc/cpuinfo获取的信息map
      */
-    void setRefreshInfoFromLscpu(const QMap<QString, QString> &mapInfo);
+    void setInfoFromCatCpuinfo(const QMap<QString, QString> &mapInfo);
 
 private:
     QString           m_Vendor;             //<! 制造商
@@ -157,8 +152,8 @@ private:
     QString           m_HardwareVirtual;    //<! 硬件虚拟化
 
     // 这个是cpu的逻辑处理器个数，而不是core的逻辑处理器个数
-    int               m_LogicalCPUNum;      //<! 逻辑处理器个数
-    int               m_CPUCoreNum;         //<! cpu核数
+    QString           m_LogicalCPUNum;      //<! 逻辑处理器个数
+    QString           m_CPUCoreNum;         //<! cpu核数
     QString           m_Driver;
     bool              m_FrequencyIsRange;   //<! 频率显示的是范围还是最大值
 

@@ -10,7 +10,6 @@
 #include <QPainter>
 #include <QDebug>
 #include <QKeyEvent>
-#include <QPainterPath>
 
 // 其它头文件
 #include "MacroDefinition.h"
@@ -112,7 +111,18 @@ void DeviceListView::addItem(const QString &name, const QString &iconFile)
         item->setToolTip(name);
     item->setIcon(QIcon::fromTheme(lst[0]));
     setIconSize(QSize(20, 20));
+    QIcon icon = QIcon::fromTheme(lst[0]);
     mp_ItemModel->appendRow(item);
+}
+
+bool DeviceListView::curItemEnable()
+{
+    const QModelIndex &index =  this->currentIndex();
+    int rowNum = index.row();
+    QStandardItem *item = mp_ItemModel->item(rowNum);
+    if (!item)
+        return false;
+    return item->isEnabled();
 }
 
 void DeviceListView::setCurItemEnable(bool enable)
@@ -180,36 +190,4 @@ void DeviceListView::mouseMoveEvent(QMouseEvent *event)
     } else {
         DListView::mouseMoveEvent(event);
     }
-}
-
-void DeviceListView::keyPressEvent(QKeyEvent *keyEvent)
-{
-    DListView::keyPressEvent(keyEvent);
-
-    // 当前Item 为Separator时，需要跳过Separator
-    if (this->currentIndex().data(Qt::DisplayRole) == "Separator") {
-        // 按键：下一个
-        if (keyEvent->key() == Qt::Key_Down) {
-            int curRow = this->currentIndex().row();
-
-            // 当前 Separator 不是最后一个Item，显示下一个Item
-            if (curRow != mp_ItemModel->rowCount() - 1) {
-                QModelIndex index = this->currentIndex().siblingAtRow(curRow + 1);
-                this->setCurrentIndex(index);
-            }
-        }
-
-        // 按键：上一个
-        if (keyEvent->key() == Qt::Key_Up) {
-            int curRow = this->currentIndex().row();
-            // 当前 Separator 不是第一个Item，显示上一个Item
-            if (curRow != 0) {
-                QModelIndex index = this->currentIndex().siblingAtRow(curRow - 1);
-                this->setCurrentIndex(index);
-            }
-        }
-    }
-
-    // 切换对应设备信息页面
-    emit clicked(this->currentIndex());
 }

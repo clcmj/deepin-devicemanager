@@ -73,6 +73,7 @@ public slots:
 
 protected:
     virtual void paintEvent(QPaintEvent *event)override;
+    virtual void contextMenuEvent(QContextMenuEvent *event) override;
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void focusInEvent(QFocusEvent *e) override;
     virtual void focusOutEvent(QFocusEvent *e) override;
@@ -84,24 +85,9 @@ signals:
     void copyAllInfo();
 
 private slots:
-    /**
-     * @brief slotShowMenu:右键菜单
-     */
     void slotShowMenu(const QPoint &);
-
-    /**
-     * @brief slotActionRefresh:刷新
-     */
     void slotActionRefresh();
-
-    /**
-     * @brief slotActionExport: 导出
-     */
     void slotActionExport();
-
-    /**
-     * @brief slotActionCopy:复制
-     */
     void slotActionCopy();
 
 private:

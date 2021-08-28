@@ -117,11 +117,6 @@ public:
      */
     EnableDeviceStatus enableDevice(int row, bool enable);
 
-    /**
-     * @brief clearWidget : 清楚widget
-     */
-    void clearWidget();
-
 protected:
     void paintEvent(QPaintEvent *e) override;
 
@@ -133,6 +128,11 @@ private:
      * @param widget ：需要添加的widget
      */
     void addWidgets(TextBrowser *widget, bool enable);
+
+    /**
+     * @brief clearWidget : 清楚widget
+     */
+    void clearWidget();
 
 signals:
     /**
@@ -152,6 +152,15 @@ private slots:
      */
     void slotBtnClicked();
 
+    /**
+     * @brief slotRefreshInfo:右键菜单刷新槽函数
+     */
+    void slotRefreshInfo();
+
+    /**
+     * @brief slotExportInfo:右键菜单导出槽函数
+     */
+    void slotExportInfo();
     void slotCopyAllInfo();
 
 private:

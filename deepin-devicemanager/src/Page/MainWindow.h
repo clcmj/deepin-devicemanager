@@ -23,12 +23,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "DBusInterface.h"
+#include <QObject>
 
 #include <DMainWindow>
 #include <DStackedWidget>
-
-#include <QObject>
 
 class WaitingWidget;
 class DeviceWidget;
@@ -132,7 +130,7 @@ private slots:
      * @brief loadingFinishSlot:加载设备信息结束 槽
      * @param message:提示信息
      */
-    void slotLoadingFinish(const QString &message);
+    void loadingFinishSlot(const QString &message);
 
     /**
      * @brief slotListItemClicked:ListView item点击槽函数
@@ -153,7 +151,7 @@ private slots:
     /**
      * @brief changeUI:UI界面变化,BIOS界面行高
      */
-    void slotChangeUI();
+    void changeUI();
 
 signals:
     /**
@@ -164,9 +162,9 @@ signals:
 private:
     /**@brief:主窗口的stackWidget，主要有两个widget，一个是等待界面，还有一个是信息显示界面*/
     DStackedWidget        *mp_MainStackWidget;
-    WaitingWidget *mp_WaitingWidget; //加载界面
-    DeviceWidget *mp_DeviceWidget; //设备显示界面
-    LoadInfoThread *mp_WorkingThread; //信息加载线程
+    WaitingWidget         *mp_WaitingWidget;
+    DeviceWidget          *mp_DeviceWidget;
+    LoadInfoThread        *mp_WorkingThread;
     bool                  m_refreshing = false;                  // 判断界面是否正在刷新
     bool                  m_IsFirstRefresh = true;
 };
