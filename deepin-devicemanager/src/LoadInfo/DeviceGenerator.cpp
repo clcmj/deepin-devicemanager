@@ -23,6 +23,7 @@
 #include "../DeviceManager/DeviceCdrom.h"
 #include "../DeviceManager/DevicePrint.h"
 #include "../DeviceManager/DeviceInput.h"
+#include "../LoadInfo/ParserLscpu.h"
 
 
 DeviceGenerator::DeviceGenerator(QObject *parent)
@@ -91,24 +92,16 @@ void DeviceGenerator::generatorComputerDevice()
 
 void DeviceGenerator::generatorCpuDevice()
 {
-    const QList<QMap<QString, QString> >  &lstCatCpu = DeviceManager::instance()->cmdInfo("cat_cpuinfo");
-    if (lstCatCpu.size() == 0) {
-        return;
-    }
+    ParserLscpu lscpu;
+    QList<QMap<QString,QString>> logicalCpu;
+    QList<QList<QString>> lstOV;
 
-    const QList<QMap<QString, QString> >  &lsCpu = DeviceManager::instance()->cmdInfo("lscpu");
-    const QMap<QString, QString> &lscpu = lsCpu.size() > 0 ? lsCpu[0] : QMap<QString, QString>();
-
-    const QList<QMap<QString, QString> >  &lshwCpu = DeviceManager::instance()->cmdInfo("lshw_cpu");
-    const QMap<QString, QString> &lshw = lshwCpu.size() > 0 ? lshwCpu[0] : QMap<QString, QString>();
-
-    const QList<QMap<QString, QString> >  &dmidecode4 = DeviceManager::instance()->cmdInfo("dmidecode4");
-    const QMap<QString, QString> &dmidecode = dmidecode4.size() > 1 ? dmidecode4[1] : QMap<QString, QString>();
-
-    QList<QMap<QString, QString> >::const_iterator it = lstCatCpu.begin();
-    for (; it != lstCatCpu.end(); ++it) {
+    lscpu.loadLscpuInfo(logicalCpu,lstOV);
+    QList<QMap<QString, QString> >::const_iterator it = logicalCpu.begin();
+    for (; it != logicalCpu.end(); ++it) {
         DeviceCpu *device = new DeviceCpu;
-        device->setCpuInfo(lscpu, lshw, dmidecode, *it);
+        device->setLscpu(*it);
+        device->setOverview(lstOV);
         DeviceManager::instance()->addCpuDevice(device);
     }
 }

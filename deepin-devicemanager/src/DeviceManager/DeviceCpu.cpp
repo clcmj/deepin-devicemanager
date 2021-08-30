@@ -27,6 +27,7 @@ DeviceCpu::DeviceCpu()
     , m_LogicalCPUNum("")
     , m_CPUCoreNum("")
     , m_Driver("")
+    , m_Overview("")
     , m_FrequencyIsRange(false)
 {
     initFilterKey();
@@ -70,6 +71,34 @@ void DeviceCpu::setCpuInfo(const QMap<QString, QString> &mapLscpu, const QMap<QS
     m_Name.replace(QRegExp("x [0-9]*$"), "");
 }
 
+void DeviceCpu::setLscpu(const QMap<QString, QString> &mapLscpu)
+{
+    setInfoFromLscpu(mapLscpu);
+}
+
+void DeviceCpu::setOverview(const QList<QList<QString>>& lstOV)
+{
+    // 获取阿拉伯数字的英文翻译
+    getTrNumber();
+    QList<QList<QString>>::const_iterator it = lstOV.begin();
+    for (; it != lstOV.end(); ++it) {
+        if((*it).size() != 3)
+            continue;
+        QString ov = QString("%1 (%2%3 / %4%5)") \
+                     .arg(it->at(2)) \
+                     .arg(m_trNumber[it->at(0).toInt()]) \
+                     .arg(tr("Core(s)")) \
+                     .arg(m_trNumber[it->at(1).toInt()]) \
+                     .arg(tr("Processor"));
+        m_Overview += ov;
+        if(it != lstOV.end()-1){
+            m_Overview += " / ";
+        }
+    }
+
+
+}
+
 const QString &DeviceCpu::vendor() const
 {
     return m_Vendor;
@@ -97,17 +126,7 @@ QString DeviceCpu::subTitle()
 
 const QString DeviceCpu::getOverviewInfo()
 {
-    // 获取阿拉伯数字的英文翻译
-    getTrNumber();
-
-    QString ov = QString("%1 (%2%3 / %4%5)") \
-                 .arg(m_Name) \
-                 .arg(m_trNumber[m_CPUCoreNum.toInt()]) \
-                 .arg(tr("Core(s)")) \
-                 .arg(m_trNumber[m_LogicalCPUNum.toInt()]) \
-                 .arg(tr("Processor"));
-
-    return ov;
+    return m_Overview;
 }
 
 void DeviceCpu::setInfoFromLscpu(const QMap<QString, QString> &mapInfo)
@@ -128,6 +147,7 @@ void DeviceCpu::setInfoFromLscpu(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Flags", m_Flags);
     setAttribute(mapInfo, "Virtualization", m_HardwareVirtual);
     setAttribute(mapInfo, "CPU(s)", m_LogicalCPUNum);
+    setAttribute(mapInfo, "processor", m_PhysicalID);
 
     // 计算频率范围
     bool min = mapInfo.find("CPU min MHz") != mapInfo.end();

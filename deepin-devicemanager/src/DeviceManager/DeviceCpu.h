@@ -44,6 +44,18 @@ public:
     void setCpuInfo(const QMap<QString, QString> &mapLscpu, const QMap<QString, QString> &mapLshw, const QMap<QString, QString> &mapDmidecode, const QMap<QString, QString> &catInfo);
 
     /**
+     * @brief setLscpu
+     * @param mapLscpu
+     */
+    void setLscpu(const QMap<QString, QString> &mapLscpu);
+
+    /**
+     * @brief setOverview
+     * @param lstOV
+     */
+    void setOverview(const QList<QList<QString>>& lstOV);
+
+    /**
      * @brief vendor:获取制造商属性值
      * @return QString:制造商属性值
      */
@@ -155,6 +167,7 @@ private:
     QString           m_LogicalCPUNum;      //<! 逻辑处理器个数
     QString           m_CPUCoreNum;         //<! cpu核数
     QString           m_Driver;
+    QString           m_Overview;
     bool              m_FrequencyIsRange;   //<! 频率显示的是范围还是最大值
 
     QMap<int, QString>        m_trNumber;

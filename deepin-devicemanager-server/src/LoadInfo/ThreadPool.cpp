@@ -6,7 +6,6 @@
 #include <QDir>
 #include <QDebug>
 
-//#define PATH "/home/liujun/device-info/"
 #define PATH "/tmp/device-info/"
 
 ThreadPool::ThreadPool(QObject *parent)
