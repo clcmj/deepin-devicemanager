@@ -7,7 +7,7 @@ ParserLscpu::ParserLscpu()
 
 void ParserLscpu::loadLscpuInfo(QList<QMap<QString,QString>>& logicalCpu,QList<QList<QString>>& overView)
 {
-    QFile file("/home/liujun/Work/Project/DeviceManager/56011/device-info/lscpu.txt");
+    QFile file("/tmp/device-info/lscpu.txt");
     if(!file.open(QIODevice::ReadOnly))
         return;
     QString info = file.readAll();
