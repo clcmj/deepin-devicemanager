@@ -54,7 +54,6 @@ bool DeviceStorage::setHwinfoInfo(const QMap<QString, QString> &mapInfo)
     if (m_Size.startsWith("0") || m_Size == "") {
         return false;
     }
-    m_Size.replace("254", "256");
 
     setAttribute(mapInfo, "Serial ID", m_SerialNumber);
     ///setDiskSerialID(mapInfo["Device Files"]);
@@ -98,7 +97,6 @@ bool DeviceStorage::setKLUHwinfoInfo(const QMap<QString, QString> &mapInfo)
     if (m_Size.startsWith("0") || m_Size == "") {
         return false;
     }
-    m_Size.replace("254", "256");
 
     setAttribute(mapInfo, "Serial ID", m_SerialNumber);
 //    setDiskSerialID(mapInfo["Device Files"]);
@@ -390,7 +388,6 @@ void DeviceStorage::getInfoFromLshw(const QMap<QString, QString> &mapInfo)
     if (re.exactMatch(m_Size)) {
         m_Size = re.cap(1);
     }
-    m_Size.replace("254", "256");
 }
 
 void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
@@ -441,7 +438,6 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
             m_Size = reg.cap(1);
         }
     }
-    m_Size.replace("254", "256");
     // 型号
     //SATA
     if (mapInfo["Device Model"].isEmpty() == false) {

@@ -16,11 +16,17 @@ void DeviceMemory::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "slot", m_Locator);
     setAttribute(mapInfo, "size", m_Size);
     if (m_Size.contains("GiB")) {
-        m_Size.replace("GiB", "GB");
+        m_Size.replace("GiB","");
+        double size = m_Size.toDouble();
+        size = size*1024*1024*1024;
+        size = size / (1000*1000*1000);
+        m_Size = QString::number(size, 'g', 0) + QString("GB");
     }
     if (m_Size.contains("MiB")) {
         m_Size.replace("MiB", "");
-        double size = m_Size.toDouble() / 1024.0;
+        double size = m_Size.toDouble();
+        size = size*1024*1024;
+        size = size / (1000*1000*1000);
         m_Size = QString::number(size, 'g', 0) + QString("GB");
     }
     setAttribute(mapInfo, "clock", m_Speed);
@@ -47,11 +53,17 @@ void DeviceMemory::setKLUInfoFromLshw(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "slot", m_Locator);
     setAttribute(mapInfo, "size", m_Size);
     if (m_Size.contains("GiB")) {
-        m_Size.replace("GiB", "GB");
+        m_Size.replace("GiB","");
+        double size = m_Size.toDouble();
+        size = size*1024*1024*1024;
+        size = size / (1000*1000*1000);
+        m_Size = QString::number(size, 'g', 0) + QString("GB");
     }
     if (m_Size.contains("MiB")) {
         m_Size.replace("MiB", "");
-        double size = m_Size.toDouble() / 1024.0;
+        double size = m_Size.toDouble();
+        size = size*1024*1024;
+        size = size / (1000*1000*1000);
         m_Size = QString::number(size, 'g', 0) + QString("GB");
     }
 
