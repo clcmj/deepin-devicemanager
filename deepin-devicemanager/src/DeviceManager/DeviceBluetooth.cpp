@@ -127,7 +127,8 @@ EnableDeviceStatus DeviceBluetooth::setEnable(bool e)
 bool DeviceBluetooth::enable()
 {
     // 获取设备状态
-    m_Enable = EnableManager::instance()->isDeviceEnableByDriver(m_Driver);
+//    m_Enable = EnableManager::instance()->isDeviceEnableByDriver(m_Driver);
+    m_Enable = true;
     return m_Enable;
 }
 
