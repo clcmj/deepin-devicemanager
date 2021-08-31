@@ -10,23 +10,15 @@ void DeviceMemory::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
 {
     setAttribute(mapInfo, "product", m_Name, false);
     setAttribute(mapInfo, "description", m_Name, false);
-//    m_Model = "H9JKNNNFB3MVJR-N6HR";
-//    m_Name = "Unknow";
     setAttribute(mapInfo, "vendor", m_Vendor);
     setAttribute(mapInfo, "slot", m_Locator);
     setAttribute(mapInfo, "size", m_Size);
     if (m_Size.contains("GiB")) {
-        m_Size.replace("GiB","");
-        double size = m_Size.toDouble();
-        size = size*1024*1024*1024;
-        size = size / (1000*1000*1000);
-        m_Size = QString::number(size, 'g', 0) + QString("GB");
+        m_Size.replace("GiB", "GB");
     }
     if (m_Size.contains("MiB")) {
         m_Size.replace("MiB", "");
-        double size = m_Size.toDouble();
-        size = size*1024*1024;
-        size = size / (1000*1000*1000);
+        double size = m_Size.toDouble() / 1024.0;
         m_Size = QString::number(size, 'g', 0) + QString("GB");
     }
     setAttribute(mapInfo, "clock", m_Speed);
@@ -47,23 +39,15 @@ void DeviceMemory::setKLUInfoFromLshw(const QMap<QString, QString> &mapInfo)
     // 设置KLU内存属性
     setAttribute(mapInfo, "product", m_Name, false);
     setAttribute(mapInfo, "description", m_Name, false);
-//    m_Name = "Unknow";
-//    m_Model = "H9JKNNNFB3MVJR-N6HR";
     setAttribute(mapInfo, "vendor", m_Vendor);
     setAttribute(mapInfo, "slot", m_Locator);
     setAttribute(mapInfo, "size", m_Size);
     if (m_Size.contains("GiB")) {
-        m_Size.replace("GiB","");
-        double size = m_Size.toDouble();
-        size = size*1024*1024*1024;
-        size = size / (1000*1000*1000);
-        m_Size = QString::number(size, 'g', 0) + QString("GB");
+        m_Size.replace("GiB", "GB");
     }
     if (m_Size.contains("MiB")) {
         m_Size.replace("MiB", "");
-        double size = m_Size.toDouble();
-        size = size*1024*1024;
-        size = size / (1000*1000*1000);
+        double size = m_Size.toDouble() / 1024.0;
         m_Size = QString::number(size, 'g', 0) + QString("GB");
     }
 
@@ -92,8 +76,6 @@ bool DeviceMemory::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
         return false;
     }
     setAttribute(mapInfo, "Part Number", m_Name);
-//    m_Name = "Unknow";
-//    m_Model = "H9JKNNNFB3MVJR-N6HR";
     setAttribute(mapInfo, "Serial Number", m_SerialNumber);
     setAttribute(mapInfo, "Configured Memory Speed", m_ConfiguredSpeed);
     if (m_ConfiguredSpeed.contains("MT/s")) {
