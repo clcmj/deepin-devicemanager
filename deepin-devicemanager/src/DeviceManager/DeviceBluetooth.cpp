@@ -26,7 +26,7 @@ DeviceBluetooth::DeviceBluetooth()
     initFilterKey();
 
     // 设置可禁用
-    m_CanEnable = true;
+    m_CanEnable = false;
 }
 
 void DeviceBluetooth::setInfoFromHciconfig(const QMap<QString, QString> &mapInfo)
