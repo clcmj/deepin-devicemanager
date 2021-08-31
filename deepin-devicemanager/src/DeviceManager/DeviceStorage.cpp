@@ -26,20 +26,18 @@ bool DeviceStorage::setHwinfoInfo(const QMap<QString, QString> &mapInfo)
     if (mapInfo.find("SysFS BusID") == mapInfo.end()) {
         return false;
     }
-    //setAttribute(mapInfo, "Model", m_Model);
-    m_Model = "KLUEG8UHDB-C2E1T01";
-    m_Vendor = "三星";
-//    setAttribute(mapInfo, "Vendor", m_Vendor);
+    setAttribute(mapInfo, "Model", m_Model);
+    setAttribute(mapInfo, "Vendor", m_Vendor);
 
-//    QRegExp exp("pci 0x[0-9a-zA-Z]*");
-//    if (exp.indexIn(m_Vendor) != -1) {
-//        m_Vendor = "";
-//    }
+    QRegExp exp("pci 0x[0-9a-zA-Z]*");
+    if (exp.indexIn(m_Vendor) != -1) {
+        m_Vendor = "";
+    }
 
-//    // 希捷硬盘为ATA硬盘，无法直接获取厂商信息,只能特殊处理
-//    if (m_Model.startsWith("ST") && m_Vendor.isEmpty()) {
-//        m_Vendor = "Seagate";
-//    }
+    // 希捷硬盘为ATA硬盘，无法直接获取厂商信息,只能特殊处理
+    if (m_Model.startsWith("ST") && m_Vendor.isEmpty()) {
+        m_Vendor = "Seagate";
+    }
 
     setAttribute(mapInfo, "Attached to", m_Interface);
     QRegExp re(".*\\((.*)\\).*");
@@ -78,14 +76,12 @@ bool DeviceStorage::setKLUHwinfoInfo(const QMap<QString, QString> &mapInfo)
     if (mapInfo.find("SysFS BusID") == mapInfo.end()) {
         return false;
     }
-    //setAttribute(mapInfo, "Model", m_Model);
-    m_Model = "KLUEG8UHDB-C2E1T01";
-    m_Vendor = "三星";
-//    setAttribute(mapInfo, "Vendor", m_Vendor);
-//    // 希捷硬盘为ATA硬盘，无法直接获取厂商信息,只能特殊处理
-//    if (m_Model.startsWith("ST") && m_Vendor.isEmpty()) {
-//        m_Vendor = "Seagate";
-//    }
+    setAttribute(mapInfo, "Model", m_Model);
+    setAttribute(mapInfo, "Vendor", m_Vendor);
+    // 希捷硬盘为ATA硬盘，无法直接获取厂商信息,只能特殊处理
+    if (m_Model.startsWith("ST") && m_Vendor.isEmpty()) {
+        m_Vendor = "Seagate";
+    }
 
     setAttribute(mapInfo, "Attached to", m_Interface);
     QRegExp re(".*\\((.*)\\).*");
@@ -166,8 +162,7 @@ bool DeviceStorage::addNVMEInfoFromlshw(const QMap<QString, QString> &mapInfo)
     //bus info: pci@0000:0d:00.0
     // 确认为同一设备
     if (m_NvmeKey.contains(key, Qt::CaseInsensitive)) {
-        //setAttribute(mapInfo, "vendor", m_Vendor);
-        m_Vendor = "三星";
+        setAttribute(mapInfo, "vendor", m_Vendor);
     }
 
     return true;
@@ -386,12 +381,10 @@ void DeviceStorage::getInfoFromLshw(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "capabilities", m_Capabilities);
     setAttribute(mapInfo, "version", m_Version);
     setAttribute(mapInfo, "serial", m_SerialNumber, false);
-    //setAttribute(mapInfo, "product", m_Model);
-    m_Model = "KLUEG8UHDB-C2E1T01";
+    setAttribute(mapInfo, "product", m_Model);
     setAttribute(mapInfo, "description", m_Description);
     setAttribute(mapInfo, "size", m_Size);
-    //setAttribute(mapInfo, "vendor", m_Vendor);
-    m_Vendor = "三星";
+    setAttribute(mapInfo, "vendor", m_Vendor);
     // 223GiB (240GB)
     QRegExp re(".*\\((.*)\\)$");
     if (re.exactMatch(m_Size)) {
@@ -453,13 +446,11 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
     //SATA
     if (mapInfo["Device Model"].isEmpty() == false) {
         m_Model = mapInfo["Device Model"];
-        m_Model = "KLUEG8UHDB-C2E1T01";
     }
 
     //NVME
     if (mapInfo["Model Number"].isEmpty() == false) {
         m_Model = mapInfo["Model Number"];
-        m_Model = "KLUEG8UHDB-C2E1T01";
     }
 
     setAttribute(mapInfo, "Serial Number", m_SerialNumber, true);
