@@ -10,6 +10,7 @@ public:
     /**@brief:设置从upower获取的信息*/
     bool setInfoFromUpower(const QMap<QString, QString> &mapInfo);
     void setDaemonInfo(const QMap<QString, QString> &mapInfo);
+    void setInfoFromLshw(const QMap<QString, QString> &mapInfo);
 
     // 获取设备属性
     const QString &name()const;

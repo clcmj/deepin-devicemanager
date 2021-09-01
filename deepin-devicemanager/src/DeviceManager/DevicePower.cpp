@@ -45,6 +45,15 @@ void DevicePower::setDaemonInfo(const QMap<QString, QString> &mapInfo)
         loadOtherDeviceInfo(mapInfo);
 }
 
+void DevicePower::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
+{
+    setAttribute(mapInfo, "product", m_Name);
+    setAttribute(mapInfo, "vendor", m_Vendor);
+    setAttribute(mapInfo, "capacity", m_Capacity);
+    setAttribute(mapInfo, "serial", m_SerialNumber);
+    loadOtherDeviceInfo(mapInfo);
+}
+
 const QString &DevicePower::name()const
 {
     return m_Name;
@@ -147,4 +156,7 @@ void DevicePower::initFilterKey()
     addFilterKey(QObject::tr("lid-is-closed"));
     addFilterKey(QObject::tr("lid-is-present"));
     addFilterKey(QObject::tr("critical-action"));
+    addFilterKey(QObject::tr("description"));
+    addFilterKey(QObject::tr("physical id"));
+    addFilterKey(QObject::tr("version"));
 }

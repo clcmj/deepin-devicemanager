@@ -22,7 +22,7 @@
 #include <QDebug>
 
 DeviceGenerator::DeviceGenerator(QObject *parent)
-    : QObject (parent)
+    : QObject(parent)
 {
 
 }
@@ -221,28 +221,35 @@ void DeviceGenerator::generatorOthersDevice()
 
 void DeviceGenerator::generatorPowerDevice()
 {
-    const QList<QMap<QString, QString> > &daemon = DeviceManager::instance()->cmdInfo("Daemon");
-    bool hasDaemon = false;
-    // 守护进程信息
-    if (daemon.size() > 0) {
-        hasDaemon = true;
-    }
-    // 电池或这电源信息
-    const QList<QMap<QString, QString>> lstInfo = DeviceManager::instance()->cmdInfo("upower");
-    QList<QMap<QString, QString> >::const_iterator it = lstInfo.begin();
-    for (; it != lstInfo.end(); ++it) {
-        if ((*it).size() < 2) {
-            continue;
-        }
+    const QList<QMap<QString, QString> > &power = DeviceManager::instance()->cmdInfo("lshw_power");
+    QList<QMap<QString, QString> >::const_iterator it = power.begin();
+    for (; it != power.end(); ++it) {
         DevicePower device;
-        if (!device.setInfoFromUpower(*it)) {
-            continue;
-        }
-        if (hasDaemon) {
-            device.setDaemonInfo(daemon[0]);
-        }
+        device.setInfoFromLshw(*it);
         DeviceManager::instance()->addPowerDevice(device);
     }
+
+//    bool hasDaemon = false;
+//    // 守护进程信息
+//    if (daemon.size() > 0) {
+//        hasDaemon = true;
+//    }
+//    // 电池或这电源信息
+//    const QList<QMap<QString, QString>> lstInfo = DeviceManager::instance()->cmdInfo("upower");
+//    QList<QMap<QString, QString> >::const_iterator it = lstInfo.begin();
+//    for (; it != lstInfo.end(); ++it) {
+//        if ((*it).size() < 2) {
+//            continue;
+//        }
+//        DevicePower device;
+//        if (!device.setInfoFromUpower(*it)) {
+//            continue;
+//        }
+//        if (hasDaemon) {
+//            device.setDaemonInfo(daemon[0]);
+//        }
+//        DeviceManager::instance()->addPowerDevice(device);
+//    }
 }
 
 
