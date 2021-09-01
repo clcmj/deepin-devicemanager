@@ -23,6 +23,8 @@
 #define DETECTTHREAD_H
 
 #include <QThread>
+#include <QMap>
+#include <QDateTime>
 
 class MonitorUsb;
 
@@ -46,8 +48,22 @@ signals:
      */
     void usbChanged();
 
+private slots:
+    /**
+     * @brief slotUsbChanged usb发生变化时的曹函数处理
+     */
+    void slotUsbChanged();
+
 private:
-    MonitorUsb   *mp_MonitorUsb;          //<! udev检测任务
+    // 判断hwinfo --usb信息是否发生变化
+    bool isUsbDevicesChanged();
+    void updateMemUsbInfo(const QMap<QString,QMap<QString,QString>>& usbInfo);
+    void curHwinfoUsbInfo(QMap<QString,QMap<QString,QString>>& usbInfo);
+    bool getMapInfo(const QString& item,QMap<QString,QString>& mapInfo);
+
+private:
+    MonitorUsb   *mp_MonitorUsb;                      //<! udev检测任务
+    QMap<QString,QMap<QString,QString>> m_MapUsbInfo; //<! usb信息
 };
 
 #endif // DETECTTHREAD_H
