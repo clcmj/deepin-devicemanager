@@ -1,23 +1,23 @@
-// 项目自身文件
+// 其它头文件
 #include "DeviceWidget.h"
+#include "PageListView.h"
+#include "PageInfoWidget.h"
+#include "DeviceInfo.h"
+#include "MacroDefinition.h"
+#include "DeviceManager.h"
+#include "DeviceBios.h"
 
 // Qt库文件
 #include <QHBoxLayout>
 #include <QDebug>
 
-// 其它头文件
-#include "PageListView.h"
-#include "PageInfoWidget.h"
-#include "../DeviceManager/DeviceInfo.h"
-#include "MacroDefinition.h"
-#include "DeviceManager.h"
-#include "DeviceBios.h"
 
 DeviceWidget::DeviceWidget(QWidget *parent)
     : DWidget(parent)
     , mp_ListView(new PageListView(this))
     , mp_PageInfo(new PageInfoWidget(this))
     , m_CurItemStr("")
+    , m_Layout(nullptr)
 {
     // 初始化界面布局
     initWidgets();
@@ -34,8 +34,9 @@ DeviceWidget::DeviceWidget(QWidget *parent)
 
 DeviceWidget::~DeviceWidget()
 {
-    DELETE_PTR(mp_ListView);
-    DELETE_PTR(mp_PageInfo);
+    DELETE_PTR(mp_ListView)
+    DELETE_PTR(mp_PageInfo)
+    DELETE_PTR(m_Layout)
 }
 
 void DeviceWidget::updateListView(const QList<QPair<QString, QString> > &lst)
@@ -88,7 +89,7 @@ void DeviceWidget::resizeEvent(QResizeEvent *event)
 {
     DWidget::resizeEvent(event);
     // 获取所有设备类别
-    const QList<QPair<QString, QString>> types = DeviceManager::instance()->getDeviceTypes();
+    const QList<QPair<QString, QString>> &types = DeviceManager::instance()->getDeviceTypes();
 
     // 根据右侧Listview当前Index获取当前设备类别的
     QString userStr = mp_ListView->currentIndex();
@@ -124,10 +125,10 @@ void DeviceWidget::resizeEvent(QResizeEvent *event)
 void DeviceWidget::initWidgets()
 {
     // 初始化页面布局
-    QHBoxLayout *hLayout = new QHBoxLayout();
-    hLayout->setContentsMargins(0, 0, 0, 0);
-    hLayout->setSpacing(0);
-    hLayout->addWidget(mp_ListView);
-    hLayout->addWidget(mp_PageInfo);
-    setLayout(hLayout);
+    m_Layout = new QHBoxLayout();
+    m_Layout->setContentsMargins(0, 0, 0, 0);
+    m_Layout->setSpacing(0);
+    m_Layout->addWidget(mp_ListView);
+    m_Layout->addWidget(mp_PageInfo);
+    setLayout(m_Layout);
 }

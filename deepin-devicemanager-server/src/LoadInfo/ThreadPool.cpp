@@ -1,5 +1,6 @@
 #include "ThreadPool.h"
 #include "ThreadPoolTask.h"
+#include "DeviceInfoManager.h"
 
 #include <QObjectCleanupHandler>
 #include <QProcess>
@@ -15,32 +16,49 @@ ThreadPool::ThreadPool(QObject *parent)
     dir.mkdir(PATH);
 }
 
-void ThreadPool::generateDeviceFile()
+void ThreadPool::loadDeviceInfo()
 {
     // 根据m_ListCmd生成所有设备信息
-    //QObjectCleanupHandler *cleaner = new QObjectCleanupHandler;
-    //cleaner->setParent(this);
+    QObjectCleanupHandler *cleaner = new QObjectCleanupHandler;
+    cleaner->setParent(this);
     QList<Cmd>::iterator it = m_ListCmd.begin();
     for (; it != m_ListCmd.end(); ++it) {
         ThreadPoolTask *task = new ThreadPoolTask((*it).cmd, (*it).file, (*it).canNotReplace, (*it).waitingTime);
-        //cleaner->add(task);
+        cleaner->add(task);
         start(task);
         task->setAutoDelete(true);
     }
 }
 
-void ThreadPool::updateDeviceFile()
+void ThreadPool::updateDeviceInfo()
 {
     // 根据m_ListCmd生成所有设备信息
-    //QObjectCleanupHandler *cleaner = new QObjectCleanupHandler;
-    //cleaner->setParent(this);
+    QObjectCleanupHandler *cleaner = new QObjectCleanupHandler;
+    cleaner->setParent(this);
     QList<Cmd>::iterator it = m_ListUpdate.begin();
     for (; it != m_ListUpdate.end(); ++it) {
         ThreadPoolTask *task = new ThreadPoolTask((*it).cmd, (*it).file, (*it).canNotReplace, (*it).waitingTime);
-        //cleaner->add(task);
+        cleaner->add(task);
         start(task);
         task->setAutoDelete(true);
     }
+}
+
+void ThreadPool::runCmdToCache(const Cmd &cmd)
+{
+    QString key = cmd.file;
+    key.replace(".txt", "");
+
+    // 2. 执行命令获取设备信息
+    QString info;
+    QProcess process;
+    QString cmdT = cmd.cmd;
+    QStringList options;
+    options << "-c" << cmdT.replace(QString(" >  ") + PATH + cmd.file, "");
+    process.start("/bin/bash", options);
+    process.waitForFinished(-1);
+    info = process.readAllStandardOutput();
+    DeviceInfoManager::getInstance()->addInfo(key, info);
 }
 
 void ThreadPool::initCmd()
@@ -119,7 +137,7 @@ void ThreadPool::initCmd()
 
     // 添加lscpu命令
     Cmd cmdLscpu;
-    cmdLscpu.cmd = QString("%1 %2%3").arg("lscpu > ").arg(PATH).arg("lscpu.txt");
+    cmdLscpu.cmd = "lscpu";//QString("%1 %2%3").arg("lscpu > ").arg(PATH).arg("lscpu.txt");
     cmdLscpu.file = "lscpu.txt";
     cmdLscpu.canNotReplace = true;
     m_ListCmd.append(cmdLscpu);

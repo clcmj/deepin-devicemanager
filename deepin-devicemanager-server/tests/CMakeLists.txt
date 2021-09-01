@@ -32,6 +32,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+option (PERF_ON "Use provided math implementation" ON)
+
 # 设置包含头文件的时候不用包含路径 begin ****************************************************************************************
 macro(SUBDIRLIST result curdir)
     file(GLOB children RELATIVE ${curdir} ${curdir}/*)
@@ -60,7 +62,9 @@ find_package(DtkCore REQUIRED)
 find_package(DFrameworkdbus REQUIRED)
 
 set(PROJECT_NAME_TEST
-    ${PROJECT_NAME}_test)
+    ${PROJECT_NAME}-test)
+
+ADD_COMPILE_OPTIONS(-fno-access-control)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../src)
 foreach(subdir ${all_src})
@@ -70,24 +74,18 @@ endforeach()
 file(GLOB_RECURSE APP_SRCS
     ${CMAKE_CURRENT_LIST_DIR}/../src/DebugTimeManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/../src/MainJob.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/../src/DBus/*.cpp
     ${CMAKE_CURRENT_LIST_DIR}/../src/LoadInfo/*.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/../src/UsbDetect/*.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/../src/ZeroMQ/*.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/../src/EnableAndDisable/*.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/../src/HotPlug/*.cpp
     )
-FILE(GLOB allTestSource
-  ../tests/src/*.cpp
-  ../tests/src/DBus/*.cpp
-  ../tests/src/LoadInfo/*.cpp
-  ../tests/src/UsbDetect/*.cpp
-  ../tests/src/ZeroMQ/*.cpp
-)
+file(GLOB_RECURSE TEST_SRC_CPP ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp)
+file(GLOB_RECURSE TEST_SRC_H ${CMAKE_CURRENT_LIST_DIR}/src/*.h)
 
 find_package(Qt5 COMPONENTS
     Core
     DBus REQUIRED)
 
-add_executable(${PROJECT_NAME_TEST} ${APP_SRCS} ${allTestSource})
+add_executable(${PROJECT_NAME_TEST} ${APP_SRCS} ${TEST_SRC_CPP} ${TEST_SRC_H})
 
 target_include_directories(${PROJECT_NAME_TEST}
     PUBLIC ${DtkWidget_INCLUDE_DIRS} ${OBJECT_BINARY_DIR})
@@ -115,4 +113,4 @@ add_custom_target(test-server
 add_dependencies(test ${PROJECT_NAME_TEST})
 
 # 设置添加gocv相关信息的输出
-set(CMAKE_CXX_FLAGS "-g -fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fprofile-arcs -ftest-coverage")

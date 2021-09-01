@@ -1,12 +1,11 @@
 // 项目自身文件
 #include "PageOverview.h"
-
-// Qt库文件
-#include <QVBoxLayout>
-#include <QTableWidgetItem>
-#include <QAction>
-#include <QDebug>
-#include <QClipboard>
+#include "PageTableWidget.h"
+#include "DeviceManager.h"
+#include "PageInfoWidget.h"
+#include "LongTextLabel.h"
+#include "MacroDefinition.h"
+#include "DeviceGenerator.h"
 
 // Dtk头文件
 #include <DApplication>
@@ -17,12 +16,12 @@
 #include <DNotifySender>
 #include <DTextBrowser>
 
-// 其它头文件
-#include "PageTableWidget.h"
-#include "DeviceManager.h"
-#include "PageInfoWidget.h"
-#include "LongTextLabel.h"
-#include "MacroDefinition.h"
+// Qt库文件
+#include <QVBoxLayout>
+#include <QTableWidgetItem>
+#include <QAction>
+#include <QDebug>
+#include <QClipboard>
 
 #define ENTER_ONE 60    // 换行的位置 1
 #define ENTER_TWO 120   // 换行的位置 2                                                                    // end html
@@ -66,7 +65,6 @@ void PageOverview::updateInfo(const QMap<QString, QString> &map)
     int maxRow = this->height() / ROW_HEIGHT - 4;
     if (maxRow < 1) {
         mp_Overview->setLimitRow(11);
-
     } else {
         mp_Overview->setLimitRow(std::min(11, maxRow));
     }
@@ -123,29 +121,8 @@ void PageOverview::setLabel(const QString &str1, const QString &str2)
     QString linkStr = LINK_STR;
 
     // 系统类型+链接
-    DSysInfo::UosEdition type = DSysInfo::uosEditionType();
-    if (DSysInfo::UosProfessional == type) { // 桌面专业版
-        linkStr += PROF_STR + END_STR + os.remove(PROF_STR);
-    } else if (DSysInfo::UosHome == type) {  // 个人版
-        linkStr += HOME_STR + END_STR + os.remove(HOME_STR);
-    } else if (DSysInfo::UosCommunity == type) { // 社区版
-        linkStr = COMMUNITY_LINK_STR;  // 社区版的链接与其它的不同
-        linkStr += COMMUNITY_STR + END_STR + os.remove(COMMUNITY_STR);
-    }
-#if(DTK_VERSION > DTK_VERSION_CHECK(5,4,10,0))
-    else if (DSysInfo::UosEducation == type) {// 教育版
-        linkStr += EDUC_STR + END_STR + os.remove(EDUC_STR);
-    }
-#endif
-    else if (DSysInfo::UosEnterprise == type) {// 服务器企业版
-        linkStr += ENTERPRISE_STR + END_STR + os.remove(ENTERPRISE_STR);
-    } else if (DSysInfo::UosEnterpriseC == type) {// 服务器行业版
-        linkStr += ENTERPRISEC_STR + END_STR + os.remove(ENTERPRISEC_STR);
-    } else if (DSysInfo::UosEuler == type) {// 服务器欧拉版
-        linkStr += EULER_STR + END_STR + os.remove(EULER_STR);
-    } else {// 默认值
-        linkStr += DEFAULT_STR + END_STR + os.remove(DEFAULT_STR);
-    }
+    QString productName = DeviceGenerator::getProductName();
+    linkStr += productName + END_STR + os.remove(productName);
 
     // 设置系统描述
     mp_OSLabel->setText(linkStr);
