@@ -387,6 +387,10 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
     if (strList.size() == 2)
         m_Speed = strList[1];
 
+    // 当 无法找到Rotation Rate属性的时候默认为SSD
+    if(mapInfo.find("Rotation Rate") == mapInfo.end()){
+        m_MediaType = QObject::tr("SSD");
+    }
     setAttribute(mapInfo, "Rotation Rate", m_RotationRate);
     // 解决Bug45428,INTEL SSDSA2BW160G3L 这个型号的硬盘通过lsblk获取的rota是１，所以这里需要特殊处理
     if (m_RotationRate == QString("Solid State Device"))
