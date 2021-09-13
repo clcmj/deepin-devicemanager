@@ -70,7 +70,10 @@ void DeviceCpu::setfrequencyShowRange(bool isRange, const QString &maxSpeed)
         m_Frequency = m_Frequency.replace("MHz", "").trimmed();
         double frequencyNum = m_Frequency.toDouble() / 1000.0;
 
-        m_Frequency = QString::number(frequencyNum) + " GHz";
+        // 最多三位最少一位
+        m_Frequency = QString::number(frequencyNum,'f',3) + "GHz";
+        m_Frequency.replace("0 "," ");
+        m_Frequency.replace("0 "," ");
     }
 }
 
