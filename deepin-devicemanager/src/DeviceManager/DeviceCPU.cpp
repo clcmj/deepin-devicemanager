@@ -72,8 +72,8 @@ void DeviceCpu::setfrequencyShowRange(bool isRange, const QString &maxSpeed)
 
         // 最多三位最少一位
         m_Frequency = QString::number(frequencyNum,'f',3) + "GHz";
-        m_Frequency.replace("0 "," ");
-        m_Frequency.replace("0 "," ");
+        m_Frequency.replace("0GHz","GHz");
+        m_Frequency.replace("0GHz","GHz");
     }
 }
 
