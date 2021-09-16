@@ -103,12 +103,10 @@ const QString DeviceCpu::getOverviewInfo()
     // 获取阿拉伯数字的英文翻译
     getTrNumber();
 
-    QString ov = QString("%1 (%2%3 / %4%5)") \
+    QString ov = QString("%1 (%2%3)") \
                  .arg(m_Name) \
                  .arg(m_trNumber[m_CPUCoreNum]) \
-                 .arg(tr("Core(s)")) \
-                 .arg(m_trNumber[m_LogicalCPUNum]) \
-                 .arg(tr("Processor"));
+                 .arg(tr("Core(s)"));
 
     return ov;
 }
@@ -198,8 +196,7 @@ void DeviceCpu::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
     // 获取设备基本信息
     setAttribute(mapInfo, "Manufacturer", m_Vendor);
     setAttribute(mapInfo, "Max Speed", m_Frequency, false);
-    // 飞腾架构由于无法通过lscpu获取当前频率，因此需要通过dmidecode获取
-    setAttribute(mapInfo, "Current Speed", m_CurFrequency,false);
+    //    setAttribute(mapInfo, "Current Speed", m_CurFrequency);
     setAttribute(mapInfo, "Family", m_Familly);
 
     // 获取其他cpu信息
@@ -321,7 +318,7 @@ void DeviceCpu::getTrNumber()
     m_trNumber.insert(124, QObject::tr("One hundred and Twenty-four"));
     m_trNumber.insert(126, QObject::tr("One hundred and Twenty-six"));
     m_trNumber.insert(128, QObject::tr("One hundred and Twenty-eight"));
-    m_trNumber.insert(256, QObject::tr("Two hundred and fifty-six"));
+
 }
 
 

@@ -58,20 +58,14 @@ public:
     /**
      * @brief generateDeviceFile : load device info
      */
-    void loadDeviceInfo();
+    void generateDeviceFile();
 
     /**
      * @brief updateDeviceFile
      */
-    void updateDeviceInfo();
+    void updateDeviceFile();
 
 private:
-    /**
-     * @brief runCmdToCache
-     * @param cmd
-     */
-    void runCmdToCache(const Cmd &cmd);
-
     /**
      * @brief initCmd init all cmd
      */

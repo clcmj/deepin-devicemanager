@@ -1,4 +1,4 @@
-#include "GetInfoPool.h"
+#include "ReadFilePool.h"
 
 #include <QObjectCleanupHandler>
 #include <QDebug>
@@ -8,7 +8,7 @@
 
 static QMutex mutex;
 
-CmdTask::CmdTask(QString key, QString file, QString info, GetInfoPool *parent)
+CmdTask::CmdTask(QString key, QString file, QString info, ReadFilePool *parent)
     : m_Key(key)
     , m_File(file)
     , m_Info(info)
@@ -30,14 +30,14 @@ void CmdTask::run()
     mp_Parent->finishedCmd(m_Info, cmdInfo);
 }
 
-GetInfoPool::GetInfoPool()
+ReadFilePool::ReadFilePool()
     : m_Arch("")
     , m_FinishedNum(0)
 {
     initCmd();
 }
 
-void GetInfoPool::getAllInfo()
+void ReadFilePool::readAllFile()
 {
     DeviceManager::instance()->clear();
 
@@ -52,7 +52,7 @@ void GetInfoPool::getAllInfo()
     }
 }
 
-void GetInfoPool::finishedCmd(const QString &info, const QMap<QString, QList<QMap<QString, QString> > > &cmdInfo)
+void ReadFilePool::finishedCmd(const QString &info, const QMap<QString, QList<QMap<QString, QString> > > &cmdInfo)
 {
     DeviceManager::instance()->addCmdInfo(cmdInfo);
     QMutexLocker m_lock(&mutex);
@@ -63,13 +63,13 @@ void GetInfoPool::finishedCmd(const QString &info, const QMap<QString, QList<QMa
     }
 }
 
-void GetInfoPool::setFramework(const QString &arch)
+void ReadFilePool::setFramework(const QString &arch)
 {
     // 设置架构
     m_Arch = arch;
 }
 
-void GetInfoPool::initCmd()
+void ReadFilePool::initCmd()
 {
     m_CmdList.append({ "lshw",                 "lshw.txt",               tr("Loading Audio Device Info...") });
     m_CmdList.append({ "printer",              "printer.txt",            ""});
@@ -85,7 +85,15 @@ void GetInfoPool::initCmd()
     m_CmdList.append({"dr_config", "dr_config.txt", ""});
 
     m_CmdList.append({ "hwinfo_monitor",       "hwinfo_monitor.txt",     tr("Loading CD-ROM Info...")});
-    m_CmdList.append({ "hwinfo",         "hwinfo.txt",       ""});
+    m_CmdList.append({ "hwinfo_sound",         "hwinfo_sound.txt",       ""});
+    m_CmdList.append({ "hwinfo_usb",           "hwinfo_usb.txt",         ""});
+    m_CmdList.append({ "hwinfo_network",       "hwinfo_network.txt",     ""});
+    m_CmdList.append({ "hwinfo_keyboard",      "hwinfo_keyboard.txt",    tr("Loading Bluetooth Device Info...")});
+    m_CmdList.append({ "hwinfo_cdrom",         "hwinfo_cdrom.txt",       tr("Loading Image Devices Info...")});
+    // 注意：这里一定要用 sudo hwinfo --disk,因为很多机器只有加上sudo 才能获取硬盘的大小
+    m_CmdList.append({ "hwinfo_disk",          "hwinfo_disk.txt",        tr("Loading Keyboard Info...")});
+    m_CmdList.append({ "hwinfo_display",       "hwinfo_display.txt",     ""});
+    m_CmdList.append({ "hwinfo_mouse",         "hwinfo_mouse.txt",       ""});
 
 
     m_CmdList.append({ "upower",               "upower_dump.txt",        ""});

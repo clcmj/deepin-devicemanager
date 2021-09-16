@@ -22,7 +22,7 @@
 
 #include <QObject>
 #include <QThread>
-#include "GetInfoPool.h"
+#include "ReadFilePool.h"
 #include "GenerateDevicePool.h"
 
 class ZmqOrder;
@@ -54,13 +54,11 @@ private slots:
     void slotFinishedReadFilePool(const QString &info);
 
 private:
-    GetInfoPool mp_ReadFilePool;
+    ReadFilePool mp_ReadFilePool;
     GenerateDevicePool mp_GenerateDevicePool;
-    ZmqOrder       *mp_ZmqOrder;
     bool            m_Running;                      //<!  标识是否正在运行
     bool            m_FinishedReadFilePool;         //<!  标识生成读文件的线程池是否结束
-    bool            m_Start;                        //<!  是否为启动
-
+    ZmqOrder       *mp_ZmqOrder;
 };
 
 #endif // LOADINFOTHREAD_H

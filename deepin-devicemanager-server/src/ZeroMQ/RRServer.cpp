@@ -9,6 +9,8 @@ RRServer::RRServer(QObject *parent)
     : QThread(parent)
     , mpRep(new ZMQServer)
     , mpContext(nullptr)
+    , m_Waiting(false)
+    , m_ReturnStr("")
     , mp_MainJob(dynamic_cast<MainJob *>(parent))
 {
 }
@@ -38,25 +40,16 @@ void RRServer::connectToDealer(char *_endpoint, void *_context)
 
 void RRServer::run()
 {
+//    qint64 begin = 0, end = 0;
     while (1) {
         char *msg = mpRep->recvMsg();
-        if (!mp_MainJob) {
-            sendMsg("0");
+        if (mp_MainJob) {
+            mp_MainJob->executeClientInstruction(QString::fromLocal8Bit(msg));
+            sendMsg(m_ReturnStr);
             continue;
         }
-
-        // Request update
-        if (QString::fromLocal8Bit(msg).startsWith("UPDATE_UI")) {
-            if (mp_MainJob->isServerRunning())
-                sendMsg(QString::number(IR_SUCCESS));
-            else
-                sendMsg(QString::number(IR_UPDATE));
-            continue;
-        }
-
-        INSTRUCTION_RES res = mp_MainJob->executeClientInstruction(QString::fromLocal8Bit(msg));
-        sendMsg(QString::number(res));
-        continue;
+        sendMsg("0");
+//        usleep(100);
     }
 }
 
@@ -66,4 +59,14 @@ void RRServer::sendMsg(const QString &info)
     char ch[256];
     sprintf(ch, "%s", info.toStdString().c_str());
     mpRep->sendMsg(ch);
+}
+
+void RRServer::setWaiting(bool waiting)
+{
+    m_Waiting = waiting;
+}
+
+void RRServer::setReturnStr(const QString &str)
+{
+    m_ReturnStr = str;
 }

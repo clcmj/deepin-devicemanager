@@ -114,20 +114,14 @@ void DeviceGenerator::generatorCpuDevice()
     //  获取逻辑数和core数  获取cpu个数 获取logical个数
     int coreNum = 0, logicalNum = 0, physicalNum = 0;
     const QList<QMap<QString, QString> >  &lsCpu_num = DeviceManager::instance()->cmdInfo("lscpu_num");
-    if (lsCpu_num.size() <= 0)
-        return;
-    const QMap<QString, QString> &map = lsCpu_num[0];
-    if (map.find("physical") != map.end())
-        physicalNum = map["physical"].toInt();
-    if (map.find("core") != map.end())
-        coreNum = map["core"].toInt();
-    if (map.find("logical") != map.end())
-        logicalNum = map["logical"].toInt();
+    if (lsCpu_num.size() > 0) {
+        physicalNum = lsCpu_num[0]["physical"].toInt();
+        coreNum = lsCpu_num[0]["core"].toInt();
+        logicalNum = lsCpu_num[0]["logical"].toInt();
+    }
 
-    // set cpu number
     DeviceManager::instance()->setCpuNum(physicalNum);
 
-    // set cpu info
     QList<QMap<QString, QString> >::const_iterator it = lsCpu.begin();
     for (; it != lsCpu.end(); ++it) {
         DeviceCpu *device = new DeviceCpu;
@@ -669,9 +663,11 @@ void DeviceGenerator::getKeyboardInfoFromHwinfo()
     for (; it != lstMap.end(); ++it) {
         if ((*it).size() < 1)
             continue;
-
-        // 下面这句代码忘了这么写的原因，先去掉
-        //if ((*it).contains("Device Files")) {}
+        if ((*it)["Vendor"] == "0x0001")
+            continue;
+        // 按照同方要求，定制该要求
+        if ((*it)["Model"] == "AT Raw Set 2 keyboard")
+            continue;
 
         DeviceInput *device = new DeviceInput();
         device->setInfoFromHwinfo(*it);

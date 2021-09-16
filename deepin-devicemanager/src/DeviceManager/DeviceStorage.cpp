@@ -326,8 +326,8 @@ void DeviceStorage::loadBaseDeviceInfo()
 void DeviceStorage::loadOtherDeviceInfo()
 {
     // 添加其他信息,成员变量
-    addOtherDeviceInfo(tr("Power Cycle Count"), m_PowerCycleCount);
-    addOtherDeviceInfo(tr("Power On Hours"), m_PowerOnHours);
+//    addOtherDeviceInfo(tr("Power Cycle Count"), m_PowerCycleCount);
+//    addOtherDeviceInfo(tr("Power On Hours"), m_PowerOnHours);
     addOtherDeviceInfo(tr("Firmware Version"), m_FirmwareVersion);
     addOtherDeviceInfo(tr("Speed"), m_Speed);
     addOtherDeviceInfo(tr("Description"), m_Description);
@@ -392,15 +392,15 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
     if (m_RotationRate == QString("Solid State Device"))
         m_MediaType = QObject::tr("SSD");
 
-    // 通电时间
-    m_PowerOnHours = mapInfo["Power_On_Hours"];
-    if (m_PowerOnHours == "")
-        m_PowerOnHours = mapInfo["Power On Hours"];
+//    // 通电时间
+//    m_PowerOnHours = mapInfo["Power_On_Hours"];
+//    if (m_PowerOnHours == "")
+//        m_PowerOnHours = mapInfo["Power On Hours"];
 
-    // 通电次数
-    m_PowerCycleCount = mapInfo["Power_Cycle_Count"];
-    if (m_PowerCycleCount == "")
-        m_PowerCycleCount = mapInfo["Power Cycles"];
+//    // 通电次数
+//    m_PowerCycleCount = mapInfo["Power_Cycle_Count"];
+//    if (m_PowerCycleCount == "")
+//        m_PowerCycleCount = mapInfo["Power Cycles"];
 
     // 安装大小
     QString capacity = mapInfo["User Capacity"];

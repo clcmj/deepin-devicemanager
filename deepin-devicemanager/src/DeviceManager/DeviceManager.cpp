@@ -57,9 +57,6 @@ void DeviceManager::clear()
     foreach (auto device, m_ListDeviceMonitor)
         delete device;
 
-    foreach (auto device, m_ListDeviceBluetooth)
-        delete device;
-
     foreach (auto device, m_ListDeviceAudio)
         delete device;
 

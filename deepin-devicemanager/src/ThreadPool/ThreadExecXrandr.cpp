@@ -81,7 +81,8 @@ void ThreadExecXrandr::loadXrandrVerboseInfo(QList<QMap<QString, QString>> &lstM
         }
 
         if (lstMap.size() < 1)
-            continue;
+            continue ;
+
         QMap<QString, QString> &last = lstMap.last();
         // 获取edid信息
         QString edid;

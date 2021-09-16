@@ -166,14 +166,17 @@ void CpuInfo::readSysCpuN(int N, const QString &path)
 
     // set logical id
     lcpu.setLogicalID(N);
+    lcpu.setCoreID(N);
+    CoreCpu core = CoreCpu(N);
+    m_CoreCpu.insert(N, core);
 
     // get core id
-    int core_id = readCoreID(dir);
-    if (core_id >= 0) {
-        lcpu.setCoreID(core_id);
-        CoreCpu core = CoreCpu(core_id);
-        m_CoreCpu.insert(core_id, core);
-    }
+//    int core_id = readCoreID(dir);
+//    if (core_id >= 0) {
+//        lcpu.setCoreID(core_id);
+//        CoreCpu core = CoreCpu(core_id);
+//        m_CoreCpu.insert(core_id, core);
+//    }
 
     // get physical id
     int physical_id = readPhysicalID(dir);
