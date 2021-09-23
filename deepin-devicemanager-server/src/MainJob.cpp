@@ -4,6 +4,7 @@
 #include "DebugTimeManager.h"
 #include "DBusInterface.h"
 #include "DeviceInfoManager.h"
+#include "XinputManager.h"
 
 #include <unistd.h>
 #include <QDateTime>
@@ -31,6 +32,9 @@ MainJob::MainJob(QObject *parent)
     if (!isZhaoXin()) {
         updateAllDevice();
     }
+    XinputManager::instance()->update();
+    const QString &info = DeviceInfoManager::getInstance()->getInfo("hwinfo");
+    XinputManager::instance()->disableDevices(info);
 }
 
 MainJob::~MainJob()
@@ -100,6 +104,13 @@ bool MainJob::isServerRunning()
 
 void MainJob::slotUsbChanged()
 {
+    XinputManager::instance()->update();
+    QProcess process;
+    process.start("hwinfo --sound --network --keyboard --cdrom --disk --display --mouse --usb");
+    process.waitForFinished(-1);
+    const QString &info =process.readAllStandardOutput();
+//    const QString &info = DeviceInfoManager::getInstance()->getInfo("hwinfo");
+    XinputManager::instance()->disableDevices(info);
     executeClientInstruction("DETECT");
 }
 
