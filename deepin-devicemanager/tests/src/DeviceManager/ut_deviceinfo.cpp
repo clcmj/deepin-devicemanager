@@ -32,6 +32,8 @@ class UT_DeviceInfo : public UT_HEAD
 public:
     void SetUp()
     {
+        audio->m_Name = "name";
+        audio->m_Vendor = "vendor";
     }
     void TearDown()
     {
