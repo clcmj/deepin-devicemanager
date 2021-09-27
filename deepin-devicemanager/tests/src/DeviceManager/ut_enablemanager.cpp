@@ -15,7 +15,6 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "../src/DeviceManager/EnableManager.h"
-#include "../src/ZeroMQ/ZmqOrder.h"
 #include "../ut_Head.h"
 #include <QCoreApplication>
 #include <QPaintEvent>
@@ -68,12 +67,6 @@ bool ut_execDriverOrder()
     return false;
 }
 
-TEST_F(EnableManager_UT, EnableManager_UT_enableDeviceByDriver)
-{
-    Stub stub;
-    stub.set(ADDR(ZmqOrder, execDriverOrder), ut_execDriverOrder);
-    ASSERT_EQ(EnableManager::instance()->enableDeviceByDriver(false, "/"), 1);
-}
 
 QByteArray ut_readAllStandardOutput_1()
 {
@@ -93,14 +86,6 @@ bool ut_execIfconfigOrder()
     return true;
 }
 
-TEST_F(EnableManager_UT, EnableManager_UT_enableNetworkByIfconfig)
-{
-    Stub stub;
-    stub.set(ADDR(ZmqOrder, execIfconfigOrder), ut_execIfconfigOrder);
-    stub.set((void (QProcess::*)(const QString &, QIODevice::OpenMode))ADDR(QProcess, start), ut_start);
-    stub.set(ADDR(QProcess, readAllStandardOutput), ut_readAllStandardOutput_1);
-    ASSERT_EQ(EnableManager::instance()->enableNetworkByIfconfig("/", false), 2);
-}
 
 TEST_F(EnableManager_UT, EnableManager_UT_getDriverPath)
 {
