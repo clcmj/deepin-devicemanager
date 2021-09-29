@@ -2,6 +2,7 @@
 #include "DeviceCpu.h"
 
 #include <math.h>
+#include <QDebug>
 
 DeviceCpu::DeviceCpu()
     : DeviceBaseInfo()
@@ -166,6 +167,7 @@ void DeviceCpu::setCurFreq(const QString &curFreq)
 {
     if(!curFreq.isEmpty())
         m_CurFrequency = curFreq;
+    qInfo() << "curFreq *************************************** " << curFreq;
 }
 
 void DeviceCpu::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
@@ -197,7 +199,7 @@ void DeviceCpu::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
     // 获取设备基本信息
     setAttribute(mapInfo, "Manufacturer", m_Vendor);
     setAttribute(mapInfo, "Max Speed", m_Frequency, false);
-    setAttribute(mapInfo, "Current Speed", m_CurFrequency);
+    setAttribute(mapInfo, "Current Speed", m_CurFrequency,false);
     setAttribute(mapInfo, "Family", m_Familly,false);
 
     // 获取其他cpu信息
