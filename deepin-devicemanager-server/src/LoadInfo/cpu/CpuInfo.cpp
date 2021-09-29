@@ -136,7 +136,7 @@ bool CpuInfo::parseInfo(const QString &info)
         lcpu.setBogomips(mapInfo["bogomips"]);
 
         // diff in loognsoon
-        if (m_Arch == "mips64") {
+        if (m_Arch == "loongarch64") {
             lcpu.setBogomips(mapInfo["BogoMIPS"]);
             lcpu.setCurFreq(mapInfo["cpu MHz"] + "MHz");
             lcpu.setModel(mapInfo["cpu model"]);
