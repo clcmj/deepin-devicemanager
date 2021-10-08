@@ -117,6 +117,7 @@ private:
     QString            m_Model;                   //<! 【型号】
     QString            m_Version;                 //<! 【版本】
     QString            m_GraphicsMemory;          //<! 【显存】
+    QString            m_GraphicsType;            //<! 【显存类型】
     QString            m_Width;                   //<! 【位宽】
     QString            m_DisplayPort;             //<! 【DisplayPort】
     QString            m_Clock;                   //<! 【时钟】

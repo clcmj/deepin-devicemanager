@@ -10,7 +10,8 @@ DeviceGpu::DeviceGpu()
     , m_Vendor("")
     , m_Model("")
     , m_Version("")
-    , m_GraphicsMemory("")
+    , m_GraphicsMemory("2GB")
+    , m_GraphicsType("DDR3")
     , m_Width("")
     , m_DisplayPort("Unable")
     , m_Clock("")
@@ -60,6 +61,7 @@ void DeviceGpu::loadBaseDeviceInfo()
     addBaseDeviceInfo(tr("Model"), m_Model);
     addBaseDeviceInfo(tr("Version"), m_Version);
     addBaseDeviceInfo(tr("Graphics Memory"), m_GraphicsMemory);
+    addBaseDeviceInfo(tr("Graphics Type"), m_GraphicsType);
 }
 
 void DeviceGpu::setLshwInfo(const QMap<QString, QString> &mapInfo)
@@ -76,7 +78,6 @@ void DeviceGpu::setLshwInfo(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "vendor", m_Vendor);
     setAttribute(mapInfo, "", m_Model);
     setAttribute(mapInfo, "version", m_Version);
-    setAttribute(mapInfo, "", m_GraphicsMemory);
     setAttribute(mapInfo, "width", m_Width, false);
     setAttribute(mapInfo, "", m_DisplayPort);
     setAttribute(mapInfo, "clock", m_Clock);
@@ -110,15 +111,6 @@ bool DeviceGpu::setHwinfoInfo(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "IRQ", m_IRQ, false);
     setAttribute(mapInfo, "Driver", m_Driver, false);
     setAttribute(mapInfo, "Width", m_Width);
-    setAttribute(mapInfo, "", m_GraphicsMemory);
-    setAttribute(mapInfo, "", m_DisplayOutput);
-    setAttribute(mapInfo, "", m_VGA);
-    setAttribute(mapInfo, "", m_HDMI);
-    setAttribute(mapInfo, "", m_DisplayPort);
-    setAttribute(mapInfo, "", m_Clock);
-    setAttribute(mapInfo, "", m_CurrentResolution);
-    setAttribute(mapInfo, "", m_MinimumResolution);
-    setAttribute(mapInfo, "", m_MaximumResolution);
 
     // 获取 m_UniqueKey
     QRegExp re(":[0-9]{2}:[0-9]{2}");
@@ -156,16 +148,16 @@ void DeviceGpu::setXrandrInfo(const QMap<QString, QString> &mapInfo)
 void DeviceGpu::setDmesgInfo(const QString &info)
 {
     // Bug-85049 JJW 显存特殊处理
-    if (info.contains("null")) {
-        QString size = info;
-        m_GraphicsMemory = size.replace("null=", "");
-    }
+//    if (info.contains("null")) {
+//        QString size = info;
+//        m_GraphicsMemory = size.replace("null=", "");
+//    }
 
-    // 设置显存大小
-    if (info.contains(m_UniqueKey)) {
-        QString size = info;
-        m_GraphicsMemory = size.replace(m_UniqueKey + "=", "");
-    }
+//    // 设置显存大小
+//    if (info.contains(m_UniqueKey)) {
+//        QString size = info;
+//        m_GraphicsMemory = size.replace(m_UniqueKey + "=", "");
+//    }
 }
 
 void DeviceGpu::setGpuInfo(const QMap<QString, QString> &mapInfo)

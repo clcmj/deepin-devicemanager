@@ -425,6 +425,11 @@
         <translation>显存</translation>
     </message>
     <message>
+        <location filename="../src/DeviceManager/DeviceGpu.cpp" line="63"/>
+        <source>Graphics Type</source>
+        <translation>类型</translation>
+    </message>
+    <message>
         <location filename="../src/DeviceManager/DeviceGpu.cpp" line="210"/>
         <source>Physical ID</source>
         <translation>物理ID</translation>

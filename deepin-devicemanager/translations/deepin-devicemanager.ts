@@ -425,6 +425,11 @@
         <translation>Graphics Memory</translation>
     </message>
     <message>
+        <location filename="../src/DeviceManager/DeviceGpu.cpp" line="63"/>
+        <source>Graphics Type</source>
+        <translation>Graphics Type</translation>
+    </message>
+    <message>
         <location filename="../src/DeviceManager/DeviceGpu.cpp" line="210"/>
         <source>Physical ID</source>
         <translation>Physical ID</translation>
