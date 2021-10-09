@@ -11,9 +11,9 @@ DWIDGET_USE_NAMESPACE
 
 DevicePower::DevicePower()
     : DeviceBaseInfo()
-    , m_Name("")
+    , m_Name("507487-3S1P")
     , m_Vendor("东莞赣锋电子有限公司")
-    , m_Model("507487-3S1P")
+    , m_Model("")
     , m_Type("")
     , m_SerialNumber("")
     , m_ElectricType("")
@@ -43,7 +43,7 @@ bool DevicePower::setInfoFromUpower(const QMap<QString, QString> &mapInfo)
     if (mapInfo["Device"].contains("line_power", Qt::CaseInsensitive)) {
         return false;
     }
-    m_Name = QObject::tr("battery");
+//    m_Name = QObject::tr("battery");
 
     setAttribute(mapInfo, "", m_Vendor);
     setAttribute(mapInfo, "", m_Model);
@@ -83,7 +83,7 @@ bool DevicePower::setInfoFromUpower(const QMap<QString, QString> &mapInfo)
 void DevicePower::setDaemonInfo(const QMap<QString, QString> &mapInfo)
 {
     // 设置守护进程信息
-    if (m_Name == QObject::tr("battery"))
+    if (m_Name == "507487-3S1P"/*QObject::tr("battery")*/)
         getOtherMapInfo(mapInfo);
 }
 
