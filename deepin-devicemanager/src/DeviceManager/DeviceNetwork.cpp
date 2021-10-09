@@ -164,7 +164,7 @@ void DeviceNetwork::loadOtherDeviceInfo()
     addOtherDeviceInfo(tr("Auto Negotiation"), m_Autonegotiation);
     addOtherDeviceInfo(tr("Clock"), m_Clock);
     addOtherDeviceInfo(tr("Width"), m_Width);
-    addOtherDeviceInfo(tr("Memory"), m_Memory);
+    addOtherDeviceInfo(tr("Memory Address"), m_Memory);
     addOtherDeviceInfo(tr("IRQ"), m_Irq);
     addOtherDeviceInfo(tr("MAC Address"), m_MACAddress);
     addOtherDeviceInfo(tr("Logical Name"), m_LogicalName);
