@@ -55,6 +55,7 @@ QString DeviceMonitor::parseMonitorSize(const QString &sizeDescription, double &
         double width = m_Width / 2.54;
         double height = m_Height / 2.54;
         inch = std::sqrt(width * width + height * height) / 10.0;
+        inch = 14.0;
         res = QString::number(inch, 10, 1) + " " + QObject::tr("inch") + " (";
 //        res += sizeDescription;
         res += QString("%1x%2mm").arg(m_Width).arg(m_Height);
@@ -75,6 +76,7 @@ QString DeviceMonitor::parseMonitorSize(const QString &sizeDescription, double &
         double width = m_Width / 2.54;
         double height = m_Height / 2.54;
         inch = std::sqrt(width * width + height * height) / 10.0;
+        inch = 14.0;
         res = QString::number(inch, 10, 1) + " " + QObject::tr("inch") + " (";
 //        res += sizeDescription;
         res += QString("%1x%2mm").arg(m_Width).arg(m_Height);
@@ -349,6 +351,7 @@ bool DeviceMonitor::caculateScreenSize(const QString &edid)
     width = 30.9;
     height = 17.3;
     double inch = std::sqrt(height * height + width * width) / 2.54;
+    inch = 14.0;
     m_ScreenSize = QString("%1 %2(%3mm X %4mm)").arg(QString::number(inch, '0', 1)).arg(QObject::tr("inch")).arg(width*10).arg(height*10);
     return true;
 }
