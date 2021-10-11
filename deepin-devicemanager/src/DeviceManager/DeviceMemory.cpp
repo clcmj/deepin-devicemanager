@@ -50,18 +50,12 @@ void DeviceMemory::setKLUInfoFromLshw(const QMap<QString, QString> &mapInfo)
         m_Size = QString::number(size, 'g', 0) + QString("GB");
     }
 
-    // 设置速度 华为panguW定制处理
-//    setAttribute(mapInfo, "clock", m_Speed);
-//    if (m_Speed.contains("MT/s")) {
-//        m_Speed.replace("MT/s", "MHz");
-//    }
-    m_Speed = "3200MHz";
+    // 设置速度 华为panguW Bug97385
+    setAttribute(mapInfo, "clock", m_Speed);
+    if (m_Speed.contains("MT/s")) {
+        m_Speed.replace("MT/s", "MHz");
+    }
 
-//    // KLU要求 去除2667MHz（0.4ns） 中的 （0.4ns）
-//    QRegExp reg("([\\s\\S]*)\\([\\s\\S]*\\)");
-//    if (reg.indexIn(m_Speed) != -1) {
-//        m_Speed = reg.cap(1);
-//    }
 
     setAttribute(mapInfo, "width", m_TotalBandwidth);
     setAttribute(mapInfo, "width", m_DataBandwidth);
@@ -78,12 +72,12 @@ bool DeviceMemory::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Part Number", m_Name);
     setAttribute(mapInfo, "Serial Number", m_SerialNumber);
 
-    // 华为panguW定制处理
-//    setAttribute(mapInfo, "Configured Memory Speed", m_ConfiguredSpeed);
-//    if (m_ConfiguredSpeed.contains("MT/s")) {
-//        m_ConfiguredSpeed.replace("MT/s", "MHz");
-//    }
-    m_ConfiguredSpeed = "3200MHz";
+    // 华为panguW Bug97385
+    setAttribute(mapInfo, "Configured Memory Speed", m_ConfiguredSpeed);
+    if (m_ConfiguredSpeed.contains("MT/s")) {
+        m_ConfiguredSpeed.replace("MT/s", "MHz");
+    }
+
 
     setAttribute(mapInfo, "Minimum Voltage", m_MinimumVoltage);
     setAttribute(mapInfo, "Maximum Voltage", m_MaximumVoltage);

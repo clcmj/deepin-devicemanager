@@ -478,5 +478,10 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
         m_Model = mapInfo["Model Number"];
     }
 
+    // 接口，PanguW 机械硬盘不显示接口类型Bug97384
+    if (mapInfo["SATA Version is"].contains("SATA", Qt::CaseInsensitive) == true) {
+        m_Interface = "SATA";
+    }
+
     setAttribute(mapInfo, "Serial Number", m_SerialNumber, true);
 }
