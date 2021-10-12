@@ -326,8 +326,8 @@ void DeviceStorage::loadBaseDeviceInfo()
 void DeviceStorage::loadOtherDeviceInfo()
 {
     // 添加其他信息,成员变量
-    addOtherDeviceInfo(tr("Power Cycle Count"), m_PowerCycleCount);
-    addOtherDeviceInfo(tr("Power On Hours"), m_PowerOnHours);
+//    addOtherDeviceInfo(tr("Power Cycle Count"), m_PowerCycleCount);
+//    addOtherDeviceInfo(tr("Power On Hours"), m_PowerOnHours);
     addOtherDeviceInfo(tr("Firmware Version"), m_FirmwareVersion);
     addOtherDeviceInfo(tr("Speed"), m_Speed);
     addOtherDeviceInfo(tr("Description"), m_Description);
@@ -417,7 +417,7 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
     m_Size.replace(QRegExp(".0[1-9]"), ".00");
 
     // 型号
-    if (m_Model.isEmpty()) {
+    if (m_Model.isEmpty() || m_Model == "Disk") {
         //SATA
         if (mapInfo.find("Device Model") != mapInfo.end())
             m_Model = mapInfo["Device Model"];

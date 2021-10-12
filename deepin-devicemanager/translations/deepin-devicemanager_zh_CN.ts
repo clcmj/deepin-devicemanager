@@ -102,7 +102,7 @@
     <message>
         <location filename="../src/DeviceManager/DeviceAudio.cpp" line="236"/>
         <source>Memory</source>
-        <translation>内存</translation>
+        <translation>内存地址</translation>
     </message>
     <message>
         <location filename="../src/DeviceManager/DeviceAudio.cpp" line="237"/>
@@ -1018,7 +1018,7 @@
     <message>
         <location filename="../src/DeviceManager/DeviceNetwork.cpp" line="167"/>
         <source>Memory</source>
-        <translation>内存</translation>
+        <translation>内存地址</translation>
     </message>
     <message>
         <location filename="../src/DeviceManager/DeviceNetwork.cpp" line="168"/>
