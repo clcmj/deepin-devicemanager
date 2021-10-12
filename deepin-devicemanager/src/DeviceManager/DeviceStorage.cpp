@@ -426,5 +426,13 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
             m_Model = mapInfo["Model Number"];
     }
 
+    if(mapInfo.find("Model Number") != mapInfo.end()){
+        QString model = mapInfo["Model Number"];
+        if(model.startsWith("FORESEE")){
+            m_Vendor = "Shenzhen Longsys Electronics Co., Ltd";
+            m_Model = mapInfo["Model Number"];
+        }
+    }
+
     setAttribute(mapInfo, "Serial Number", m_SerialNumber, true);
 }
