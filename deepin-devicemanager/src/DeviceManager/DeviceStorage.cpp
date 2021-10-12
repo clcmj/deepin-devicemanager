@@ -424,7 +424,7 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
     m_FirmwareVersion = mapInfo["Firmware Version"];
 
     // 速度
-    QString sataVersion = mapInfo["SATA Version is"];
+    QString sataVersion = mapInfo["SATA Version"];
     QStringList strList = sataVersion.split(",");
     if (strList.size() == 2) {
         m_Speed = strList[1];
@@ -479,7 +479,8 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
     }
 
     // 接口，PanguW 机械硬盘不显示接口类型Bug97384
-    if (mapInfo["SATA Version is"].contains("SATA", Qt::CaseInsensitive) == true) {
+    // 在处理smartctl信息时，去除了SATA Version is中的is，见CmdTool::getMapInfoFromSmartctl
+    if (mapInfo["SATA Version"].contains("SATA", Qt::CaseInsensitive) == true) {
         m_Interface = "SATA";
     }
 
