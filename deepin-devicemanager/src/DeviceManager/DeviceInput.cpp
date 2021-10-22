@@ -257,7 +257,7 @@ void DeviceInput::loadOtherDeviceInfo()
 {
     // 添加其他信息,成员变量
     addOtherDeviceInfo(tr("Speed"), m_Speed);
-    addOtherDeviceInfo(tr("Maximum Power"), m_MaximumPower);
+    addOtherDeviceInfo(tr("Maximum Current"), m_MaximumPower);   // 1050需求将最大功率改为最大电流
     addOtherDeviceInfo(tr("Driver"), m_Driver);
     addOtherDeviceInfo(tr("Capabilities"), m_Capabilities);
     addOtherDeviceInfo(tr("Version"), m_Version);

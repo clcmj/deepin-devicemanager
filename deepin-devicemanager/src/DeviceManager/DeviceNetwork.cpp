@@ -151,8 +151,8 @@ void DeviceNetwork::loadBaseDeviceInfo()
 void DeviceNetwork::loadOtherDeviceInfo()
 {
     // 添加其他信息,成员变量
-    addOtherDeviceInfo(tr("Capacity"), m_Capacity);
-    addOtherDeviceInfo(tr("Speed"), m_Speed);
+    addOtherDeviceInfo(tr("Maximum Rate"), m_Capacity);        // 1050需求 容量改为最大速率
+    addOtherDeviceInfo(tr("Negotiation Rate"), m_Speed);       // 1050需求 速度改为协商速率
     addOtherDeviceInfo(tr("Port"), m_Port);
     addOtherDeviceInfo(tr("Multicast"), m_Multicast);
     addOtherDeviceInfo(tr("Link"), m_Link);
@@ -164,7 +164,7 @@ void DeviceNetwork::loadOtherDeviceInfo()
     addOtherDeviceInfo(tr("Auto Negotiation"), m_Autonegotiation);
     addOtherDeviceInfo(tr("Clock"), m_Clock);
     addOtherDeviceInfo(tr("Width"), m_Width);
-    addOtherDeviceInfo(tr("Memory"), m_Memory);
+    addOtherDeviceInfo(tr("Memory Address"), m_Memory);        // 1050需求 内存改为内存地址
     addOtherDeviceInfo(tr("IRQ"), m_Irq);
     addOtherDeviceInfo(tr("MAC Address"), m_MACAddress);
     addOtherDeviceInfo(tr("Logical Name"), m_LogicalName);

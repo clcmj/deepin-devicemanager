@@ -233,7 +233,7 @@ void DeviceAudio::loadOtherDeviceInfo()
     addOtherDeviceInfo(tr("Capabilities"), m_Capabilities);
     addOtherDeviceInfo(tr("Clock"), m_Clock);
     addOtherDeviceInfo(tr("Width"), m_Width);
-    addOtherDeviceInfo(tr("Memory"), m_Memory);
+    addOtherDeviceInfo(tr("Memory Address"), m_Memory);   // 1050需求 内存改为内存地址
     addOtherDeviceInfo(tr("IRQ"), m_Irq);
 
     // 将QMap<QString, QString>内容转存为QList<QPair<QString, QString>>
