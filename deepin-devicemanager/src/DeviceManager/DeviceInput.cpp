@@ -1,12 +1,9 @@
 // 项目自身文件
 #include "DeviceInput.h"
+#include "DeviceManager.h"
 
 // Qt库文件
 #include <QDebug>
-
-// 其它头文件
-#include "EnableManager.h"
-#include "DeviceManager.h"
 
 DeviceInput::DeviceInput()
     : DeviceBaseInfo()
@@ -168,10 +165,6 @@ void DeviceInput::setInfoFromInput()
 
     // Uniq属性标识蓝牙设备Mac地址
     m_keysToPairedDevice = mapInfo["Uniq"].toUpper();
-
-    // 设置设备是否可用
-    int id = EnableManager::instance()->getDeviceID(m_Name, m_KeysToCatDevices);
-    m_Enable = EnableManager::instance()->isDeviceEnable(id);
 }
 
 void DeviceInput::setInfoFromBluetoothctl()
@@ -217,11 +210,7 @@ const QString DeviceInput::getOverviewInfo()
 EnableDeviceStatus DeviceInput::setEnable(bool e)
 {
     // 设置设备状态
-    int id = EnableManager::instance()->getDeviceID(m_Name, m_KeysToCatDevices);
-    EnableDeviceStatus res = EnableManager::instance()->enableDeviceByInput(e, id);
-    if (res == EDS_Success)
-        m_Enable = e;
-    return res;
+    return EDS_Success;
 }
 
 bool DeviceInput::enable()

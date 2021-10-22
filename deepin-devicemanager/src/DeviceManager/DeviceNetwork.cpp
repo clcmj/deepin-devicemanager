@@ -1,9 +1,6 @@
 // 项目自身文件
 #include "DeviceNetwork.h"
 
-// 其它头文件
-#include "EnableManager.h"
-
 DeviceNetwork::DeviceNetwork()
     : DeviceBaseInfo()
     , m_Name("")
@@ -106,13 +103,12 @@ const QString DeviceNetwork::getOverviewInfo()
 EnableDeviceStatus DeviceNetwork::setEnable(bool e)
 {
     // 设置网卡禁用启用
-    return EnableManager::instance()->enableNetworkByIfconfig(m_LogicalName, e);
+    return EDS_Faild;
 }
 
 bool DeviceNetwork::enable()
 {
     // 通过ifconfig配置网卡禁用启用
-    m_Enable = EnableManager::instance()->isNetworkEnableByIfconfig(m_LogicalName);
     return m_Enable;
 }
 
