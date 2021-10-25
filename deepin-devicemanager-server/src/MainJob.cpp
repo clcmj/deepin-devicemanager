@@ -43,7 +43,6 @@ void MainJob::working()
     if (!initDBus()) {
         exit(1);
     }
-    mp_IFace->setMainJob(this);
 
     // 启动线程监听USB是否有新的设备
     mp_DetectThread = new DetectThread(this);
