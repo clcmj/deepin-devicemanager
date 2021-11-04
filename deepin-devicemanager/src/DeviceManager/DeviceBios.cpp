@@ -40,9 +40,10 @@ bool DeviceBios::setBaseBoardInfo(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Manufacturer", m_Vendor);
     setAttribute(mapInfo, "Version", m_Version);   //主板->主板信息->版本  由bios获取
 //    m_Version = "VB";
-//    setAttribute(mapInfo, "Product Name", m_ProductName);
+    // 固化回退
+    setAttribute(mapInfo, "Product Name", m_ProductName);
     // 根据panguW送测要求修改 m_ProductName 写死
-    m_ProductName = "SP1PGUWM";
+    //m_ProductName = "SP1PGUWM";
     setAttribute(mapInfo, "Board name", m_ProductName, false);
     setAttribute(mapInfo, "chipset", m_ChipsetFamily);
     m_IsBoard = true;

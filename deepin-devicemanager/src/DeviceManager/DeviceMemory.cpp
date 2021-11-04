@@ -38,7 +38,12 @@ void DeviceMemory::setKLUInfoFromLshw(const QMap<QString, QString> &mapInfo)
     // 设置KLU内存属性
     setAttribute(mapInfo, "product", m_Name, false);
     setAttribute(mapInfo, "description", m_Name, false);
+    if (m_Name == "NULL")  // HW要求
+        m_Name = "--";
+
     setAttribute(mapInfo, "vendor", m_Vendor);
+    if (m_Vendor == "NULL") // HW要求
+        m_Vendor = "--";
     setAttribute(mapInfo, "slot", m_Locator);
     setAttribute(mapInfo, "size", m_Size);
     if (m_Size.contains("GiB")) {
@@ -70,6 +75,8 @@ bool DeviceMemory::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
         return false;
     }
     setAttribute(mapInfo, "Part Number", m_Name);
+    if (m_Name == "NULL") // HW要求
+        m_Name = "--";
     setAttribute(mapInfo, "Serial Number", m_SerialNumber);
 
     // 华为panguW Bug97385
