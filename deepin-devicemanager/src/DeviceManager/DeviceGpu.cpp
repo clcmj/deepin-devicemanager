@@ -1,5 +1,6 @@
 // 项目自身文件
 #include "DeviceGpu.h"
+#include "DBusInterface.h"
 
 // Qt库文件
 #include<QDebug>
@@ -165,6 +166,11 @@ void DeviceGpu::setDmesgInfo(const QString &info)
     if (info.contains(m_UniqueKey)) {
         QString size = info;
         m_GraphicsMemory = size.replace(m_UniqueKey + "=", "");
+    }
+
+    // nvidia显卡从nvidia中获取显存
+    if (m_GraphicsMemory.isEmpty()) {
+        DBusInterface::getInstance()->getInfo("GPU Memory", m_GraphicsMemory);
     }
 }
 
