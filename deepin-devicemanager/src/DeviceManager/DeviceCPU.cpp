@@ -34,7 +34,7 @@ DeviceCpu::DeviceCpu()
 void DeviceCpu::initFilterKey()
 {
     addFilterKey(QObject::tr("CPU implementer"));
-    addFilterKey(QObject::tr("CPU architecture"));
+//    addFilterKey(QObject::tr("CPU architecture"));
     addFilterKey(QObject::tr("CPU variant"));
     addFilterKey(QObject::tr("CPU part"));
     addFilterKey(QObject::tr("CPU revision"));
