@@ -1,4 +1,5 @@
 #include "ThreadPoolTask.h"
+#include "cpu/CpuInfo.h"
 
 #include <QTime>
 #include <QProcess>
@@ -26,6 +27,10 @@ ThreadPoolTask::~ThreadPoolTask()
 
 void ThreadPoolTask::run()
 {
+    if (m_Cmd == "lscpu") {
+        loadCpuInfo();
+        return;
+    }
     runCmdToCache(m_Cmd);
 }
 
@@ -243,5 +248,21 @@ void ThreadPoolTask::loadLspciVSInfoToFile(QFile &file)
             }
         }
         file.close();
+    }
+}
+
+void ThreadPoolTask::loadCpuInfo()
+{
+    CpuInfo cpu;
+    if (cpu.loadCpuInfo()) {
+        QString info;
+        cpu.logicalCpus(info);
+        DeviceInfoManager::getInstance()->addInfo("lscpu", info);
+
+        QString numInfo;
+        numInfo += QString("%1 : %2\n").arg("physical").arg(cpu.physicalNum());
+        numInfo += QString("%1 : %2\n").arg("core").arg(cpu.coreNum());
+        numInfo += QString("%1 : %2\n").arg("logical").arg(cpu.logicalNum());
+        DeviceInfoManager::getInstance()->addInfo("lscpu_num", numInfo);
     }
 }

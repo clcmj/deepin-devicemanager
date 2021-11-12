@@ -112,6 +112,10 @@ private:
      */
     void loadLspciVSInfoToFile(QFile &file);
 
+    /**
+     * @brief loadCpuInfo
+     */
+    void loadCpuInfo();
 private:
     QString   m_Cmd;                  //<! cmd
     QString   m_File;                 //<! file name

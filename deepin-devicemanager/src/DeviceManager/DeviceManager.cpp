@@ -660,7 +660,7 @@ void DeviceManager::setCpuRefreshInfoFromlscpu(const QMap<QString, QString> &map
         if (!device)
             continue;
 
-        device->setInfoFromLscpu(mapInfo);
+        device->setCurFreq(mapInfo["CPU MHz"]);
     }
 }
 

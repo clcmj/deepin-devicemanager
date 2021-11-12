@@ -39,19 +39,11 @@ void LoadCpuInfoThread::runCmd(QString &info, const QString &cmd)
     info = process.readAllStandardOutput();
 }
 
-void LoadCpuInfoThread::loadCpuInfo(QList<QMap<QString, QString>> &lstMap, const QString &cmd)
+void LoadCpuInfoThread::loadCpuInfo(QMap<QString, QString> &mapInfo, const QString &cmd)
 {
     QString cpuInfo;
     runCmd(cpuInfo, cmd);
-    QStringList items = cpuInfo.split("\n");
-    foreach (const QString &item, items) {
-        if (item.isEmpty())
-            continue;
-        QMap<QString, QString> mapInfo;
-
-        getMapInfoFromCmd(item, mapInfo, ":");
-        lstMap.append(mapInfo);
-    }
+    getMapInfoFromCmd(cpuInfo, mapInfo, ": ");
 }
 
 void LoadCpuInfoThread::getMapInfoFromCmd(const QString &info, QMap<QString, QString> &mapInfo, const QString &ch)
@@ -67,15 +59,10 @@ void LoadCpuInfoThread::getMapInfoFromCmd(const QString &info, QMap<QString, QSt
 void LoadCpuInfoThread::getCpuInfoFromLscpu()
 {
     // 生成CPU
-    const QList<QMap<QString, QString>> &lstCatCpu = DeviceManager::instance()->cmdInfo("cat_cpuinfo");
+    const QList<QMap<QString, QString>> &lstCatCpu = DeviceManager::instance()->cmdInfo("lscpu");
     if (lstCatCpu.size() == 0)
         return;
-    QList<QMap<QString, QString>> lstMap;
-    loadCpuInfo(lstMap, "lscpu");
-    QList<QMap<QString, QString>>::const_iterator it = lstMap.begin();
-    for (; it != lstMap.end(); ++it) {
-        if ((*it).size() < 1)
-            continue;
-        DeviceManager::instance()->setCpuRefreshInfoFromlscpu(*it);
-    }
+    QMap<QString, QString> mapInfo;
+    loadCpuInfo(mapInfo, "lscpu");
+    DeviceManager::instance()->setCpuRefreshInfoFromlscpu(mapInfo);
 }
