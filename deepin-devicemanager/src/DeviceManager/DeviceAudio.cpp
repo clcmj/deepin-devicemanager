@@ -91,10 +91,25 @@ void DeviceAudio::setInfoFromCatAudio(const QMap<QString, QString> &mapInfo)
 {
     setAttribute(mapInfo, "Name", m_Name);
 
+    // 102606   HW要求da_combine_v5 改为 Hi6405
+    if (mapInfo["Name"].contains("da_combine_v5", Qt::CaseInsensitive) == true) {
+        m_Name = "Hi6405";
+    }
+
     //设置基本信息 厂商,初始化可显示信息时没有厂商信息
     setAttribute(mapInfo, "Vendor", m_Vendor);
 
-    loadOtherDeviceInfo(mapInfo);
+    // 102606   HW要求da_combine_v5 改为 Hi6405
+    QMap<QString, QString> tempMap;
+    foreach (const QString &key, mapInfo.keys()) {
+        tempMap.insert(key, mapInfo[key]);
+    }
+    if (tempMap["Model"].contains("da_combine_v5", Qt::CaseInsensitive) == true) {
+        tempMap["Model"] = "Hi6405";
+
+    }
+
+    loadOtherDeviceInfo(tempMap);
 }
 
 bool DeviceAudio::setAudioChipFromDmesg(const QString &info)
