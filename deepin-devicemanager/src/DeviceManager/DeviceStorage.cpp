@@ -178,11 +178,14 @@ bool DeviceStorage::addNVMEInfoFromlshw(const QMap<QString, QString> &mapInfo)
 
     // SysFS Device Link: /devices/pci0000:00/0000:00:05.0/0000:0d:00.0/nvme/nvme0
     //bus info: pci@0000:0d:00.0
-    // 确认为同一设备
-    if (m_NvmeKey.contains(key, Qt::CaseInsensitive)) {
-        setAttribute(mapInfo, "vendor", m_Vendor);
+
+    if (m_NvmeKey.contains(key, Qt::CaseInsensitive) == false) {
+        // 不是同一设备
+        return false;
     }
 
+    // 确认为同一设备
+    setAttribute(mapInfo, "vendor", m_Vendor);
     // 更新接口
     setAttribute(mapInfo, "interface", m_Interface, false);
     // 获取基本信息
