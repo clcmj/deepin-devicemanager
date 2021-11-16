@@ -430,4 +430,9 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
     }
 
     setAttribute(mapInfo, "Serial Number", m_SerialNumber, true);
+
+    if(mapInfo.find("Device Model") != mapInfo.end() && mapInfo["Device Model"] == "SINKER SDK256TYL-CEN"){
+        m_Model = "SINKER SDK256TYL-CEN";
+        m_Vendor = "Powev Electronic Technology Co.,Limited";
+    }
 }
