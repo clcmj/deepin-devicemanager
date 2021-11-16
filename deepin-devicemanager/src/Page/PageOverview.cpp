@@ -65,7 +65,7 @@ void PageOverview::updateInfo(const QMap<QString, QString> &map)
     QMap<QString, QString> mapCloud;
     mapCloud = DeviceManager::instance()->getHWCloudMap();
 
-    int row = map.size() + mapCloud.size() - 1;
+    int row = map.size() + mapCloud.size();
 
     // 根据页面高度确定表格最多显示行数
     int maxRow = this->height() / ROW_HEIGHT - 4;
