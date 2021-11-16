@@ -1,5 +1,6 @@
 // 项目自身文件
 #include "DeviceComputer.h"
+#include "DeviceManager.h"
 
 // Qt库文件
 #include <QDebug>
@@ -127,6 +128,84 @@ const QString DeviceComputer::getOverviewInfo()
 const QString DeviceComputer::getOSInfo()
 {
     return m_OsDescription + " " + m_OS;
+}
+
+const QMap<QString, QString> &DeviceComputer::getHWCloudInfo()
+{
+    return m_CloudMap;
+}
+
+void DeviceComputer::getInfoFromEnv()
+{
+    QFile file("/usr/local/vdi/base.env");
+    if (file.open(QIODevice::ReadOnly)) {
+        QString info = file.readAll();
+        file.close();
+
+        QStringList lines = info.split("\n");
+        foreach (QString line, lines) {
+            if (line.isEmpty())
+                continue;
+            line.replace("export ", "");
+            QStringList words = line.split("=");
+            if (words.size() != 2)
+                continue;
+            QString key = words[0];
+            if (words[0] == "SW_IMG_VERSION") {
+                key = tr("SW_IMG_VERSION");        // 整机系统版本号
+                m_CloudMap.insert(key, words[1]);
+            } else if (words[0] == "SW_HARDWARE_MODEL") {
+                key = tr("SW_HARDWARE_MODEL");     // 整机产品名称
+                m_CloudMap.insert(key, words[1]);
+            } else {
+                continue;
+            }
+        }
+    }
+}
+
+void DeviceComputer::getInfoFromDmi()
+{
+    // get SYSTEM_VERSION  /usr/share/version/VersionInfo
+    QFile file("/usr/share/version/VersionInfo");
+    if (file.open(QIODevice::ReadOnly)) {
+        QString info = file.readAll();
+        file.close();
+
+        QStringList lines = info.split("\n");
+        foreach (QString line, lines) {
+            if (line.isEmpty())
+                continue;
+            QStringList words = line.split("=");
+            if (words.size() != 2)
+                continue;
+            QString key = words[0];
+            if (key == "Version") {
+                key = tr("SYSTEM_VERSION");   // 整机系统版本号
+                m_CloudMap.insert(key, words[1]);
+            }
+        }
+    }
+
+    // get TERMINAL_MODEL
+    const QList<QMap<QString, QString>> &lstInfo = DeviceManager::instance()->cmdInfo("dmidecode1");
+    if (lstInfo.size() <= 0)
+        return;
+
+    const QMap<QString, QString> &mapt = lstInfo[0];
+    if (mapt.find("SKU Number") == mapt.end())
+        return;
+
+    QString info = mapt["SKU Number"];
+    if (!info.contains("|"))
+        return;
+
+    QStringList lst = info.split("|");
+    if (lst.size() != 2)
+        return;
+
+    m_CloudMap.insert(tr("SERIAL_NUMBER"), lst[0]);    // 整机序列号
+    m_CloudMap.insert(tr("TERMINAL_MODEL"), lst[1]);   // 整机产品名称
 }
 
 void DeviceComputer::initFilterKey()

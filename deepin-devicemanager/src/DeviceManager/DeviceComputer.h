@@ -102,6 +102,22 @@ public:
 
     const QString getOSInfo();
 
+    /**
+     * @brief getHWCloudInfo：获取华为云设备信息
+     * @return 华为云设备信息
+     */
+    const QMap<QString, QString> &getHWCloudInfo();
+
+    /**
+     * @brief getInfoFromEnv : 瑞芯项目需求 Get info from /usr/local/vdi/base.env
+     */
+    void getInfoFromEnv();
+
+    /**
+     * @brief getInfoFromDmi : 实达项目需求
+     */
+    void getInfoFromDmi();
+
 protected:
 
     /**
@@ -132,6 +148,7 @@ private:
     QString            m_Name;
     QString            m_Type;
     QString            m_Driver;
+    QMap<QString, QString>    m_CloudMap;      // HW cloud info
 };
 
 #endif // DEVICECOMPUTER_H

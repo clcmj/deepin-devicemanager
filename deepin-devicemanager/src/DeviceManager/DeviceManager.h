@@ -269,7 +269,7 @@ public:
      * @brief updateNetworkInfo 更新网络信息
      * @param mapInfo
      */
-    void updateNetworkInfo(const QMap<QString,QString>& mapInfo);
+    void updateNetworkInfo(const QMap<QString, QString> &mapInfo);
 
     /**
      * @brief correctNetworkLinkStatus:校正网络连接状态
@@ -477,6 +477,12 @@ public:
     const QMap<QString, QString>  &getDeviceOverview();
 
     /**
+     * @brief getHWCloudMap:获取华为云信息
+     * @return map 华为云信息map
+     */
+    const QMap<QString, QString>  &getHWCloudMap();
+
+    /**
      * @brief getDeviceDriverPool：获取所有设备驱动与设备关联map
      * @return 所有设备的驱动与设备关联map
      */
@@ -529,6 +535,7 @@ private:
     QStringList                                    m_BusIdList;            //<! 所有的设备总线ID
     QMap<QString, QList<QMap<QString, QString> > > m_cmdInfo;              //<! 所有设备信息获取命令
     QMap<QString, QString>                         m_OveriewMap;           //<! 所有的设备与其对应概况信息
+    QMap<QString, QString>                         m_HWCloudMap;           //<! 华为云设备信息Map
     QMap<QString, QList<DeviceBaseInfo *>>         m_DeviceClassMap;       //<! 所有的设备类型与其对应设备列表
     QMap<QString, QMap<QString, QStringList>>      m_DeviceDriverPool;     //<! 所有的设备驱动与与其对应的设备类型，设备名称列表
     QMap<QString, QMap<QString, QString> >         m_InputDeviceInfo;

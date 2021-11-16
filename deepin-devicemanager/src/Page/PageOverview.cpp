@@ -63,8 +63,8 @@ void PageOverview::updateInfo(const QMap<QString, QString> &map)
 //    export SW_TCM_VERSION=0.0.5
 //    export SW_HARDWARE_MODEL整机产品名称="HT3300"
     QMap<QString, QString> mapCloud;
-    getInfoFromEnv(mapCloud);
-    getInfoFromDmi(mapCloud);
+    mapCloud = DeviceManager::instance()->getHWCloudMap();
+
     int row = map.size() + mapCloud.size() - 1;
 
     // 根据页面高度确定表格最多显示行数
