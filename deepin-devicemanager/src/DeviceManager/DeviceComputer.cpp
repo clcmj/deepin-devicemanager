@@ -137,7 +137,7 @@ const QMap<QString, QString> &DeviceComputer::getHWCloudInfo()
 
 void DeviceComputer::getInfoFromEnv()
 {
-    QFile file("/usr/local/vdi/base.env");
+    QFile file("/usr/local/vdi/sunniwellinfo.env");
     if (file.open(QIODevice::ReadOnly)) {
         QString info = file.readAll();
         file.close();
