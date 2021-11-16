@@ -62,10 +62,11 @@ void PageOverview::updateInfo(const QMap<QString, QString> &map)
 //    export SW_IMG_VERSION整机系统版本号=1.0.0.B004.0
 //    export SW_TCM_VERSION=0.0.5
 //    export SW_HARDWARE_MODEL整机产品名称="HT3300"
-    QMap<QString, QString> mapCloud;
-    mapCloud = DeviceManager::instance()->getHWCloudMap();
+//    QMap<QString, QString> mapCloud;
+//    mapCloud = DeviceManager::instance()->getHWCloudMap();
 
-    int row = map.size() + mapCloud.size();
+//    int row = map.size() + mapCloud.size();
+    int row = map.size();
 
     // 根据页面高度确定表格最多显示行数
     int maxRow = this->height() / ROW_HEIGHT - 4;
@@ -79,13 +80,13 @@ void PageOverview::updateInfo(const QMap<QString, QString> &map)
     mp_Overview->setColumnAndRow(row - 1);
 
     int i = 0;
-    foreach (const QString &key, mapCloud.keys()) {
-        QTableWidgetItem *itemFirst = new QTableWidgetItem(key);
-        mp_Overview->setItem(i, 0, itemFirst);
-        QTableWidgetItem *itemSecond = new QTableWidgetItem(mapCloud[key].replace("\"", ""));
-        mp_Overview->setItem(i, 1, itemSecond);
-        ++i;
-    }
+//    foreach (const QString &key, mapCloud.keys()) {
+//        QTableWidgetItem *itemFirst = new QTableWidgetItem(key);
+//        mp_Overview->setItem(i, 0, itemFirst);
+//        QTableWidgetItem *itemSecond = new QTableWidgetItem(mapCloud[key].replace("\"", ""));
+//        mp_Overview->setItem(i, 1, itemSecond);
+//        ++i;
+//    }
 
     const QList<QPair<QString, QString>> types = DeviceManager::instance()->getDeviceTypes();
     foreach (auto iter, types) {
