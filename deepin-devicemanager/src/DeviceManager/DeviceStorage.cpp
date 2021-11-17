@@ -431,8 +431,13 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
 
     setAttribute(mapInfo, "Serial Number", m_SerialNumber, true);
 
-    if(mapInfo.find("Device Model") != mapInfo.end() && mapInfo["Device Model"].contains("TYK-CEN")){
+    if (mapInfo.find("Device Model") != mapInfo.end() && mapInfo["Device Model"].contains("TYK-CEN")) {
         m_Model = mapInfo["Device Model"];
+
+        // 按厂商要求去除SINKER 字样
+        if (m_Model.contains("SINKER")) {
+            m_Model = m_Model.replace("SINKER", "").trimmed();
+        }
         m_Vendor = "Powev Electronic Technology Co.,Limited";
     }
 }
