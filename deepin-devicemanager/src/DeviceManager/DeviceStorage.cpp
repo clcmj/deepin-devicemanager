@@ -431,8 +431,8 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
 
     setAttribute(mapInfo, "Serial Number", m_SerialNumber, true);
 
-    if (mapInfo.find("Device Model") != mapInfo.end() && mapInfo["Device Model"].contains("TYK-CEN")) {
-        m_Model = mapInfo["Device Model"];
+    if (mapInfo.find("Model Number") != mapInfo.end() && mapInfo["Model Number"].contains("TYK-CEN")) {
+        m_Model = mapInfo["Model Number"];
 
         // 按厂商要求去除SINKER 字样
         if (m_Model.contains("SINKER")) {
