@@ -178,9 +178,7 @@ bool CpuInfo::readProcDTCompatible()
         if (info.isEmpty())
             continue;
         qInfo() << "readProcDTCompatible: info:" <<info;
-        QStringList words = info.split(QRegExp("[\\s]*,[\\s]*"));
-        strModelName = words.last();
-        qInfo() << "readProcDTCompatible: strModelName:" <<strModelName;
+        strModelName = info;
     }
     file.close();
 
