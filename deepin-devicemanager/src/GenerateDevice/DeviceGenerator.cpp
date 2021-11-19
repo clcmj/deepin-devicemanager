@@ -140,10 +140,13 @@ void DeviceGenerator::generatorBiosDevice()
 {
     // 生成BIOS
     getBiosInfo();
-    getSystemInfo();
-    getBaseBoardInfo();
-    getChassisInfo();
-    getBiosMemoryInfo();
+    int num = DeviceManager::instance()->getBiosDeviceSize();
+    if(num > 0){
+        getSystemInfo();
+        getBaseBoardInfo();
+        getChassisInfo();
+        getBiosMemoryInfo();
+    }
 }
 
 void DeviceGenerator::generatorMemoryDevice()
@@ -299,7 +302,8 @@ void DeviceGenerator::getBiosInfo()
     for (; it != lstInfo.end(); ++it) {
         if ((*it).size() < 2)
             continue;
-
+        if((*it).find("Vendor") == (*it).end())
+            continue;
         DeviceBios *device = new DeviceBios();
         device->setBiosInfo(*it);
         DeviceManager::instance()->addBiosDevice(device);

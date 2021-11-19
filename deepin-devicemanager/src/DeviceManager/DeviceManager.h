@@ -94,6 +94,12 @@ public:
      */
     bool getDeviceList(const QString &name, QList<DeviceBaseInfo *> &lst);
 
+    /**
+     * @brief getBiosDeviceSize
+     * @return
+     */
+    int getBiosDeviceSize();
+
     // 鼠标设备相关 **************************************************************************************
 
     /**

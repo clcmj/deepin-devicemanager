@@ -235,6 +235,11 @@ bool DeviceManager::getDeviceList(const QString &name, QList<DeviceBaseInfo *> &
     return true;
 }
 
+int DeviceManager::getBiosDeviceSize()
+{
+    return m_ListDeviceBios.size();
+}
+
 void DeviceManager::addMouseDevice(DeviceInput *const device)
 {
     // 如果不是重复设备则添加到设备列表
