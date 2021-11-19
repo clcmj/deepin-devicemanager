@@ -178,7 +178,7 @@ void DeviceCpu::setInfoFromLscpu(const QMap<QString, QString> &mapInfo)
             mapInfoT.insert(words[0].trimmed(), words[1].trimmed());
         }
 
-        m_Name = mapInfoT["Model name"];
+        setAttribute(mapInfoT,"Model name",m_Name,false);
         m_Vendor = mapInfoT["Vendor ID"];
         m_BogoMIPS = mapInfoT["BogoMIPS"];
         m_Extensions = mapInfoT["Flags"];
