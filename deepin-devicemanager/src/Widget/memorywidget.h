@@ -33,9 +33,10 @@ public:
 
     /**重构后的代码************************************************************/
     void initWidgetEX();
-    void initTable(const QList<DeviceMemory>& devices);
-    void initDetails(const QList<DeviceMemory>& devices);
-    void addDeviceDetail(const DeviceMemory& device,bool withTitle = false);
-    void setOverView(const QList<DeviceMemory>& devices);
+    void initTable(const QList<DeviceMemory> &devices);
+    void initDetails(const QList<DeviceMemory> &devices);
+    void addDeviceDetail(const DeviceMemory &device, bool withTitle = false);
+    void addDeviceDetail(const DeviceMemory &device, int num, bool withTitle = false);
+    void setOverView(const QList<DeviceMemory> &devices);
     //***********************************************************************
 };

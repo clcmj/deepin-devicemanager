@@ -48,7 +48,10 @@ void MemoryWidget::initWidgetEX()
     }
 
     // 初始化表格
-    initTable(devices);
+    // 单内存时，模块名下直接展示内存详细信息，不展示标题
+    if (deviceNum > 1) {
+        initTable(devices);
+    }
 
     // 初始化详细信息
     initDetails(devices);
@@ -78,9 +81,11 @@ void MemoryWidget::initTable(const QList<DeviceMemory> &devices)
 
 void MemoryWidget::initDetails(const QList<DeviceMemory> &devices)
 {
-//    int size = devices.size();
+    // 同方要求在获取不到名称制造商时，显示“内存1”，“内存2” task91840
+    int num = 1;
     foreach (const DeviceMemory &device, devices) {
-        addDeviceDetail(device, true);
+        addDeviceDetail(device, num, true);
+        ++num;
     }
 }
 
@@ -108,6 +113,38 @@ void MemoryWidget::addDeviceDetail(const DeviceMemory &device, bool withTitle)
 
     // 显示到界面
     addSubInfo(withTitle ? device.vendor() + " " + device.name() : "", attributes);
+}
+
+void MemoryWidget::addDeviceDetail(const DeviceMemory &device, int num, bool withTitle)
+{
+    // 每个内存的标题，默认取内存名称+制造商，如果取不到或者取到的是--，则展示为内存1，内存2，顺次罗列
+    QList<ArticleStruct> attributes;
+
+    // 添加基本信息
+    addDeviceAttribute(tr("Name"), device.name(), attributes);
+    addDeviceAttribute(tr("Vendor"), device.vendor(), attributes);
+    addDeviceAttribute(tr("Size"), device.size(), attributes);
+    addDeviceAttribute(tr("Type"), device.type(), attributes);
+    addDeviceAttribute(tr("Speed"), device.speed(), attributes);
+    addDeviceAttribute(tr("Total Width"), device.totalBandwidth(), attributes);
+    addDeviceAttribute(tr("Data Width"), device.dataBandwidth(), attributes);
+    addDeviceAttribute(tr("Locator"), device.locator(), attributes);
+    addDeviceAttribute(tr("Serial Number"), device.serialNumber(), attributes);
+    addDeviceAttribute(tr("Configured Speed"), device.configuredSpeed(), attributes);
+    addDeviceAttribute(tr("Minimum Voltage"), device.minimumVoltage(), attributes);
+    addDeviceAttribute(tr("Maximum Voltage"), device.maximumVoltage(), attributes);
+    addDeviceAttribute(tr("Configured Voltage"), device.configuredVoltage(), attributes);
+
+    // 添加其他信息
+    addOtherDeviceAttribute(device, attributes);
+
+    QString subTitle = device.vendor() + " " + device.name();
+
+    if (subTitle.isEmpty() || subTitle.contains("--")) {
+        subTitle = tr("Memory") + QString::number(num);
+    }
+    // 显示到界面
+    addSubInfo(withTitle ? subTitle : "", attributes);
 }
 
 void MemoryWidget::setOverView(const QList<DeviceMemory> &devices)
