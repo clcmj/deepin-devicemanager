@@ -50,7 +50,7 @@ bool DeviceBios::setBaseBoardInfo(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Version", m_Version);
     setAttribute(mapInfo, "Product Name", m_ProductName);
     setAttribute(mapInfo, "Board name", m_ProductName, false);
-    setAttribute(mapInfo, "chipset", m_ChipsetFamily);
+//    setAttribute(mapInfo, "chipset", m_ChipsetFamily);   //ZX定制，去除芯片组
 
     // 该信息为主板信息
     m_IsBoard = true;
