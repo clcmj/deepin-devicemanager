@@ -107,7 +107,12 @@ void KeyboardWidget::addDeviceDetail(const DeviceKeyboard &device, bool withTitl
 void KeyboardWidget::setOverView(const QList<DeviceKeyboard> &devices)
 {
     foreach (const DeviceKeyboard &device, devices) {
-        overviewInfo_.value += QString("%1 (%2)/").arg(device.name()).arg(device.model());
+        QString name = device.name();
+        QString model = device.model();
+        if(name == model){
+            name = "Keyboard";
+        }
+        overviewInfo_.value += QString("%1 (%2)/").arg(name).arg(model);
     }
     overviewInfo_.value.replace(QRegExp("/$"), "");
 }

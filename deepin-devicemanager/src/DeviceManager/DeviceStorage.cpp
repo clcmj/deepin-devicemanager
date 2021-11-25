@@ -1,6 +1,7 @@
 #include "DeviceStorage.h"
 #include <QDebug>
 #include <QFile>
+#include <QtMath>
 
 DeviceStorage::DeviceStorage()
     : DeviceBaseInfo()
@@ -186,6 +187,33 @@ bool DeviceStorage::addInfoFromSmartctl(const QString &name, const QMap<QString,
     }
     // 获取基本信息
     getInfoFromsmartctl(mapInfo);
+    return true;
+}
+bool DeviceStorage::addInfoFromSameDevice(const DeviceStorage &device)
+{
+    // 查看传入的设备信息与当前的设备信息是不是同一个设备信息
+    if(this->serialNumber() != device.serialNumber())
+    {
+        return false;
+    }
+    // 计算容量
+    QString strSize1 = this->m_Size;
+    QString strSize2 = device.size();
+
+    if((strSize1.lastIndexOf("GB") > -1) &&  (strSize2.lastIndexOf("GB") > -1))
+    {
+        int iSize =qCeil(strSize1.split("GB")[0].trimmed().toDouble() + strSize2.split("GB")[0].trimmed().toDouble());
+        int iSize2L = qFloor(qPow(2,qFloor(qLn(iSize)/ qLn(2))));
+        iSize2L = iSize2L * 2;
+        this->m_Size = QString("%1").arg(iSize) + " GB";
+    }
+    else if(strSize2.lastIndexOf("TB") > -1)
+    {
+        this->m_Size = strSize2;
+    }
+    //(strSize1.lastIndexOf("TB") > -1)
+    // this 硬盘大小为TB级别，不做处理直接显示
+
     return true;
 }
 

@@ -4,7 +4,7 @@
 
 DeviceKeyboard::DeviceKeyboard()
     : DeviceBaseInfo()
-    , m_Name("")
+    , m_Name("Keyboard")
     , m_Vendor("")
     , m_Model("")
     , m_Version("")
@@ -256,7 +256,7 @@ void DeviceKeyboard::setInfoFromInput()
     const QMap<QString, QString> &mapInfo = DeviceManager::instance()->inputInfo(m_KeysToCatDevices);
 
     // 设置Name属性
-    setAttribute(mapInfo, "Name", m_Name, true);
+//    setAttribute(mapInfo, "Name", m_Name, true);
 
     // Uniq属性标识蓝牙设备Mac地址
     m_keysToPairedDevice = mapInfo["Uniq"].toUpper();

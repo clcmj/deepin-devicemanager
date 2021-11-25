@@ -60,6 +60,13 @@ public:
     bool addInfoFromSmartctl(const QString &name, const QMap<QString, QString> &mapInfo);
 
     /**
+     * @brief addInfoFromSameDevice:有些设备将硬盘从底层分为多个硬盘，这里计算重复设备的容量
+     * @param DeviceStorage:存储设备信息
+     * @return 布尔值:true-设置成功；false--设置失败
+     */
+    bool addInfoFromSameDevice(const DeviceStorage &device);
+
+    /**
      * @brief getInfoFromLshw:设置由lshw获取的信息
      * @param mapInfo:lshw获取的信息map
      */

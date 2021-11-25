@@ -58,6 +58,7 @@ public:
     bool setStorageDeviceMediaType(const QString &name, const QString &value);
     bool setKLUStorageDeviceMediaType(const QString &name, const QString &value);
     void setStorageInfoFromSmartctl(const QString &name, const QMap<QString, QString> &mapInfo);
+    void setRepetitiveStorageInfo();
 
     // GPU设备相关 **************************************************************************************
     void addGpuDevice(const DeviceGpu &device);

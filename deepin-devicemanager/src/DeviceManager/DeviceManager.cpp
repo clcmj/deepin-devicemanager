@@ -121,6 +121,41 @@ void DeviceManager::setStorageInfoFromSmartctl(const QString &name, const QMap<Q
         }
     }
 }
+void DeviceManager::setRepetitiveStorageInfo()
+{
+    QList<bool> lstIsRepetive;
+    for(int i = 0;i < m_ListDeviceStorage.length();i++)
+    {
+        lstIsRepetive.append(false);//先给标识位赋初值
+    }
+
+    for(int i = 0;i < m_ListDeviceStorage.length()-1;i++)
+    {
+        if (m_ListDeviceStorage[i].mediaType().indexOf("USB") > -1)
+        {
+            continue;
+        }
+        for (int j=i+1; j< m_ListDeviceStorage.length();j++) {
+            if(lstIsRepetive[j])
+            {
+                continue;
+            }
+            if(m_ListDeviceStorage[i].serialNumber() == m_ListDeviceStorage[j].serialNumber())
+            {
+                lstIsRepetive[j] = true;
+                m_ListDeviceStorage[i].addInfoFromSameDevice(m_ListDeviceStorage[j]);
+                continue;
+            }
+        }
+    }
+    for(int i = m_ListDeviceStorage.length() -1;i > -1;i--)
+    {
+        if(lstIsRepetive[i])
+        {
+            m_ListDeviceStorage.removeAt(i);
+        }
+    }
+}
 
 const QList<DeviceStorage> &DeviceManager::getStorageDevices()
 {

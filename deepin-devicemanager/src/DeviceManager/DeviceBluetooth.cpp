@@ -23,6 +23,7 @@ void DeviceBluetooth::setInfoFromHciconfig(const QMap<QString, QString> &mapInfo
 {
     setAttribute(mapInfo, "Name", m_Name);
     setAttribute(mapInfo, "Manufacturer", m_Vendor);
+    m_Vendor = "HISILICON";
     loadOtherDeviceInfo(mapInfo);
 }
 

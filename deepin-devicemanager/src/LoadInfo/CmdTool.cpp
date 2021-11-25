@@ -122,6 +122,9 @@ void CmdTool::loadLshwInfo(const QString &cmd, const QString &debugFile)
         } else if (item.startsWith("cdrom")) {
             getMapInfoFromLshw(item, mapInfo);
             addMapInfo("lshw_cdrom", mapInfo);
+        }else if(item.startsWith("battery")){
+            getMapInfoFromLshw(item, mapInfo);
+            addMapInfo("lshw_battery", mapInfo);
         }
     }
 }

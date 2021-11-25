@@ -738,7 +738,7 @@
     </message>
     <message>
         <source>Configured Speed</source>
-        <translation>配置频率</translation>
+        <translation>最大频率</translation>
     </message>
     <message>
         <source>Minimum Voltage</source>
@@ -1306,7 +1306,7 @@
     </message>
     <message>
         <source>Physical Memory Array</source>
-        <translation>内存插槽信息</translation>
+        <translation>内存插槽</translation>
     </message>
     <message>
         <source>Release Date</source>
@@ -1430,7 +1430,7 @@
     </message>
     <message>
         <source>Maximum Capacity</source>
-        <translation>最大容量</translation>
+        <translation>容量</translation>
     </message>
     <message>
         <source>Error Information Handle</source>

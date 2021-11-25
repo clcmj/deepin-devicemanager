@@ -119,8 +119,9 @@ void NetworkadapterWidget::addDeviceDetail(const DeviceNetwork &device, bool wit
 
 void NetworkadapterWidget::setOverView(const QList<DeviceNetwork> &devices)
 {
-    foreach (const DeviceNetwork &device, devices) {
-        overviewInfo_.value += QString("%1/").arg(device.name());
+    QString strSymbol;
+    for (int i=0;i < devices.length();i++) {
+        strSymbol = (i < devices.length() - 1)? "\n" : "";
+        overviewInfo_.value += ("%1" + strSymbol).arg(devices[i].name());
     }
-    overviewInfo_.value.replace(QRegExp("/$"), "");
 }

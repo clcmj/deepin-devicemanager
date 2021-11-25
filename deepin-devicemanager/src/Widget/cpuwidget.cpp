@@ -99,7 +99,7 @@ void CpuWidget::addDeviceDetail(const DeviceCpu &device, int index, bool withTit
     addDeviceAttribute(tr("CPU ID"), device.physicalID(), attributes);
     addDeviceAttribute(tr("Core ID"), device.coreID(), attributes);
     addDeviceAttribute(tr("Threads"), device.threadNum(), attributes);
-    addDeviceAttribute(tr("Current Speed"), device.curFrequency(), attributes);
+    addDeviceAttribute(tr("Max Speed"), device.frequency(), attributes);//当前频率改为最大频率
     addDeviceAttribute(tr("BogoMIPS"), device.bogoMIPS(), attributes);
     addDeviceAttribute(tr("Architecture"), device.architecture(), attributes);
     addDeviceAttribute(tr("CPU Family"), device.familly(), attributes);

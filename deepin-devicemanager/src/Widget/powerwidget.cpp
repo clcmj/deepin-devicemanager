@@ -88,7 +88,6 @@ void PowerWidget::addDeviceDetail(const DevicePower &device, bool withTitle)
     addDeviceAttribute(tr("Name"), device.name(), attributes);
     addDeviceAttribute(tr("Model"), device.model(), attributes);
     addDeviceAttribute(tr("Vendor"), device.vendor(), attributes);
-    addDeviceAttribute(tr("Model"), device.model(), attributes);
     addDeviceAttribute(tr("Serial Number"), device.serialNumber(), attributes);
     addDeviceAttribute(tr("Type"), device.type(), attributes);
     addDeviceAttribute(tr("Status"), device.status(), attributes);
@@ -109,11 +108,26 @@ void PowerWidget::addDeviceDetail(const DevicePower &device, bool withTitle)
     // 显示到界面
     addSubInfo(withTitle ? device.name() : "", attributes);
 }
-
 void PowerWidget::setOverView(const QList<DevicePower> &devices)
 {
     foreach (const DevicePower &device, devices) {
-        QString value = DApplication::translate("ManulTrack", device.name().trimmed().toStdString().data(), "");
+        QString strCapocity = device.designCapacity();
+        if(strCapocity.isEmpty())
+        {
+            const QMap<QString, QString> &otherAttribs = device.getOtherAttribs();
+            foreach (QString key, otherAttribs.keys()) {
+                if("设计容量" == key)
+                {
+                    strCapocity = otherAttribs[key];
+                    break;
+                }
+            }
+        }
+        if(!strCapocity.isEmpty())
+        {
+            strCapocity = strCapocity + "_";
+        }
+        QString value = DApplication::translate("ManulTrack", (strCapocity + device.model()).trimmed().toStdString().data(), "");
         overviewInfo_.value += QString("%1/").arg(value);
     }
     overviewInfo_.value.replace(QRegExp("/$"), "");

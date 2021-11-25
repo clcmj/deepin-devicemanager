@@ -61,7 +61,6 @@ bool DevicePower::setInfoFromUpower(const QMap<QString, QString> &mapInfo)
     loadOtherDeviceInfo(mapInfo);
     return true;
 }
-
 bool DevicePower::setKLUInfoFromUpower(const QMap<QString, QString> &mapInfo)
 {
     if (mapInfo["Device"].contains("line_power", Qt::CaseInsensitive)) {
@@ -69,7 +68,10 @@ bool DevicePower::setKLUInfoFromUpower(const QMap<QString, QString> &mapInfo)
     }
 
     // KLU要求 "battery" 不翻译
-    m_Name = "battery";
+    if(m_Name.isEmpty())
+    {
+        m_Name = "battery";
+    }
 
     // 设置电池属性
     setAttribute(mapInfo, "", m_Vendor);
@@ -105,6 +107,13 @@ void DevicePower::setDaemonInfo(const QMap<QString, QString> &mapInfo)
 {
     if (m_Name == QObject::tr("battery"))
         loadOtherDeviceInfo(mapInfo);
+}
+
+void DevicePower::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
+{
+    setAttribute(mapInfo, "vendor", m_Vendor);
+    setAttribute(mapInfo, "product", m_Model);
+    setAttribute(mapInfo, "description", m_Name);
 }
 
 const QString &DevicePower::name()const

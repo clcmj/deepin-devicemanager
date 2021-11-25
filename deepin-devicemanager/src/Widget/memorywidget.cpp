@@ -98,7 +98,7 @@ void MemoryWidget::addDeviceDetail(const DeviceMemory &device, bool withTitle)
     addDeviceAttribute(tr("Vendor"), device.vendor(), attributes);
     addDeviceAttribute(tr("Size"), device.size(), attributes);
     addDeviceAttribute(tr("Type"), device.type(), attributes);
-    addDeviceAttribute(tr("Speed"), device.speed(), attributes);
+    //addDeviceAttribute(tr("Speed"), device.speed(), attributes);
     addDeviceAttribute(tr("Total Width"), device.totalBandwidth(), attributes);
     addDeviceAttribute(tr("Data Width"), device.dataBandwidth(), attributes);
     addDeviceAttribute(tr("Locator"), device.locator(), attributes);
@@ -125,7 +125,7 @@ void MemoryWidget::addDeviceDetail(const DeviceMemory &device, int num, bool wit
     addDeviceAttribute(tr("Vendor"), device.vendor(), attributes);
     addDeviceAttribute(tr("Size"), device.size(), attributes);
     addDeviceAttribute(tr("Type"), device.type(), attributes);
-    addDeviceAttribute(tr("Speed"), device.speed(), attributes);
+    //addDeviceAttribute(tr("Speed"), device.speed(), attributes);
     addDeviceAttribute(tr("Total Width"), device.totalBandwidth(), attributes);
     addDeviceAttribute(tr("Data Width"), device.dataBandwidth(), attributes);
     addDeviceAttribute(tr("Locator"), device.locator(), attributes);
@@ -150,7 +150,7 @@ void MemoryWidget::addDeviceDetail(const DeviceMemory &device, int num, bool wit
 void MemoryWidget::setOverView(const QList<DeviceMemory> &devices)
 {
     foreach (const DeviceMemory &device, devices) {
-        overviewInfo_.value += QString("%1(%2 %3 %4)/").arg(device.size()).arg(device.name() != "" ? device.name() : device.vendor()).arg(device.type()).arg(device.speed());
+        overviewInfo_.value += QString("%1(%2 %3 %4)/").arg(device.size()).arg(device.name() != "" ? device.name() : device.vendor()).arg(device.type()).arg(device.configuredSpeed());
     }
     overviewInfo_.value.replace(QRegExp("/$"), "");
 }

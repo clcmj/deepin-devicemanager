@@ -369,8 +369,17 @@ void DeviceInfoWidgetBase::toHtmlString(QDomDocument &doc, const DeviceBase &di)
 
         QDomText valueText;
         if (article.externalLinks == false) {
-            valueText = doc.createTextNode(article.value);
-            td2.appendChild(valueText);
+            QStringList lst = article.value.split("\n");
+            for (int i =0; i < lst.length();i++) {
+                valueText = doc.createTextNode(lst[i]);
+                td2.appendChild(valueText);
+                if(i < lst.length()-1)
+                {
+                    QDomElement style = doc.createElement("br");
+                    td2.appendChild(style);
+                }
+            }
+
         } else {
             QDomElement style = doc.createElement("style");
             QDomText decoration = doc.createTextNode("a {text-decoration: none; }");

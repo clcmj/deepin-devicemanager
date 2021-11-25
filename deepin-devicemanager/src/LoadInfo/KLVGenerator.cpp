@@ -10,8 +10,10 @@
 #include "DeviceManager/DevicePower.h"
 #include "DeviceManager/DeviceMemory.h"
 #include "DeviceManager/DeviceCpu.h"
+#include "DeviceManager/DeviceNetwork.h"
 
 #include<QDebug>
+#include <QtMath>
 
 KLVGenerator::KLVGenerator()
 {
@@ -36,6 +38,11 @@ void KLVGenerator::generatorComputerDevice()
         device.setType(sysInfo[0]["description"]);
         //device.setVendor(sysInfo[0]["vendor"]);
         device.setName(sysInfo[0]["product"]);
+    }
+
+    const QList<QMap<QString, QString> >  &dmidecode1List = DeviceManager::instance()->cmdInfo("dmidecode1");
+    if (dmidecode1List.size() > 1) {
+        device.setName(dmidecode1List[1]["Product Name"]);
     }
 
     // setOsDescription
@@ -112,6 +119,8 @@ void KLVGenerator::generatorAudioDevice()
 
 void KLVGenerator::generatorPowerDevice()
 {
+    const QList<QMap<QString, QString>> lstbat = DeviceManager::instance()->cmdInfo("lshw_battery");
+
     const QList<QMap<QString, QString> > &daemon = DeviceManager::instance()->cmdInfo("Daemon");
     bool hasDaemon = false;
     // 守护进程信息
@@ -125,8 +134,15 @@ void KLVGenerator::generatorPowerDevice()
         if ((*it).size() < 2) {
             continue;
         }
+        QMap<QString, QString> tempMap = *it;
+        QStringList lstCapacity = tempMap["energy-full-design"].split(" ");
+        if(2 == lstCapacity.length())
+        {
+            tempMap["energy-full-design"] =QString::number(qCeil(lstCapacity[0].toDouble())) + lstCapacity[1];
+        }
+
         DevicePower device;
-        if (!device.setKLUInfoFromUpower(*it)) {
+        if (!device.setKLUInfoFromUpower(tempMap)) {
             continue;
         }
         if (hasDaemon) {
@@ -140,6 +156,10 @@ void KLVGenerator::generatorPowerDevice()
 
 //            device.setDaemonInfo(daemon[0]);
             device.setDaemonInfo(tempMap);
+        }
+
+        if(lstbat.size() > 0){
+            device.setInfoFromLshw(lstbat[0]);
         }
         DeviceManager::instance()->addPowerDevice(device);
     }
@@ -366,7 +386,7 @@ void KLVGenerator::getNetworkInfoFromCatWifiInfo()
 
         // 按照华为的需求，设置蓝牙制造商和类型
         tempMap["Vendor"] = "HISILICON";
-        tempMap["Type"] = "Network Device";
+        tempMap["Type"] = "Wireless network";
 
         DeviceManager::instance()->setNetworkInfoFromWifiInfo(tempMap);
     }
@@ -446,8 +466,33 @@ void KLVGenerator::generatorBluetoothDevice()
 
 void KLVGenerator::generatorNetworkDevice()
 {
-    DeviceGenerator::generatorNetworkDevice();
+    const QList<QMap<QString, QString>> lstInfo = DeviceManager::instance()->cmdInfo("lshw_network");
+    QList<QMap<QString, QString> >::const_iterator it = lstInfo.begin();
+    for (; it != lstInfo.end(); ++it) {
+        if ((*it).size() < 2) {
+            continue;
+        }
+        QMap<QString, QString> tempMap = *it;
+        /*
+        capabilities: ethernet physical wireless
+        configuration: broadcast=yes ip=10.4.6.115 multicast=yes wireless=IEEE 802.11
+        */
+        if ((tempMap["configuration"].indexOf("wireless=IEEE 802.11")> -1) ||
+                (tempMap["capabilities"].indexOf("wireless") > -1))
+        {
+            continue;
+        }
 
+        DeviceNetwork device;
+        device.setInfoFromLshw(*it);
+        DeviceManager::instance()->addNetworkDevice(device);
+    }
     // HW 要求修改名称,制造商以及类型
     getNetworkInfoFromCatWifiInfo();
+}
+
+void KLVGenerator::generatorDiskDevice()
+{
+    DeviceGenerator::generatorDiskDevice();
+    DeviceManager::instance()->setRepetitiveStorageInfo();
 }

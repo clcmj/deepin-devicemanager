@@ -35,6 +35,8 @@ protected:
     /**@brief:generator network info*/
     virtual void generatorNetworkDevice();
 
+    /**@brief:generator disk info*/
+    virtual void generatorDiskDevice();
 protected:
     /**@brief:generator keyboard info from hwinfo*/
     virtual void getKeyboardInfoFromHwinfo();
