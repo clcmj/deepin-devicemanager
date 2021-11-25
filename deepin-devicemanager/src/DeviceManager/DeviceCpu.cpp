@@ -2,6 +2,8 @@
 #include "DeviceCpu.h"
 
 #include <math.h>
+#include <QLocale>
+#include <QDebug>
 
 DeviceCpu::DeviceCpu()
     : DeviceBaseInfo()
@@ -109,6 +111,16 @@ const QString DeviceCpu::getOverviewInfo()
                  .arg(tr("Core(s)")) \
                  .arg(m_trNumber[m_LogicalCPUNum]) \
                  .arg(tr("Processor"));
+
+    // 系统语言为英文时,单词之间需要添加空格
+    if ("en_US" == QLocale::system().name() || "en_GB" == QLocale::system().name()) {
+        ov = QString("%1 (%2 %3 / %4 %5)") \
+             .arg(m_Name) \
+             .arg(m_trNumber[m_CPUCoreNum]) \
+             .arg(tr("Core(s)")) \
+             .arg(m_trNumber[m_LogicalCPUNum]) \
+             .arg(tr("Processor"));
+    }
 
     return ov;
 }
