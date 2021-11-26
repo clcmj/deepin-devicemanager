@@ -79,8 +79,8 @@ bool DeviceBluetooth::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
 bool DeviceBluetooth::setInfoFromWifiInfo(const QMap<QString, QString> &mapInfo)
 {
     // 机器自身蓝牙
-    if (m_Name.contains("uos-PC")) {
-        setAttribute(mapInfo, "Chip Type", m_Name);
+    if ("UART" == this->m_MapOtherInfo[QObject::tr("Bus")]) {//内置：UART 外接USB：USB
+	setAttribute(mapInfo, "Chip Type", m_Name);
         setAttribute(mapInfo, "Vendor", m_Vendor);
         setAttribute(mapInfo, "Type", m_Type);
 
