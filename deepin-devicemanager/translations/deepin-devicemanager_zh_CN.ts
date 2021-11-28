@@ -1306,7 +1306,7 @@
     </message>
     <message>
         <source>Physical Memory Array</source>
-        <translation>内存插槽</translation>
+        <translation>内存信息</translation>
     </message>
     <message>
         <source>Release Date</source>
