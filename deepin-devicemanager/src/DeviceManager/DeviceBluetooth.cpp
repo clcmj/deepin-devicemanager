@@ -17,7 +17,7 @@ DeviceBluetooth::DeviceBluetooth()
     , m_LogicalName("")
     , m_BusInfo("")
     , m_Capabilities("")
-    , m_Driver("btusb")
+    , m_Driver("")
     , m_DriverVersion("")
     , m_MaximumPower("")
     , m_Speed("")
@@ -125,7 +125,14 @@ EnableDeviceStatus DeviceBluetooth::setEnable(bool e)
 bool DeviceBluetooth::enable()
 {
     // 获取设备状态
-    m_Enable = EnableManager::instance()->isDeviceEnableByDriver(m_Driver);
+    if(m_Driver.isEmpty())
+    {
+        m_Enable = true;
+    }
+    else
+    {
+        m_Enable = EnableManager::instance()->isDeviceEnableByDriver(m_Driver);
+    }
     return m_Enable;
 }
 
