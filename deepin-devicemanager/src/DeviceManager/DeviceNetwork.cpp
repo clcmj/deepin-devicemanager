@@ -80,11 +80,12 @@ bool DeviceNetwork::setInfoFromWifiInfo(const QMap<QString, QString> &mapInfo)
         setAttribute(mapInfo, "Chip Type", m_Name);
         setAttribute(mapInfo, "Vendor", m_Vendor);
         setAttribute(mapInfo, "Type", m_Model);
-
-        return true;
     } else {
-        return false;
+        setAttribute(mapInfo, "Chip Type", m_Name);
+        setAttribute(mapInfo, "NIC  Type", m_Model);
+        setAttribute(mapInfo, "NIC  Rate(theory)", m_Capacity);
     }
+    return true;
 }
 
 const QString &DeviceNetwork::name()const

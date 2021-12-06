@@ -10,6 +10,8 @@ public:
 
     /**@brief:generator disk info from lshw*/
     virtual void getDiskInfoFromLshw();
+
+    virtual void generatorNetworkDevice();
 };
 
 #endif // PANGUWGENERATOR_H

@@ -269,7 +269,7 @@ void ThreadPool::getCmdList(QList<QStringList> &cmdList, const QString &arch)
         cmdList.append({ "EDID_VGA",             "hexdump /sys/devices/platform/hldrm/drm/card0/card0-VGA-1/edid", "EDID_VGA.txt",     ""});
     }
 
-    if (arch == "KLU") {
+    if (arch == "KLU" || arch == "PanGuV" || arch == "PanGuW") {
         cmdList.append({ "wifiinfo",              "cat /sys/hisys/wal/wifi_devices_info",  "wifiinfo.txt",            ""});
     }
 
