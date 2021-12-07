@@ -417,7 +417,7 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
     m_Size.replace(QRegExp(".0[1-9]"), ".00");
 
     // 型号
-    if (m_Model.isEmpty()) {
+    if (m_Model.isEmpty() || "Disk" == m_Model) {   // bug102919 型号为Disk时，从smartctl中获取信息
         //SATA
         if (mapInfo.find("Device Model") != mapInfo.end())
             m_Model = mapInfo["Device Model"];
