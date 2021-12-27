@@ -521,7 +521,7 @@ void DeviceManager::addNetworkDevice(DeviceNetwork *const device)
     m_ListDeviceNetwork.append(device);
 }
 
-void DeviceManager::updateNetworkInfo(const QMap<QString, QString> &mapInfo)
+void DeviceManager::updateNetworkInfo(const QMap<QString,QString>& mapInfo)
 {
     if (m_ListDeviceNetwork.size() == 0)
         return;
@@ -1085,15 +1085,6 @@ const QMap<QString, QString>  &DeviceManager::getDeviceOverview()
         m_OveriewMap[tr("CPU quantity")] = QString::number(m_CpuNum);
 
     return m_OveriewMap;
-}
-
-const QMap<QString, QString> &DeviceManager::getHWCloudMap()
-{
-    if (m_ListDeviceComputer.size() > 0) {
-        m_HWCloudMap = dynamic_cast<DeviceComputer *>(m_ListDeviceComputer[0])->getHWCloudInfo();
-    }
-
-    return m_HWCloudMap;
 }
 
 const QMap<QString, QMap<QString, QStringList> > &DeviceManager::getDeviceDriverPool()

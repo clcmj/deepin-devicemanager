@@ -93,10 +93,6 @@ void DeviceGenerator::generatorComputerDevice()
         }
         device->setOS(info);
     }
-
-    device->getInfoFromEnv();   // 华为云
-    device->getInfoFromDmi();   // 实达
-
     DeviceManager::instance()->addComputerDevice(device);
 }
 

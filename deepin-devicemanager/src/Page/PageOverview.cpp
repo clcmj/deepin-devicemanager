@@ -58,14 +58,14 @@ void PageOverview::updateInfo(const QMap<QString, QString> &map)
 {
     mp_Overview->clear();
     // HuaWei Cloud
-    // /usr/local/vdi/base.env
+    // /usr/local/vdi/sunniwellinfo.env
 //    export SW_IMG_VERSION整机系统版本号=1.0.0.B004.0
 //    export SW_TCM_VERSION=0.0.5
 //    export SW_HARDWARE_MODEL整机产品名称="HT3300"
     QMap<QString, QString> mapCloud;
-    mapCloud = DeviceManager::instance()->getHWCloudMap();
-
-    int row = map.size() + mapCloud.size();
+    getInfoFromEnv(mapCloud);
+    getInfoFromDmi(mapCloud);
+    int row = map.size() + mapCloud.size() - 1;
 
     // 根据页面高度确定表格最多显示行数
     int maxRow = this->height() / ROW_HEIGHT - 4;
@@ -244,7 +244,7 @@ void PageOverview::initWidgets()
 
 void PageOverview::getInfoFromEnv(QMap<QString, QString> &mapInfo)
 {
-    QFile file("/usr/local/vdi/base.env");
+    QFile file("/usr/local/vdi/sunniwellinfo.env");
     if (file.open(QIODevice::ReadOnly)) {
         QString info = file.readAll();
         file.close();
