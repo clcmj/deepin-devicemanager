@@ -35,7 +35,7 @@ class DetectThread : public QThread
 {
     Q_OBJECT
 public:
-    DetectThread(QObject *parent);
+    explicit DetectThread(QObject *parent);
 
     /**
      * @brief run
@@ -55,14 +55,34 @@ private slots:
     void slotUsbChanged();
 
 private:
-    // 判断hwinfo --usb信息是否发生变化
+    /**
+     * @brief isUsbDevicesChanged 判断hwinfo --usb信息是否发生变化
+     * @return
+     */
     bool isUsbDevicesChanged();
+
+    /**
+     * @brief updateMemUsbInfo 更新
+     * @param usbInfo
+     */
     void updateMemUsbInfo(const QMap<QString,QMap<QString,QString>>& usbInfo);
+
+    /**
+     * @brief curHwinfoUsbInfo 获取当前的usb信息
+     * @param usbInfo
+     */
     void curHwinfoUsbInfo(QMap<QString,QMap<QString,QString>>& usbInfo);
+
+    /**
+     * @brief getMapInfo 解析usb信息
+     * @param item
+     * @param mapInfo
+     * @return
+     */
     bool getMapInfo(const QString& item,QMap<QString,QString>& mapInfo);
 
 private:
-    MonitorUsb   *mp_MonitorUsb;                      //<! udev检测任务
+    MonitorUsb *mp_MonitorUsb; //<! udev检测任务
     QMap<QString,QMap<QString,QString>> m_MapUsbInfo; //<! usb信息
 };
 
