@@ -1,9 +1,10 @@
 // 项目自身文件
 #include "DeviceCpu.h"
 
-#include <math.h>
 #include <QLocale>
 #include <QDebug>
+
+#include <math.h>
 
 DeviceCpu::DeviceCpu()
     : DeviceBaseInfo()
@@ -213,9 +214,9 @@ void DeviceCpu::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
     // longxin CPU型号不从dmidecode中获取
     // bug39874
     if (m_Name.contains("Loongson", Qt::CaseInsensitive)) {
-        setAttribute(mapInfo, "product", m_Name, false);
+        setAttribute(mapInfo, "Version", m_Name, false);
     } else {
-        setAttribute(mapInfo, "product", m_Name);
+        setAttribute(mapInfo, "Version", m_Name);
     }
 
     // 获取设备基本信息

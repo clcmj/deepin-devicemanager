@@ -1,17 +1,16 @@
 // 项目自身文件
 #include "CmdTool.h"
+#include "commondefine.h"
+#include "EDIDParser.h"
+#include "DeviceManager.h"
+#include "DBusInterface.h"
+#include "MacroDefinition.h"
 
 // Qt库文件
 #include<QDebug>
 #include<QDateTime>
 #include<QMutex>
 
-// 其它头文件
-#include "../commondefine.h"
-#include "EDIDParser.h"
-#include "DeviceManager.h"
-#include "DBusInterface.h"
-#include "MacroDefinition.h"
 
 CmdTool::CmdTool()
 {
@@ -581,6 +580,9 @@ void CmdTool::loadDmidecodeInfo(const QString &key, const QString &debugfile)
             continue;
         QMap<QString, QString> mapInfo;
         getMapInfoFromDmidecode(item, mapInfo);
+        // 过滤空cpu卡槽信息
+        if ("dmidecode4" == key && mapInfo.find("ID") == mapInfo.end())
+            continue;
         if (mapInfo.size() > MIN_NUM)
             addMapInfo(key, mapInfo);
     }
@@ -931,8 +933,8 @@ void CmdTool::getMapInfoFromInput(const QString &info, QMap<QString, QString> &m
 void CmdTool::getMapInfoFromLshw(const QString &info, QMap<QString, QString> &mapInfo, const QString &ch)
 {
     QStringList infoList = info.split("\n");
-    for (QStringList::iterator it = infoList.begin(); it != infoList.end(); ++it) {
-        QStringList words = (*it).split(ch);
+    for (QStringList::iterator itOut = infoList.begin(); itOut != infoList.end(); ++itOut) {
+        QStringList words = (*itOut).split(ch);
         if (words.size() != 2)
             continue;
 

@@ -1,29 +1,28 @@
 // 项目自身文件
 #include "DeviceGenerator.h"
+#include "CmdTool.h"
+#include "DeviceManager.h"
+#include "DeviceCpu.h"
+#include "DeviceGpu.h"
+#include "DeviceStorage.h"
+#include "DeviceMemory.h"
+#include "DeviceMonitor.h"
+#include "DeviceBios.h"
+#include "DeviceAudio.h"
+#include "DeviceBluetooth.h"
+#include "DeviceNetwork.h"
+#include "DeviceImage.h"
+#include "DeviceOthers.h"
+#include "DeviceComputer.h"
+#include "DevicePower.h"
+#include "DeviceCdrom.h"
+#include "DevicePrint.h"
+#include "DeviceInput.h"
+#include "MacroDefinition.h"
 
 // Qt库文件
 #include <QDebug>
 
-// 其它头文件
-#include "CmdTool.h"
-#include "../DeviceManager/DeviceManager.h"
-#include "../DeviceManager/DeviceCpu.h"
-#include "../DeviceManager/DeviceGpu.h"
-#include "../DeviceManager/DeviceStorage.h"
-#include "../DeviceManager/DeviceMemory.h"
-#include "../DeviceManager/DeviceMonitor.h"
-#include "../DeviceManager/DeviceBios.h"
-#include "../DeviceManager/DeviceAudio.h"
-#include "../DeviceManager/DeviceBluetooth.h"
-#include "../DeviceManager/DeviceNetwork.h"
-#include "../DeviceManager/DeviceImage.h"
-#include "../DeviceManager/DeviceOthers.h"
-#include "../DeviceManager/DeviceComputer.h"
-#include "../DeviceManager/DevicePower.h"
-#include "../DeviceManager/DeviceCdrom.h"
-#include "../DeviceManager/DevicePrint.h"
-#include "../DeviceManager/DeviceInput.h"
-#include "MacroDefinition.h"
 
 
 DeviceGenerator::DeviceGenerator(QObject *parent)
@@ -113,20 +112,18 @@ void DeviceGenerator::generatorCpuDevice()
 
 
     //  获取逻辑数和core数  获取cpu个数 获取logical个数
-    int coreNum = 0, logicalNum = 0, physicalNum = 0;
+    int coreNum = 0, logicalNum = 0;
     const QList<QMap<QString, QString> >  &lsCpu_num = DeviceManager::instance()->cmdInfo("lscpu_num");
     if (lsCpu_num.size() <= 0)
         return;
     const QMap<QString, QString> &map = lsCpu_num[0];
-    if (map.find("physical") != map.end())
-        physicalNum = map["physical"].toInt();
     if (map.find("core") != map.end())
         coreNum = map["core"].toInt();
     if (map.find("logical") != map.end())
         logicalNum = map["logical"].toInt();
 
     // set cpu number
-    DeviceManager::instance()->setCpuNum(physicalNum);
+    DeviceManager::instance()->setCpuNum(dmidecode4.size());
 
     // set cpu info
     QList<QMap<QString, QString> >::const_iterator it = lsCpu.begin();
@@ -442,15 +439,13 @@ void DeviceGenerator::getDiskInfoFromLshw()
     }
 
     // lshw -C storage
-    /*if (lstDisk.size() == 0)*/ {
-        const QList<QMap<QString, QString>> &lstDisk = DeviceManager::instance()->cmdInfo("lshw_storage");
-        QList<QMap<QString, QString> >::const_iterator dIt = lstDisk.begin();
-        for (; dIt != lstDisk.end(); ++dIt) {
-            if ((*dIt).size() < 2)
-                continue;
+    const QList<QMap<QString, QString>> &lstStorage = DeviceManager::instance()->cmdInfo("lshw_storage");
+    QList<QMap<QString, QString> >::const_iterator storegeIt = lstStorage.begin();
+    for (; storegeIt != lstStorage.end(); ++storegeIt) {
+        if ((*storegeIt).size() < 2)
+            continue;
 
-            DeviceManager::instance()->addLshwinfoIntoNVMEStorageDevice(*dIt);
-        }
+        DeviceManager::instance()->addLshwinfoIntoNVMEStorageDevice(*storegeIt);
     }
 }
 
