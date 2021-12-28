@@ -452,8 +452,9 @@ void DeviceBaseInfo::getOtherMapInfo(const QMap<QString, QString> &mapInfo)
         QString k = DApplication::translate("QObject", it.key().trimmed().toStdString().data());
 
         // 可显示设备属性中存在该属性
-        if (m_FilterKey.find(k) != m_FilterKey.end())
+        if ((m_FilterKey.find(k) != m_FilterKey.end()) && (!it.value().trimmed().isEmpty())){
             m_MapOtherInfo.insert(k, it.value().trimmed());
+        }
     }
 }
 

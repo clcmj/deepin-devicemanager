@@ -149,3 +149,29 @@ void DeviceImage::setInfoFromInput()
     // 设置是否可禁用
     m_Enable = EnableManager::instance()->isDeviceEnable(m_Name);
 }
+void DeviceImage::setInfoFromXml(QString key, QList<QMap<QString, QString>> &lstMap)
+{
+    if(lstMap.length() < 1){
+        return;
+    }
+    QMap<QString, QString> * map = nullptr;
+    for (int i = 0; i< lstMap.length();i++) {
+        if(lstMap[i][key] == m_BusInfo){
+            map = &lstMap[i];
+            break;
+        }
+    }
+    if(nullptr == map){
+        return;
+    }
+
+    //setAttribute(*map, "BusInfo", m_BusInfo);
+    setAttribute(*map, "Name", m_Name);
+    setAttribute(*map, "Vendor", m_Vendor);
+    setAttribute(*map, "version", m_Version);
+    setAttribute(*map, "Model", m_Model);
+    setAttribute(*map, "Capabilities", m_Capabilities);
+    setAttribute(*map, "Driver", m_Driver);
+    setAttribute(*map, "MaxPower", m_MaximumPower);
+    setAttribute(*map, "Speed", m_Speed);
+}

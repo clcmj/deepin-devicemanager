@@ -137,7 +137,6 @@ void DeviceBluetooth::initFilterKey()
     addFilterKey(QObject::tr("product"));
     addFilterKey(QObject::tr("description"));
     addFilterKey(QObject::tr("physical id"));
-    addFilterKey(QObject::tr("Class"));
     addFilterKey(QObject::tr("Powered"));
     addFilterKey(QObject::tr("Discoverable"));
     addFilterKey(QObject::tr("Pairable"));
@@ -200,4 +199,37 @@ void DeviceBluetooth::loadTableData()
     m_TableData.append(name);
     m_TableData.append(m_Vendor);
     m_TableData.append(m_Model);
+}
+
+void DeviceBluetooth::setInfoFromXml(QString key, QList<QMap<QString, QString>> &lstMap)
+{
+    if(lstMap.length() < 1){
+        return;
+    }
+    QMap<QString, QString> * map = nullptr;
+    for (int i = 0; i< lstMap.length();i++) {
+        if(lstMap[i][key] == m_BusInfo){
+            map = &lstMap[i];
+            break;
+        }
+    }
+    if(nullptr == map){
+        return;
+    }
+
+    //setAttribute(*map, "SerialID", m_SerialID);
+    setAttribute(*map, "Name", m_Name);
+    setAttribute(*map, "Vendor", m_Vendor);
+    setAttribute(*map, "version", m_Version);
+    setAttribute(*map, "Model", m_Model);
+    setAttribute(*map, "MAC", m_MAC);
+    setAttribute(*map, "LogicalName", m_LogicalName);
+    //setAttribute(*map, "BusInfo", m_BusInfo);
+    setAttribute(*map, "Capabilities", m_Capabilities);
+    setAttribute(*map, "Driver", m_Driver);
+    setAttribute(*map, "DriverVersion", m_DriverVersion);
+    setAttribute(*map, "MaximumPower", m_MaximumPower);
+    setAttribute(*map, "Speed", m_Speed);
+    // 获取其他cpu信息
+    getOtherMapInfo(*map);
 }

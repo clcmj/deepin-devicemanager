@@ -187,3 +187,49 @@ void DeviceNetwork::loadTableData()
     m_TableData.append(m_Vendor);
     m_TableData.append(m_Model);
 }
+
+void DeviceNetwork::setInfoFromXml(QString key, QList<QMap<QString, QString>> &lstMap)
+{
+    if(lstMap.length() < 1){
+        return;
+    }
+    QMap<QString, QString> * map = nullptr;
+    for (int i = 0; i< lstMap.length();i++) {
+        if(lstMap[i][key] == m_BusInfo){
+            map = &lstMap[i];
+            break;
+        }
+    }
+    if(nullptr == map){
+        return;
+    }
+
+    setAttribute(*map, "Name", m_Name);
+    setAttribute(*map, "Vendor", m_Vendor);
+    setAttribute(*map, "Model", m_Model);
+    setAttribute(*map, "Version", m_Version);
+    //setAttribute(*map, "BusInfo", m_BusInfo);
+    setAttribute(*map, "LogicalName", m_LogicalName);
+    setAttribute(*map, "MACAddress", m_MACAddress);
+    setAttribute(*map, "Irq", m_Irq);
+    setAttribute(*map, "Memory", m_Memory);
+    setAttribute(*map, "Width", m_Width);
+    setAttribute(*map, "Clock", m_Clock);
+    setAttribute(*map, "Capabilities", m_Capabilities);
+    setAttribute(*map, "Autonegotiation", m_Autonegotiation);
+    setAttribute(*map, "Broadcast", m_Broadcast);
+    setAttribute(*map, "Driver", m_Driver);
+    setAttribute(*map, "DriverVersion", m_DriverVersion);
+    setAttribute(*map, "Duplex       ", m_Duplex       );
+    setAttribute(*map, "Firmware     ", m_Firmware     );
+    setAttribute(*map, "Port         ", m_Port         );
+    setAttribute(*map, "Link         ", m_Link         );
+    setAttribute(*map, "Ip           ", m_Ip           );
+    setAttribute(*map, "Speed        ", m_Speed        );
+    setAttribute(*map, "Capacity     ", m_Capacity     );
+    setAttribute(*map, "Latency      ", m_Latency      );
+    setAttribute(*map, "Multicast    ", m_Multicast    );
+
+    // 获取其他cpu信息
+    getOtherMapInfo(*map);
+}

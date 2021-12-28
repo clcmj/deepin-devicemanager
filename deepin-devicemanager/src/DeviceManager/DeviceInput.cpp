@@ -285,3 +285,35 @@ void DeviceInput::loadTableData()
     m_TableData.append(m_Model);
 }
 
+
+void DeviceInput::setInfoFromXml(QString key, QList<QMap<QString, QString>> &lstMap)
+{
+    if(lstMap.length() < 1){
+        return;
+    }
+    QMap<QString, QString> * map = nullptr;
+    for (int i = 0; i< lstMap.length();i++) {
+        if((lstMap[i][key] == m_BusInfo) || (lstMap[i][key] == m_keysToPairedDevice) || (lstMap[i][key] == m_KeysToCatDevices)){
+            map = &lstMap[i];
+            break;
+        }
+    }
+    if(nullptr == map){
+        return;
+    }
+
+    setAttribute(*map, "Name", m_Name);
+    setAttribute(*map, "Vendor", m_Vendor);
+    setAttribute(*map, "version", m_Version);
+    setAttribute(*map, "Model", m_Model);
+    setAttribute(*map, "Interface", m_Interface);
+    setAttribute(*map, "Capabilities", m_Capabilities);
+    setAttribute(*map, "Description", m_Description);
+    setAttribute(*map, "Driver", m_Driver);
+    setAttribute(*map, "MaxPower", m_MaximumPower);
+    setAttribute(*map, "Speed", m_Speed);
+    setAttribute(*map, "KeyToLshw", m_KeyToLshw);
+    //setAttribute(*map, "SerialID", m_SerialID);
+    // 获取其他cpu信息
+    getOtherMapInfo(*map);
+}

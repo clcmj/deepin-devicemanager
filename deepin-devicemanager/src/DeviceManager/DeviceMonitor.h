@@ -50,6 +50,12 @@ public:
      */
     bool setInfoFromXradr(const QString &main, const QString &edid, const QString &rate);
 
+    /**
+       * @brief setInfoFromXml:设置从xml命令中获取的信息
+       * @param mapInfo:由gpuinfo获取的信息map
+       */
+    void setInfoFromXml(QString key, QList<QMap<QString, QString>> &lstMap);
+
     // 将年周转化为年月
     /**
      * @brief transWeekToDate:将年周转化为年月

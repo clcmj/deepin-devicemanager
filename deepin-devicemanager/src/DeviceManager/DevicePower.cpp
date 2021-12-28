@@ -172,3 +172,44 @@ void DevicePower::loadTableData()
     m_TableData.append(m_Vendor);
     m_TableData.append(m_Model);
 }
+
+void DevicePower::setInfoFromXml(QString key, QList<QMap<QString, QString>> &lstMap)
+{
+    if(lstMap.length() < 1){
+        return;
+    }
+    QMap<QString, QString> * map = nullptr;
+    for (int i = 0; i< lstMap.length();i++) {
+        if(lstMap[i][key] == m_SerialNumber){
+            map = &lstMap[i];
+            break;
+        }
+    }
+    if(nullptr == map){
+        return;
+    }
+
+    setAttribute(*map, "Name", m_Name);
+    setAttribute(*map, "Vendor", m_Vendor);
+    setAttribute(*map, "Model", m_Model);
+    setAttribute(*map, "Type", m_Type);
+    //setAttribute(*map, "SerialNumber", m_SerialNumber);
+    setAttribute(*map, "ElectricType", m_ElectricType);
+    setAttribute(*map, "MaxPower", m_MaxPower);
+    setAttribute(*map, "Status", m_Status);
+    setAttribute(*map, "Enabled", m_Enabled);
+    setAttribute(*map, "HotSwitch", m_HotSwitch);
+    setAttribute(*map, "Capacity", m_Capacity);
+    setAttribute(*map, "Voltage", m_Voltage);
+    setAttribute(*map, "Slot", m_Slot);
+    setAttribute(*map, "DesignCapacity", m_DesignCapacity);
+    setAttribute(*map, "DesignVoltage", m_DesignVoltage);
+    setAttribute(*map, "SBDSChemistry", m_SBDSChemistry);
+    setAttribute(*map, "SBDSManufactureDate", m_SBDSManufactureDate);
+    setAttribute(*map, "SBDSSerialNumber", m_SBDSSerialNumber);
+    setAttribute(*map, "SBDSVersion", m_SBDSVersion);
+    setAttribute(*map, "Temp", m_Temp);
+    setAttribute(*map, "Driver", m_Driver);
+    // 获取其他cpu信息
+    getOtherMapInfo(*map);
+}

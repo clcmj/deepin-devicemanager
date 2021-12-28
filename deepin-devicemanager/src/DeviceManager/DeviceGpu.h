@@ -66,6 +66,11 @@ public:
     void setGpuInfo(const QMap<QString, QString> &mapInfo);
 
     /**
+       * @brief setInfoFromXml:设置从xml命令中获取的信息
+       * @param mapInfo:由gpuinfo获取的信息map
+       */
+    void setInfoFromXml(QString, QList<QMap<QString, QString>> &);
+    /**
      * @brief name:获取名称属性值
      * @return QString 名称属性值
      */

@@ -259,3 +259,37 @@ void DeviceAudio::loadTableData()
     m_TableData.append(name);
     m_TableData.append(m_Vendor);
 }
+
+void DeviceAudio::setInfoFromXml(QString key, QList<QMap<QString, QString>> &lstMap)
+{
+    if(lstMap.length() < 1){
+        return;
+    }
+    QMap<QString, QString> * map = nullptr;
+    for (int i = 0; i< lstMap.length();i++) {
+        if(lstMap[i][key] == m_BusInfo){
+            map = &lstMap[i];
+            break;
+        }
+    }
+    if(nullptr == map){
+        return;
+    }
+
+    setAttribute(*map, "Device", m_Name);
+    setAttribute(*map, "VendorId", m_Vendor);
+    setAttribute(*map, "ModelName", m_Model);
+    //setAttribute(*map, "SysFS BusID", m_BusInfo);
+    setAttribute(*map, "IRQ", m_Irq);
+    setAttribute(*map, "Memory Range", m_Memory);
+    setAttribute(*map, "Hardware Class", m_Description);
+    setAttribute(*map, "DriverName", m_Driver);
+    setAttribute(*map, "Driver Modules", m_DriverModules); // 驱动模块
+    setAttribute(*map, "version", m_Version);
+    setAttribute(*map, "width", m_Width);
+    setAttribute(*map, "clock", m_Clock);
+    setAttribute(*map, "capabilities", m_Capabilities);
+    setAttribute(*map, "Chip", m_Chip);
+    // 获取其他cpu信息
+    getOtherMapInfo(*map);
+}

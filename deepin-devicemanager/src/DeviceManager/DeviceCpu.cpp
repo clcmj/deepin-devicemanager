@@ -116,7 +116,7 @@ const QString DeviceCpu::getOverviewInfo()
 void DeviceCpu::setInfoFromLscpu(const QMap<QString, QString> &mapInfo)
 {
     // 设置CPU属性
-    setAttribute(mapInfo, "model name", m_Name);
+    setAttribute(mapInfo, "model name", m_Name);//优先级：xml > dmidecode > Lshw > lscpu
     setAttribute(mapInfo, "vendor_id", m_Vendor, false);
     setAttribute(mapInfo, "Thread(s) per core", m_ThreadNum);
     setAttribute(mapInfo, "bogomips", m_BogoMIPS);
@@ -178,6 +178,7 @@ void DeviceCpu::setCurFreq(const QString &curFreq)
  */
 void DeviceCpu::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
 {
+    //优先级：xml > dmidecode > Lshw > lscpu
     // longxin CPU型号不从lshw中获取
     // bug39874
     if (m_Name.contains("Loongson", Qt::CaseInsensitive))
@@ -200,6 +201,7 @@ void DeviceCpu::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
 
 void DeviceCpu::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
 {
+    //优先级：xml > dmidecode > Lshw > lscpu
     // longxin CPU型号不从dmidecode中获取
     // bug39874
     if (m_Name.contains("Loongson", Qt::CaseInsensitive)) {
@@ -215,6 +217,46 @@ void DeviceCpu::setInfoFromDmidecode(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Current Speed", m_CurFrequency, false);
     setAttribute(mapInfo, "Family", m_Familly, false);
 
+    // 获取其他cpu信息
+    getOtherMapInfo(mapInfo);
+}
+void DeviceCpu::setInfoFromXml(const QMap<QString, QString> &mapInfo)
+{
+    setAttribute(mapInfo, "vendor_id", m_Vendor);
+    setAttribute(mapInfo, "model name", m_Name);
+    setAttribute(mapInfo, "processor", m_PhysicalID);
+    //setAttribute(mapInfo, "Manufacturer", m_CoreID);
+    setAttribute(mapInfo, "Thread(s) per core", m_ThreadNum);
+    setAttribute(mapInfo, "CPU MHz", m_CurFrequency);
+    setAttribute(mapInfo, "bogomips", m_BogoMIPS);
+    setAttribute(mapInfo, "Architecture", m_Architecture);
+    setAttribute(mapInfo, "cpu family", m_Familly);
+    setAttribute(mapInfo, "model", m_Model);
+    setAttribute(mapInfo, "stepping", m_Step);
+    setAttribute(mapInfo, "L1d Cache", m_CacheL1Data);
+    setAttribute(mapInfo, "L1i Cache", m_CacheL1Order);
+    setAttribute(mapInfo, "L2 Cache", m_CacheL2);
+    setAttribute(mapInfo, "L3 Cache", m_CacheL3);
+    setAttribute(mapInfo, "Extensions", m_Extensions);
+    setAttribute(mapInfo, "flags", m_Flags);
+    setAttribute(mapInfo, "Virtualization", m_HardwareVirtual);
+
+    bool min = mapInfo.find("CPU min MHz") != mapInfo.end();
+    bool max = mapInfo.find("CPU max MHz") != mapInfo.end();
+    if (min && max) {
+        QString minS = mapInfo["CPU min MHz"];
+        QString maxS = mapInfo["CPU max MHz"];
+        double minHz = minS.replace("MHz", "").toDouble() / 1000;
+        double maxHz = maxS.replace("MHz", "").toDouble() / 1000;
+        m_Frequency = QString("%1-%2 GHz").arg(minHz).arg(maxHz);
+        m_FrequencyIsRange = true;
+
+        // 如果最大最小频率相等则不显示范围
+        if (fabs(minHz - maxHz) < 0.001)
+            m_FrequencyIsRange = false;
+    } else {
+        m_Frequency = m_CurFrequency;
+    }
     // 获取其他cpu信息
     getOtherMapInfo(mapInfo);
 }

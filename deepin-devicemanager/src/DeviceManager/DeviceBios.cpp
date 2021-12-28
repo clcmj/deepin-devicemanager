@@ -147,6 +147,7 @@ const QString DeviceBios::getOverviewInfo()
 void DeviceBios::initFilterKey()
 {
     // 添加可显示属性
+    //bios
     addFilterKey(QObject::tr("Release Date"));
     addFilterKey(QObject::tr("Address"));
     addFilterKey(QObject::tr("Runtime Size"));
@@ -154,7 +155,7 @@ void DeviceBios::initFilterKey()
     addFilterKey(QObject::tr("Characteristics"));
     addFilterKey(QObject::tr("BIOS Revision"));
     addFilterKey(QObject::tr("Firmware Revision"));
-
+    //board
     addFilterKey(QObject::tr("Product Name"));
     addFilterKey(QObject::tr("Serial Number"));
     addFilterKey(QObject::tr("Asset Tag"));
@@ -163,7 +164,7 @@ void DeviceBios::initFilterKey()
     addFilterKey(QObject::tr("Chassis Handle"));
     addFilterKey(QObject::tr("Type"));
     addFilterKey(QObject::tr("Contained Object Handles"));
-
+//system
     addFilterKey(QObject::tr("Product Name"));
     addFilterKey(QObject::tr("Serial Number"));
     addFilterKey(QObject::tr("UUID"));
@@ -171,7 +172,7 @@ void DeviceBios::initFilterKey()
     addFilterKey(QObject::tr("SKU Number"));
     addFilterKey(QObject::tr("Family"));
 
-
+//机箱
     addFilterKey(QObject::tr("Type"));
     addFilterKey(QObject::tr("Lock"));
     addFilterKey(QObject::tr("Serial Number"));
@@ -185,7 +186,7 @@ void DeviceBios::initFilterKey()
     addFilterKey(QObject::tr("Number Of Power Cords"));
     addFilterKey(QObject::tr("Contained Elements"));
     addFilterKey(QObject::tr("SKU Number"));
-
+//内存
     addFilterKey(QObject::tr("Location"));
     addFilterKey(QObject::tr("Error Correction Type"));
     addFilterKey(QObject::tr("Maximum Capacity"));
@@ -233,4 +234,16 @@ void DeviceBios::loadTableHeader()
 void DeviceBios::loadTableData()
 {
 
+}
+
+void DeviceBios::setInfoFromXml(QMap<QString, QString> &map)
+{
+        //setAttribute(*map, "BusInfo", m_BusInfo);
+    setAttribute(map, "ProductName", m_ProductName);
+    setAttribute(map, "Manufacturer", m_Vendor);
+    setAttribute(map, "Version", m_Version);
+    setAttribute(map, "Chipset", m_ChipsetFamily);
+    setAttribute(map, "Driver", m_Driver);
+    // 获取其他cpu信息
+    getOtherMapInfo(map);
 }

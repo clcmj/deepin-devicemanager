@@ -77,6 +77,12 @@ public:
     bool setMemoryInfo(const QMap<QString, QString> &mapInfo);
 
     /**
+       * @brief setInfoFromXml:设置从xml命令中获取的信息
+       * @param mapInfo:由gpuinfo获取的信息map
+       */
+    void setInfoFromXml(QMap<QString, QString> &);
+
+    /**
        * @brief name:获取名称属性值
        * @param 无
        * @return QString:名称属性值

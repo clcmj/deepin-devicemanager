@@ -342,3 +342,39 @@ bool DeviceMonitor::caculateScreenSize(const QString &edid)
     m_ScreenSize = QString("%1 %2(%3cm X %4cm)").arg(QString::number(inch, '0', 1)).arg(QObject::tr("inch")).arg(width).arg(height);
     return true;
 }
+
+void DeviceMonitor::setInfoFromXml(QString key, QList<QMap<QString, QString>> &lstMap)
+{
+    if(lstMap.length() < 1){
+        return;
+    }
+    QMap<QString, QString> * map = nullptr;
+    for (int i = 0; i< lstMap.length();i++) {
+        if(lstMap[i][key] == m_SerialNumber){
+            map = &lstMap[i];
+            break;
+        }
+    }
+    if(nullptr == map){
+        return;
+    }
+
+    //setAttribute(*map, "SerialNumber", m_SerialNumber);
+    setAttribute(*map, "Name", m_Name);
+    setAttribute(*map, "Vendor", m_Vendor);
+    setAttribute(*map, "Model", m_Model);
+    setAttribute(*map, "DisplayInput", m_DisplayInput);
+    setAttribute(*map, "VGA", m_VGA);
+    setAttribute(*map, "HDMI", m_HDMI);
+    setAttribute(*map, "DVI", m_DVI);
+    setAttribute(*map, "Interface", m_Interface);
+    setAttribute(*map, "Driver", m_Driver);
+    setAttribute(*map, "ScreenSize", m_ScreenSize);
+    setAttribute(*map, "AspectRatio", m_AspectRatio);
+    setAttribute(*map, "MainScreen", m_MainScreen);
+    setAttribute(*map, "CurrentResolution", m_CurrentResolution);
+    setAttribute(*map, "ProductionWeek", m_ProductionWeek);
+    setAttribute(*map, "SupportResolution", m_SupportResolution);
+    // 获取其他cpu信息
+    getOtherMapInfo(*map);
+}

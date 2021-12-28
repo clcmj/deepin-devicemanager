@@ -168,6 +168,51 @@ void DeviceGpu::setGpuInfo(const QMap<QString, QString> &mapInfo)
     // 获取其他属性
     getOtherMapInfo(mapInfo);
 }
+void DeviceGpu::setInfoFromXml(QString key, QList<QMap<QString, QString>> &lstMap)
+{
+    if(lstMap.length() < 1){
+        return;
+    }
+    QMap<QString, QString> * map = nullptr;
+    for (int i = 0; i< lstMap.length();i++) {
+        if(lstMap[i][key] == m_BusInfo){
+            map = &lstMap[i];
+            break;
+        }
+    }
+    if(nullptr == map){
+        return;
+    }
+
+    setAttribute(*map, "product" ,m_Name);
+    setAttribute(*map, "Vendor" ,m_Vendor);
+    setAttribute(*map, "Model" ,m_Model);
+    setAttribute(*map, "version" ,m_Version);
+    setAttribute(*map, "GraphicsMemory" ,m_GraphicsMemory);
+    setAttribute(*map, "Width" ,m_Width);
+    setAttribute(*map, "DisplayPort", m_DisplayPort);
+    setAttribute(*map, "clock" ,m_Clock);
+    setAttribute(*map, "IRQ" ,m_IRQ);
+    setAttribute(*map, "capabilities" ,m_Capabilities);
+    setAttribute(*map, "DisplayOutput", m_DisplayOutput);
+    setAttribute(*map, "VGA", m_VGA);
+    setAttribute(*map, "HDMI", m_HDMI);
+    setAttribute(*map, "eDP", m_eDP);
+    setAttribute(*map, "DVI", m_DVI);
+    setAttribute(*map, "Digital", m_Digital);
+    setAttribute(*map, "description" ,m_Description);
+    setAttribute(*map, "Driver " ,m_Driver);
+    setAttribute(*map, "CurrentResolution", m_CurrentResolution);
+    setAttribute(*map, "MinimumResolution", m_MinimumResolution);
+    setAttribute(*map, "MaximumResolution", m_MaximumResolution);
+    setAttribute(*map, "Type", m_Type);
+    //setAttribute(*map, "bus info" ,m_BusInfo);
+    setAttribute(*map, "ioport" ,m_IOPort);
+    setAttribute(*map, "memory" ,m_MemAddress);
+    setAttribute(*map, "physical id" ,m_PhysID);
+    // 获取其他cpu信息
+    getOtherMapInfo(*map);
+}
 
 const QString &DeviceGpu::name() const
 {

@@ -50,6 +50,18 @@ public:
     bool setInfoFromDmidecode(const QMap<QString, QString> &mapInfo);
 
     /**
+     * @brief setInfoFromXml:设置从XML获取的内存信息
+     * @param mapInfo:由xml获取的信息map
+     */
+    void setInfoFromXml(QString, QList<QMap<QString, QString>> &);
+
+    /**
+     * @brief GetLocator:获取Locator信息
+     * @param void
+     */
+    QString GetLocator(){return m_Locator;}
+
+    /**
      * @brief name:获取名称属性值
      * @return QString 名称属性值
      */

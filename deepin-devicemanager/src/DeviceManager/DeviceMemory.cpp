@@ -179,3 +179,35 @@ const QString DeviceMemory::getOverviewInfo()
 
     return ov;
 }
+
+void DeviceMemory::setInfoFromXml(QString key, QList<QMap<QString, QString>> &lstMap)
+{
+    if(lstMap.length() < 1){
+        return;
+    }
+    QMap<QString, QString> * map = nullptr;
+    for (int i = 0; i< lstMap.length();i++) {
+        if(lstMap[i][key] == m_Locator){
+            map = &lstMap[i];
+            break;
+        }
+    }
+    if(nullptr == map){
+        return;
+    }
+    setAttribute(*map, "product", m_Name);
+    setAttribute(*map, "vendor", m_Vendor);
+    setAttribute(*map, "size", m_Size);
+    setAttribute(*map, "Type", m_Type);
+    setAttribute(*map, "clock", m_Speed);
+    setAttribute(*map, "Total Width", m_TotalBandwidth);
+    setAttribute(*map, "Data Width", m_DataBandwidth);
+    //setAttribute(*map, "slot", m_Locator);
+    setAttribute(*map, "Serial Number", m_SerialNumber);
+    setAttribute(*map, "Configured Memory Speed", m_ConfiguredSpeed);
+    setAttribute(*map, "Minimum Voltage", m_MinimumVoltage);
+    setAttribute(*map, "Maximum Voltage", m_MaximumVoltage);
+    setAttribute(*map, "Configured Voltage", m_ConfiguredVoltage);
+    // 获取其他cpu信息
+    getOtherMapInfo(*map);
+}

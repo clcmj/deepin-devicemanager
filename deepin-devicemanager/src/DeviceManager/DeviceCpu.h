@@ -81,6 +81,12 @@ public:
     void setInfoFromLscpu(const QMap<QString, QString> &mapInfo);
 
     /**
+     * @brief setInfoFromLscpu:设置由lscpu获取的CPU信息
+     * @param mapInfo:由lscpu获取的CPU信息map
+     */
+    void setInfoFromXml(const QMap<QString, QString> &mapInfo);
+
+    /**
      * @brief setCurFreq
      * @param curFreq
      */

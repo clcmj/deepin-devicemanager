@@ -24,7 +24,7 @@
 #define MAINWINDOW_H
 
 #include "DBusInterface.h"
-
+#include "XmlHandler.h"
 #include <DMainWindow>
 #include <DStackedWidget>
 

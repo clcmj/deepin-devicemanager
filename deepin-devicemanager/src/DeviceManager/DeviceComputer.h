@@ -95,6 +95,11 @@ public:
     void setName(const QString &dm1Name, const QString &dm2Name, const QString &dm1Family, const QString &dm1Version);
 
     /**
+       * @brief setInfoFromXml:设置从xml命令中获取的信息
+       * @param mapInfo:由gpuinfo获取的信息map
+       */
+    void setInfoFromXml(QMap<QString, QString>&);
+    /**
      * @brief getOverviewInfo:获取概况信息
      * @return 概况信息
      */

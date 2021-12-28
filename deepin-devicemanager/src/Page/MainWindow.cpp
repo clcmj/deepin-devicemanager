@@ -310,6 +310,7 @@ void MainWindow::refreshDataBase()
 
     if (mp_WorkingThread)
         mp_WorkingThread->start();
+    XmlHandler::instance()->XmlHandle();
 }
 
 void MainWindow::slotLoadingFinish(const QString &message)

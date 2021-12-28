@@ -116,6 +116,12 @@ public:
      */
     bool addMouseInfoFromLshw(const QMap<QString, QString> &mapInfo);
 
+    /**
+     * @brief getMouseList 获取Mouse列表
+     * @param
+     * @return
+     */
+    QList<DeviceBaseInfo *> getMouseList(){return this->m_ListDeviceMouse;}
 
     // CPU设备相关 **************************************************************************************
     /**
@@ -161,6 +167,12 @@ public:
      */
     void setStorageInfoFromSmartctl(const QString &name, const QMap<QString, QString> &mapInfo);
 
+    /**
+     * @brief getStorageList 获取Storage列表
+     * @param
+     * @return
+     */
+    QList<DeviceBaseInfo *> getStorageList(){return this->m_ListDeviceStorage;}
     // GPU设备相关 **************************************************************************************
     /**
      * @brief addGpuDevice:添加显卡
@@ -186,6 +198,13 @@ public:
      */
     void setGpuSizeFromDmesg(const QString &info);
 
+    /**
+     * @brief getGpuList 获取Gpu列表
+     * @param
+     * @return
+     */
+    QList<DeviceBaseInfo *> getGpuList(){return this->m_ListDeviceGPU;}
+
     // 内存设备相关 *************************************************************************************
     /**
      * @brief addMemoryDevice:添加内存设备
@@ -198,6 +217,13 @@ public:
      * @param mapInfo:由dmidecode获取的内存信息
      */
     void setMemoryInfoFromDmidecode(const QMap<QString, QString> &mapInfo);
+
+    /**
+     * @brief getMemoryList 获取Memory列表
+     * @param busInfo
+     * @return
+     */
+    QList<DeviceBaseInfo *> getMemoryList(){return this->m_ListDeviceMemory;}
 
     // 显示设备相关 *************************************************************************************
     /**
@@ -213,6 +239,12 @@ public:
      */
     void setMonitorInfoFromXrandr(const QString &main, const QString &edid, const QString &rate = "");
 
+    /**
+     * @brief getMonitorList 获取Monitor列表
+     * @param
+     * @return
+     */
+    QList<DeviceBaseInfo *> getMonitorList(){return this->m_ListDeviceMonitor;}
     // Bios设备相关 ************************************************************************************
     /**
      * @brief addBiosDevice:添加BIOS设备
@@ -246,6 +278,20 @@ public:
      */
     bool setBluetoothInfoFromHwinfo(const QMap<QString, QString> &mapInfo);
 
+    /**
+     * @brief getBluetoothDevice
+     * @param unique_id
+     * @return
+     */
+    DeviceBaseInfo* getBluetoothDevice(const QString& unique_id);
+
+    /**
+     * @brief getBluetoothList 获取Network列表
+     * @param
+     * @return
+     */
+    QList<DeviceBaseInfo *> getBluetoothList(){return this->m_ListDeviceBluetooth;}
+
     // 音频设备相关
     /**
      * @brief addAudioDevice:添加声卡
@@ -265,6 +311,19 @@ public:
      */
     void setAudioChipFromDmesg(const QString &info);
 
+    /**
+     * @brief getAudioList 获取Audio列表
+     * @param
+     * @return
+     */
+    QList<DeviceBaseInfo *> getAudioList(){return this->m_ListDeviceAudio;}
+
+    /**
+     * @brief getPowerList 获取Power列表
+     * @param
+     * @return
+     */
+    QList<DeviceBaseInfo *> getPowerList(){return this->m_ListDevicePower;}
     // 网络设备相关
     /**
      * @brief addNetworkDevice:添加网络适配器
@@ -290,6 +349,13 @@ public:
      */
     void correctPowerInfo(const QMap<QString, QMap<QString, QString>> &mapInfo);
 
+    /**
+     * @brief getNetworkList 获取Network列表
+     * @param
+     * @return
+     */
+    QList<DeviceBaseInfo *> getNetworkList(){return this->m_ListDeviceNetwork;}
+
     // 图像设备相关
     /**
      * @brief addImageDevice:添加图像设备
@@ -303,6 +369,13 @@ public:
      */
     void setCameraInfoFromLshw(const QMap<QString, QString> &mapInfo);
 
+    /**
+     * @brief getCameraList 获取Camera列表
+     * @param
+     * @return
+     */
+    QList<DeviceBaseInfo *> getCameraList(){return this->m_ListDeviceImage;}
+
     // 键盘设备相关
     /**
      * @brief addKeyboardDevice:添加键盘设备
@@ -315,6 +388,13 @@ public:
      * @param mapInfo:由lshw获取的键盘信息map
      */
     void setKeyboardInfoFromLshw(const QMap<QString, QString> &mapInfo);
+
+    /**
+     * @brief getKeyboardList 获取Keyboard列表
+     * @param
+     * @return
+     */
+    QList<DeviceBaseInfo *> getKeyboardList(){return this->m_ListDeviceKeyboard;}
 
     // 其它设备相关
     /**
@@ -337,6 +417,13 @@ public:
 
     void setCpuRefreshInfoFromlscpu(const QMap<QString, QString> &mapInfo);
 
+    /**
+     * @brief getCpuList 获取CPU列表
+     * @param busInfo
+     * @return
+     */
+    QList<DeviceBaseInfo *> getCpuList(){return this->m_ListDeviceCPU;}
+
     // 电源设备相关
     /**
      * @brief addPowerDevice:添加电池设备
@@ -350,6 +437,13 @@ public:
      * @param device:被添加的打印机设备
      */
     void addPrintDevice(DevicePrint *const device);
+
+    /**
+     * @brief getPrintList 获取Print列表
+     * @param busInfo
+     * @return
+     */
+    QList<DeviceBaseInfo *> getPrintList(){return this->m_ListDevicePrint;}
 
     // 其它pci设备相关
     /**
@@ -378,6 +472,13 @@ public:
      * @param mapInfo:由lshw获取的信息map
      */
     void addLshwinfoIntoCdromDevice(const QMap<QString, QString> &mapInfo);
+
+    /**
+     * @brief getCdromList 获取Cdrom列表
+     * @param
+     * @return
+     */
+    QList<DeviceBaseInfo *> getCdromList(){return this->m_ListDeviceCdrom;}
 
     /**
      * @brief addBusId:添加总线ID

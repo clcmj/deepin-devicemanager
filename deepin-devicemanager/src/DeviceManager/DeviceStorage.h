@@ -113,6 +113,12 @@ public:
     void setDiskSerialID(const QString &deviceFiles);
 
     /**
+       * @brief setInfoFromXml:设置从xml命令中获取的信息
+       * @param mapInfo:由xml获取的信息map
+       */
+    void setInfoFromXml(QString, QList<QMap<QString, QString>> &);
+
+    /**
      * @brief compareSize:比较nvme提供的两个容量值的大小
      * @param size1:Total NVM Capacity
      * @param size2:Namespace 1 Size/Capacity

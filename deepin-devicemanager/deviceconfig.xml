@@ -1,0 +1,561 @@
+<context>
+<![CDATA[
+1.对于只有一个的设备，无key处理；对于可能存在多个的设备，要在定制代码中区分。比如显卡、鼠标、键盘、其他设备。
+2.属性分类：
+    key：可以区分设备，又不会被定制的属性，比如槽位号。比如名称，一般也可以区分设备，但是可能会需要定制，不要选做key
+    一般属性：可定制属性
+    filter属性:可定制属性、filter处理属性。
+3.本表格可以为空，可以删除。
+4.如果需要定制
+    （1）device的type必须按规则填写。
+    （2）key必须填写
+]]>
+    <device type="Base Board Information">
+        <attr name="ProductName" value=""></attr>
+        <attr name="Manufacturer" value=""></attr>
+        <attr name="Version" value=""></attr>
+        <attr name="Chipset" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <!--dmidecode attr -->
+        <attr name="Product Name" value=""></attr>
+        <attr name="Serial Number" value=""></attr>
+        <attr name="Asset Tag" value=""></attr>
+        <attr name="Features" value=""></attr>
+        <attr name="Location In Chassis" value=""></attr>
+        <attr name="Chassis Handle" value=""></attr>
+        <attr name="Type" value=""></attr>
+        <attr name="Contained Object Handles" value=""></attr>
+    </device>
+    <device type="BIOS Information">
+        <attr name="ProductName" value=""></attr>
+        <attr name="Manufacturer" value=""></attr>
+        <attr name="Version" value=""></attr>
+        <attr name="Chipset" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <!--dmidecode attr -->
+        <attr name="Release Date" value=""></attr>
+        <attr name="Address" value=""></attr>
+        <attr name="Runtime Size" value=""></attr>
+        <attr name="ROM Size" value=""></attr>
+        <attr name="Characteristics" value=""></attr>
+        <attr name="BIOS Revision" value=""></attr>
+        <attr name="Firmware Revision" value=""></attr>
+    </device>
+    <device type="System Information">
+        <attr name="ProductName" value=""></attr>
+        <attr name="Manufacturer" value=""></attr>
+        <attr name="Version" value=""></attr>
+        <attr name="Chipset" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <!--dmidecode attr -->
+        <attr name="Product Name" value=""></attr>
+        <attr name="Serial Number" value=""></attr>
+        <attr name="UUID" value=""></attr>
+        <attr name="Wake-up Type" value=""></attr>
+        <attr name="SKU Number" value=""></attr>
+        <attr name="Family" value=""></attr>
+    </device>
+    <device type="Chassis Information">
+        <attr name="ProductName" value=""></attr>
+        <attr name="Manufacturer" value=""></attr>
+        <attr name="Version" value=""></attr>
+        <attr name="Chipset" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <!--dmidecode attr -->
+        <attr name="Type" value="Desktop"></attr>
+        <attr name="Lock" value="Not Present"></attr>
+        <attr name="Serial Number" value=""></attr>
+        <attr name="Asset Tag" value=""></attr>
+        <attr name="Boot-up State" value=""></attr>
+        <attr name="Power Supply State" value=""></attr>
+        <attr name="Thermal State" value=""></attr>
+        <attr name="Security Status" value=""></attr>
+        <attr name="OEM Information" value=""></attr>
+        <attr name="Height" value=""></attr>
+        <attr name="Number Of Power Cords" value=""></attr>
+        <attr name="Contained Elements" value=""></attr>
+        <attr name="SKU Number" value=""></attr>
+    </device>
+    <device type="Physical Memory Array">
+        <attr name="ProductName" value=""></attr>
+        <attr name="Manufacturer" value=""></attr>
+        <attr name="Version" value=""></attr>
+        <attr name="Chipset" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <!--dmidecode attr -->
+        <attr name="Location" value=""></attr>
+        <attr name="Error Correction Type" value=""></attr>
+        <attr name="Maximum Capacity" value=""></attr>
+        <attr name="Error Information Handle" value=""></attr>
+        <attr name="Number Of Devices" value=""></attr>
+    </device>
+    <device type="CPU">
+        <attr name="model name" value=""></attr>
+        <attr name="vendor_id" value=""></attr>
+        <attr name="Thread(s) per core" value=""></attr>
+        <attr name="bogomips" value=""></attr>
+        <attr name="Architecture" value=""></attr>
+        <attr name="cpu family" value=""></attr>
+        <attr name="CPU MHz" value=""></attr>
+        <attr name="model" value=""></attr>
+        <attr name="stepping" value=""></attr>
+        <attr name="Virtualization" value=""></attr>
+        <attr name="L3 Cache" value=""></attr>
+        <attr name="L2 Cache" value=""></attr>
+        <attr name="L1i Cache" value=""></attr>
+        <attr name="L1d Cache" value=""></attr>
+        <attr name="flags" value=""></attr>
+        <attr name="processor" value=""></attr>
+        <attr name="core id" value=""></attr>
+        <attr name="CPU min MHz" value=""></attr>
+        <attr name="CPU max MHz" value=""></attr>
+        <attr name="Extensions" value=""></attr>
+        <!--dmidecode attr -->
+        <attr name="CPU implementer" value=""></attr>
+        <attr name="CPU architecture" value=""></attr>
+        <attr name="CPU variant" value=""></attr>
+        <attr name="CPU part" value=""></attr>
+        <attr name="CPU revision" value=""></attr>
+    </device>
+    <device type="Memory 0"><![CDATA[ type只是一个标记，key是 physical id/ slot ]]>
+        <attr name="slot" value=""></attr><![CDATA[ key ]]>
+        <attr name="product" value=""></attr>
+        <attr name="vendor" value=""></attr>
+        <attr name="size" value=""></attr>
+        <attr name="Type" value=""></attr>
+        <attr name="clock" value=""></attr>
+        <attr name="Total Width" value=""></attr>
+        <attr name="Data Width" value=""></attr>
+        <attr name="Serial Number" value=""></attr>
+        <attr name="Configured Memory Speed" value=""></attr>
+        <attr name="Minimum Voltage" value=""></attr>
+        <attr name="Maximum Voltage" value=""></attr>
+        <attr name="Configured Voltage" value=""></attr>
+    </device>
+    <device type="GPU 0">
+        <attr name="bus info" value=""></attr><![CDATA[ key ]]>
+        <attr name="product" value=""></attr>
+        <attr name="version" value=""></attr>
+        <attr name="clock" value=""></attr>
+        <attr name="capabilities" value=""></attr>
+        <attr name="GraphicsMemory" value=""></attr>
+        <attr name="description" value=""></attr>
+        <attr name="ioport" value=""></attr>
+        <attr name="memory" value=""></attr>
+        <attr name="physical id" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Model" value=""></attr>
+        <attr name="IRQ" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <attr name="Width" value=""></attr>
+        <attr name="DisplayPort" value=""></attr>
+        <attr name="DisplayOutput" value=""></attr>
+        <attr name="VGA" value=""></attr>
+        <attr name="HDMI" value=""></attr>
+        <attr name="eDP" value=""></attr>
+        <attr name="DVI" value=""></attr>
+        <attr name="Digital" value=""></attr>
+        <attr name="CurrentResolution" value=""></attr>
+        <attr name="MinimumResolution" value=""></attr>
+        <attr name="MaximumResolution" value=""></attr>
+        <attr name="Type" value=""></attr>
+        <!--filter attr -->
+        <attr name="Device" value=""></attr>
+        <attr name="SubVendor" value=""></attr>
+        <attr name="SubDevice" value=""></attr>
+        <attr name="Driver Modules" value=""></attr>
+        <attr name="Config Status" value=""></attr>
+        <attr name="latency" value=""></attr>
+        <attr name="GDDR capacity" value=""></attr>
+        <attr name="GPU vendor" value=""></attr>
+        <attr name="GPU type" value=""></attr>
+        <attr name="EGL version" value=""></attr>
+        <attr name="EGL client APIs" value=""></attr>
+        <attr name="GL version" value=""></attr>
+        <attr name="GLSL version" value=""></attr>
+    </device>
+    <device type="DISK 0">
+        <attr name="Serial ID" value=""></attr><![CDATA[ key ]]>
+        <attr name="Model" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <attr name="Attached to" value=""></attr>
+        <attr name="Revision" value=""></attr>
+        <attr name="Capacity" value=""></attr>
+        <attr name="SysFS BusID" value=""></attr>
+        <attr name="DeviceFile" value=""></attr>
+        <attr name="SysFS Device Link" value=""></attr>
+        <attr name="capabilities" value=""></attr>
+        <attr name="description" value=""></attr>
+        <attr name="size" value=""></attr>
+        <attr name="Rotation Rate" value=""></attr>
+        <attr name="MediaType" value=""></attr>
+        <attr name="FirmwareVersion" value=""></attr>
+        <attr name="Speed" value="64bit-test"></attr>
+        <attr name="KeyFromStorage" value=""></attr>
+        <attr name="PowerOnHours" value=""></attr>
+        <attr name="PowerCycleCount" value=""></attr>
+        <attr name="DeviceFile" value=""></attr>
+        <attr name="KeyToLshw" value=""></attr>
+        <!--filter attr -->
+        <attr name="Hardware Class" value=""></attr>
+        <attr name="Device File" value=""></attr>
+        <attr name="ansiversion" value=""></attr>
+        <attr name="bus info" value=""></attr>
+        <attr name="logical name" value=""></attr>
+        <attr name="logicalsectorsize" value=""></attr>
+        <attr name="physical id" value=""></attr>
+        <attr name="sectorsize" value=""></attr>
+        <attr name="guid" value=""></attr>
+        <attr name="Config Status" value=""></attr>
+        <attr name="Device Number" value=""></attr>
+        <attr name="Geometry (Logical)" value=""></attr>
+    </device>
+    <device type="DISK 1">
+        <attr name="Serial ID" value=""></attr><![CDATA[ key ]]>
+        <attr name="Model" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <attr name="Attached to" value=""></attr>
+        <attr name="Revision" value=""></attr>
+        <attr name="Capacity" value=""></attr>
+        <attr name="SysFS BusID" value=""></attr>
+        <attr name="DeviceFile" value=""></attr>
+        <attr name="SysFS Device Link" value=""></attr>
+        <attr name="capabilities" value=""></attr>
+        <attr name="description" value=""></attr>
+        <attr name="size" value=""></attr>
+        <attr name="Rotation Rate" value=""></attr>
+        <attr name="MediaType" value=""></attr>
+        <attr name="FirmwareVersion" value=""></attr>
+        <attr name="Speed" value=""></attr>
+        <attr name="KeyFromStorage" value=""></attr>
+        <!--filter attr -->
+        <attr name="Hardware Class" value=""></attr>
+        <attr name="Device File" value=""></attr>
+        <attr name="ansiversion" value=""></attr>
+        <attr name="bus info" value=""></attr>
+        <attr name="logical name" value=""></attr>
+        <attr name="logicalsectorsize" value=""></attr>
+        <attr name="physical id" value=""></attr>
+        <attr name="sectorsize" value=""></attr>
+        <attr name="guid" value=""></attr>
+        <attr name="Config Status" value=""></attr>
+        <attr name="Device Number" value=""></attr>
+        <attr name="Geometry (Logical)" value=""></attr>
+    </device>
+    <device type="AUDIO 0">
+        <attr name="SysFS BusID" value=""></attr>
+        <attr name="Device" value=""></attr>
+        <attr name="VendorId" value=""></attr>
+        <attr name="ModelName" value=""></attr>
+        <attr name="IRQ" value=""></attr>
+        <attr name="Memory Range" value=""></attr>
+        <attr name="Hardware Class" value=""></attr>
+        <attr name="DriverName" value=""></attr>
+        <attr name="Driver Modules" value=""></attr>
+        <attr name="version" value=""></attr>
+        <attr name="width" value=""></attr>
+        <attr name="clock" value=""></attr>
+        <attr name="capabilities" value=""></attr>
+        <attr name="Chip" value=""></attr>
+        <!--filter attr -->
+        <attr name="Device Name" value=""></attr>
+        <attr name="SubVendor" value=""></attr>
+        <attr name="SubDevice" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <attr name="Driver Status" value=""></attr>
+        <attr name="Driver Activation Cmd" value=""></attr>
+        <attr name="Config Status" value=""></attr>
+        <attr name="physical id" value=""></attr>
+        <attr name="latency" value=""></attr>
+        <attr name="Phys" value=""></attr>
+        <attr name="Sysfs" value=""></attr>
+        <attr name="Handlers" value=""></attr>
+        <attr name="PROP" value=""></attr>
+        <attr name="EV" value=""></attr>
+        <attr name="KEY" value=""></attr>
+        <attr name="Model" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Version" value=""></attr>
+        <attr name="Bus" value=""></attr>
+    </device>
+    <device type="AUDIO 1">
+        <attr name="SysFS BusID" value=""></attr>
+        <attr name="Device" value=""></attr>
+        <attr name="VendorId" value=""></attr>
+        <attr name="ModelName" value=""></attr>
+        <attr name="IRQ" value=""></attr>
+        <attr name="Memory Range" value=""></attr>
+        <attr name="Hardware Class" value=""></attr>
+        <attr name="DriverName" value=""></attr>
+        <attr name="Driver Modules" value=""></attr>
+        <attr name="version" value=""></attr>
+        <attr name="width" value=""></attr>
+        <attr name="clock" value=""></attr>
+        <attr name="capabilities" value=""></attr>
+        <attr name="Chip" value=""></attr>
+        <!--filter attr -->
+        <attr name="Device Name" value=""></attr>
+        <attr name="SubVendor" value=""></attr>
+        <attr name="SubDevice" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <attr name="Driver Status" value=""></attr>
+        <attr name="Driver Activation Cmd" value=""></attr>
+        <attr name="Config Status" value=""></attr>
+        <attr name="physical id" value=""></attr>
+        <attr name="latency" value=""></attr>
+        <attr name="Phys" value=""></attr>
+        <attr name="Sysfs" value=""></attr>
+        <attr name="Handlers" value=""></attr>
+        <attr name="PROP" value=""></attr>
+        <attr name="EV" value=""></attr>
+        <attr name="KEY" value=""></attr>
+        <attr name="Model" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Version" value=""></attr>
+        <attr name="Bus" value=""></attr>
+    </device>
+    <device type="BLUETOOTH 0">
+        <attr name="BusInfo" value=""></attr>
+        <attr name="Name" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="version" value=""></attr>
+        <attr name="Model" value=""></attr>
+        <attr name="MAC" value=""></attr>
+        <attr name="LogicalName" value=""></attr>
+        <attr name="Capabilities Class" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <attr name="DriverVersion" value=""></attr>
+        <attr name="MaximumPower" value=""></attr>
+        <attr name="Speed" value=""></attr>
+        <!--filter attr -->
+        <attr name="Bus" value=""></attr>
+        <attr name="BD Address" value=""></attr>
+        <attr name="ACL MTU" value=""></attr>
+        <attr name="SCO MTU" value=""></attr>
+        <attr name="Features" value=""></attr>
+        <attr name="Packet type" value=""></attr>
+        <attr name="Link policy" value=""></attr>
+        <attr name="Link mode" value=""></attr>
+        <attr name="Class" value=""></attr>
+        <attr name="Service Classes" value=""></attr>
+        <attr name="Device Class" value=""></attr>
+        <attr name="HCI Version" value=""></attr>
+        <attr name="LMP Version" value=""></attr>
+        <attr name="Subversion" value=""></attr>
+        <attr name="Device" value=""></attr>
+        <attr name="Serial ID" value=""></attr>
+        <attr name="product" value=""></attr>
+        <attr name="description" value=""></attr>
+        <attr name="physical id" value=""></attr>
+        <attr name="Powered" value=""></attr>
+        <attr name="Discoverable" value=""></attr>
+        <attr name="Pairable" value=""></attr>
+        <attr name="UUID" value=""></attr>
+        <attr name="Modalias" value=""></attr>
+        <attr name="Discovering" value=""></attr>
+    </device>
+    <device type="CDROM 0">
+        <attr name="BusInfo" value=""></attr>
+        <attr name="Name" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Type" value=""></attr>
+        <attr name="Version" value=""></attr>
+        <attr name="Capabilities" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <attr name="MaxPower" value=""></attr>
+        <attr name="Speed" value=""></attr>
+        <!--filter attr -->
+        <attr name="Serial ID" value=""></attr>
+        <attr name="Driver Modules" value=""></attr>
+        <attr name="Device File" value=""></attr>
+        <attr name="Device Files" value=""></attr>
+        <attr name="Device Number" value=""></attr>
+        <attr name="Module Alias" value=""></attr>
+        <attr name="Config Status" value=""></attr>
+        <attr name="Application" value=""></attr>
+        <attr name="physical id" value=""></attr>
+        <attr name="status" value=""></attr>
+        <attr name="logical name" value=""></attr>
+        <attr name="ansiversion" value=""></attr>
+    </device>
+    <device type="Camera 0">
+        <attr name="BusInfo" value=""></attr>
+        <attr name="Name" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Model" value=""></attr>
+        <attr name="Version" value=""></attr>
+        <attr name="Capabilities" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <attr name="MaximumPower" value=""></attr>
+        <attr name="Speed" value=""></attr>
+    </device>
+    <device type="Input 0">
+        <attr name="BusInfo" value=""></attr><![CDATA[ key ]]>
+        <attr name="keysToPairedDevice" value=""></attr><![CDATA[ key: 蓝牙键盘 ]]>
+        <attr name="KeysToCatDevices" value=""></attr><![CDATA[ key: 蓝牙键盘 ]]>
+        <attr name="Name" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Model" value=""></attr>
+        <attr name="Version" value=""></attr>
+        <attr name="Capabilities" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <attr name="MaxPower" value=""></attr>
+        <attr name="Speed" value=""></attr>
+        <attr name="Interface" value=""></attr>
+        <attr name="Description" value=""></attr>
+        <!--filter attr -->
+        <attr name="Uniq" value=""></attr>
+        <attr name="PROP" value=""></attr>
+        <attr name="EV" value=""></attr>
+        <attr name="KEY" value=""></attr>
+        <attr name="MSC" value=""></attr>
+        <attr name="Device File" value=""></attr>
+        <attr name="Hardware Class" value=""></attr>
+        <attr name="physical id" value=""></attr>
+    </device>
+    <device type="Input 1">
+        <attr name="BusInfo" value=""></attr><![CDATA[ key ]]>
+        <attr name="keysToPairedDevice" value=""></attr><![CDATA[ key: 蓝牙键盘 ]]>
+        <attr name="KeysToCatDevices" value=""></attr><![CDATA[ key: 蓝牙键盘 ]]>
+        <attr name="Name" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Model" value=""></attr>
+        <attr name="Version" value=""></attr>
+        <attr name="Capabilities" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <attr name="MaxPower" value=""></attr>
+        <attr name="Speed" value=""></attr>
+        <attr name="Interface" value=""></attr>
+        <attr name="Description" value=""></attr>
+        <!--filter attr -->  
+        <attr name="Uniq" value=""></attr>
+        <attr name="PROP" value=""></attr>
+        <attr name="EV" value=""></attr>
+        <attr name="KEY" value=""></attr>
+        <attr name="MSC" value=""></attr>
+        <attr name="Device File" value=""></attr>
+        <attr name="Hardware Class" value=""></attr>
+        <attr name="physical id" value=""></attr>
+    </device>
+    <device type="Monitor 0"><![CDATA[ 显示器 ]]>
+        <attr name="SerialNumber" value=""></attr><![CDATA[ key ]]>
+        <attr name="Name" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Model" value=""></attr>
+        <attr name="DisplayInput" value=""></attr>
+        <attr name="VGA" value=""></attr>
+        <attr name="HDMI" value=""></attr>
+        <attr name="DVI" value=""></attr>
+        <attr name="Interface" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <attr name="ScreenSize" value=""></attr>
+        <attr name="AspectRatio" value=""></attr>
+        <attr name="MainScreen" value=""></attr>
+        <attr name="CurrentResolution" value=""></attr>
+        <attr name="ProductionWeek" value=""></attr><![CDATA[ 填了这个会导致分辨率等无法显示 ]]>
+        <attr name="SupportResolution" value=""></attr>
+        <!--filter attr -->  
+        <attr name="Date" value="今天"></attr>
+    </device>
+    <device type="Network 0"><![CDATA[ 网卡 ]]>
+        <attr name="BusInfo" value=""></attr><![CDATA[ key ]]>
+        <attr name="Name" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Model" value=""></attr>
+        <attr name="Version" value=""></attr>
+        <attr name="LogicalName" value=""></attr>
+        <attr name="MACAddress" value=""></attr>
+        <attr name="Irq" value=""></attr>
+        <attr name="Memory" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <attr name="Width" value=""></attr>
+        <attr name="Clock" value=""></attr>
+        <attr name="Capabilities" value=""></attr>
+        <attr name="Autonegotiation" value=""></attr>
+        <attr name="Broadcast" value=""></attr>
+        <attr name="DriverVersion" value=""></attr>
+        <attr name="Duplex" value=""></attr>
+        <attr name="Firmware" value=""></attr>
+        <attr name="Port" value=""></attr>
+        <attr name="Link" value=""></attr>
+        <attr name="Ip" value=""></attr>
+        <attr name="Speed" value=""></attr>
+        <attr name="Capacity" value=""></attr>
+        <attr name="Latency" value=""></attr>
+        <attr name="Multicast" value=""></attr>
+        <!--filter attr -->
+        <attr name="ioport" value=""></attr>
+        <attr name="physical id" value=""></attr>
+        <attr name="network" value="abc"></attr>
+    </device>
+    <device type="Power 0"><![CDATA[ 电源 ]]>
+        <attr name="SerialNumber" value=""></attr><![CDATA[ key ]]>
+        <attr name="Name" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Model" value=""></attr>
+        <attr name="Type" value=""></attr>
+        <attr name="ElectricType" value=""></attr>
+        <attr name="MaxPower" value=""></attr>
+        <attr name="Status" value=""></attr>
+        <attr name="Enabled" value=""></attr>
+        <attr name="HotSwitch" value=""></attr>
+        <attr name="Capacity" value=""></attr>
+        <attr name="Voltage" value=""></attr>
+        <attr name="Slot" value=""></attr>
+        <attr name="DesignCapacity" value=""></attr>
+        <attr name="DesignVoltage" value=""></attr>
+        <attr name="SBDSChemistry" value=""></attr>
+        <attr name="SBDSManufactureDate" value=""></attr>
+        <attr name="SBDSSerialNumber" value=""></attr>
+        <attr name="SBDSVersion" value=""></attr>
+        <attr name="Temp" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <!--filter attr -->
+        <attr name="native-path" value=""></attr>
+        <attr name="powersupply" value=""></attr>
+        <attr name="updated" value=""></attr>
+        <attr name="hashistory" value=""></attr>
+        <attr name="hasstatistics" value=""></attr>
+        <attr name="rechargeable" value=""></attr>
+        <attr name="state" value=""></attr>
+        <attr name="warning-level" value=""></attr>
+        <attr name="energy" value=""></attr>
+        <attr name="energy-empty" value=""></attr>
+        <attr name="energy-full" value=""></attr>
+        <attr name="energy-full-design" value=""></attr>
+        <attr name="energy-rate" value=""></attr>
+        <attr name="voltage" value=""></attr>
+        <attr name="percentage" value=""></attr>
+        <attr name="technology" value=""></attr>
+        <attr name="icon-name" value=""></attr>
+        <attr name="online" value=""></attr>
+        <attr name="daemon-version" value=""></attr>
+        <attr name="on-battery" value=""></attr>
+        <attr name="lid-is-closed" value=""></attr>
+        <attr name="lid-is-present" value=""></attr>
+        <attr name="critical-action" value=""></attr>
+    </device>
+    <device type="Print 0"><![CDATA[ 打印机 ]]>
+        <attr name="SerialNumber" value=""></attr><![CDATA[ key ]]>
+        <attr name="URI" value=""></attr><![CDATA[ key:同一台打印机设备可以在系统中创建多个副本，这里做统一的定制 ]]>
+        <attr name="Name" value=""></attr>
+        <attr name="Vendor" value=""></attr>
+        <attr name="Model" value=""></attr>
+        <attr name="InterfaceType" value=""></attr>
+        <attr name="Status" value=""></attr>
+        <attr name="Shared" value=""></attr>
+        <attr name="Driver" value=""></attr>
+        <!--filter attr -->
+        <attr name="copies" value=""></attr>
+        <attr name="job-cancel-after" value=""></attr>
+        <attr name="job-hold-until" value=""></attr>
+        <attr name="job-priority" value=""></attr>
+        <attr name="marker-change-time" value=""></attr>
+        <attr name="number-up" value=""></attr>
+        <attr name="orientation-requested" value=""></attr>
+        <attr name="print-color-mode" value=""></attr>
+        <attr name="printer-is-accepting-jobs" value=""></attr>
+    </device>
+</context>

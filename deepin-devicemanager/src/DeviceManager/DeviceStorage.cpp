@@ -435,3 +435,44 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
 
     setAttribute(mapInfo, "Serial Number", m_SerialNumber, true);
 }
+void DeviceStorage::setInfoFromXml(QString key, QList<QMap<QString, QString>> &lstMap)
+{
+    if(lstMap.length() < 1){
+        return;
+    }
+    QMap<QString, QString> * map = nullptr;
+    for (int i = 0; i< lstMap.length();i++) {
+        if(lstMap[i][key] == m_SerialNumber){
+            map = &lstMap[i];
+            break;
+        }
+    }
+    if(nullptr == map){
+        return;
+    }
+
+    //setAttribute(*map, "Serial ID", m_SerialNumber);
+    setAttribute(*map, "Model", m_Model);
+    setAttribute(*map, "Vendor", m_Vendor);
+    setAttribute(*map, "Driver", m_Driver);
+    setAttribute(*map, "Attached to", m_Interface);
+    setAttribute(*map, "Revision", m_Version);
+    setAttribute(*map, "Capacity", m_Size);
+    setAttribute(*map, "SysFS BusID", m_KeyToLshw);
+    setAttribute(*map, "DeviceFile", m_DeviceFile);
+    setAttribute(*map, "SysFS Device Link", m_NvmeKey);
+    setAttribute(*map, "capabilities", m_Capabilities);
+    setAttribute(*map, "description", m_Description);
+    setAttribute(*map, "size", m_Size);
+    setAttribute(*map, "Rotation Rate", m_RotationRate);
+    setAttribute(*map, "MediaType", m_MediaType);
+    setAttribute(*map, "FirmwareVersion", m_FirmwareVersion);
+    setAttribute(*map, "Speed", m_Speed);
+    setAttribute(*map, "KeyFromStorage", m_KeyFromStorage);
+    setAttribute(*map, "PowerOnHours", m_PowerOnHours);
+    setAttribute(*map, "PowerCycleCount", m_PowerCycleCount);
+    setAttribute(*map, "DeviceFile", m_DeviceFile);
+    setAttribute(*map, "KeyToLshw", m_KeyToLshw);
+    // 获取其他cpu信息
+    getOtherMapInfo(*map);
+}

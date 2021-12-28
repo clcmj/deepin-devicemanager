@@ -150,3 +150,10 @@ void DeviceComputer::loadTableData()
 {
 
 }
+void DeviceComputer::setInfoFromXml(QMap<QString, QString> &mapInfo)
+{
+    setAttribute(mapInfo, "vendor_id", m_Vendor);
+    setAttribute(mapInfo, "model name", m_Name);
+    // 获取其他cpu信息
+    getOtherMapInfo(mapInfo);
+}
