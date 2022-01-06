@@ -186,6 +186,12 @@ public:
      */
     void setGpuSizeFromDmesg(const QString &info);
 
+    /**
+     * @brief setGpuWidthFromNvidia:设置由nvidia-settings获取的显卡大小信息
+     * @param info:由nvidia-settings获取的显卡大小信息
+     */
+    void setGpuWidthFromNvidia(const QString &info);
+
     // 内存设备相关 *************************************************************************************
     /**
      * @brief addMemoryDevice:添加内存设备

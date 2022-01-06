@@ -154,6 +154,11 @@ void DeviceGpu::setDmesgInfo(const QString &info)
     }
 }
 
+void DeviceGpu::setNvidiaInfo(const QString &info)
+{
+    m_Width = info;
+}
+
 void DeviceGpu::setGpuInfo(const QMap<QString, QString> &mapInfo)
 {
     // 华为KLU和PanGuV机器中不需要显示以下信息

@@ -520,8 +520,11 @@ void DeviceGenerator::getGpuSizeFromDmesg()
     else {
         // dmesg无法获取显存信息时从nvidia-settings获取
         const QList<QMap<QString, QString>> &nvidiaMap = DeviceManager::instance()->cmdInfo("nvidia");
-        if (nvidiaMap.size() > 0 && nvidiaMap[0].size() > 0)
+        if (nvidiaMap.size() > 0 && nvidiaMap[0].size() > 0) {
+
             DeviceManager::instance()->setGpuSizeFromDmesg(nvidiaMap[0]["Size"]);
+            DeviceManager::instance()->setGpuWidthFromNvidia(nvidiaMap[0]["Width"]);   // 109782  定制需求从nvidia-settings中读取位宽
+        }
     }
 }
 

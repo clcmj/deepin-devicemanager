@@ -669,10 +669,11 @@ void CmdTool::loadNvidiaSettingInfo(const QString &key, const QString &debugfile
     // 加载nvidia-settings  -q  VideoRam 信息
     // 命令与xrandr命令一样无法在后台运行,该从前台命令直接获取信息
     QString deviceInfo;
-    if (!getDeviceInfoFromCmd(deviceInfo, "nvidia-settings  -q  VideoRam"))
+    if (!getDeviceInfoFromCmd(deviceInfo, "nvidia-settings  -q  VideoRam -q GPUMemoryInterface"))
         return;
-    QMap<QString, QString> mapInfo;
+
     QRegExp reg("[\\s\\S]*VideoRam[\\s\\S]*([0-9]{4,})[\\s\\S]*");
+    QRegExp regWidth("[\\s\\S]*GPUMemoryInterface[\\s\\S]*([0-9]{2,})[\\s\\S]*");
     QStringList list = deviceInfo.split("\n");
 
     foreach (QString item, list) {
@@ -687,11 +688,24 @@ void CmdTool::loadNvidiaSettingInfo(const QString &key, const QString &debugfile
             } else {
                 gpuSize = "null=" + QString::number(numSize) + "MB";
             }
+            QMap<QString, QString> mapInfo;
             mapInfo.insert("Size", gpuSize);
-            break;
+            addMapInfo(key, mapInfo);
         }
     }
-    addMapInfo(key, mapInfo);
+
+    int i = 0;
+    foreach (QString item, list) {
+        // bug109782 定制需求
+        // Attribute 'GPUMemoryInterface' (jixiaomei-PC:0.0): 64. 正则表达式获取位宽64
+        if (regWidth.exactMatch(item)) {
+            QString gpuWidth = regWidth.cap(1);
+
+            QList<QMap<QString, QString>> &lst = m_cmdInfo["nvidia"];
+            lst[i].insert("Width", gpuWidth + "bits");
+            ++i;
+        }
+    }
 }
 
 void CmdTool::getSMBIOSVersion(const QString &info, QString &version)

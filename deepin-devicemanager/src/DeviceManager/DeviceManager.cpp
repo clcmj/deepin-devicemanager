@@ -399,6 +399,18 @@ void DeviceManager::setGpuSizeFromDmesg(const QString &info)
     }
 }
 
+void DeviceManager::setGpuWidthFromNvidia(const QString &info)
+{
+    // 从dmesg中设置显卡大小
+    QList<DeviceBaseInfo *>::iterator it = m_ListDeviceGPU.begin();
+    for (; it != m_ListDeviceGPU.end(); ++it) {
+        DeviceGpu *device = dynamic_cast<DeviceGpu *>(*it);
+        if (!device)
+            continue;
+
+        device->setNvidiaInfo(info);
+    }
+}
 void DeviceManager::addMemoryDevice(DeviceMemory *const device)
 {
     // 添加内存
