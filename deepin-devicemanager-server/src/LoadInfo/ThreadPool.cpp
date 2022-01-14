@@ -19,17 +19,18 @@ ThreadPool::ThreadPool(QObject *parent)
 void ThreadPool::loadDeviceInfo()
 {
     // 根据m_ListCmd生成所有设备信息
-#ifndef COMMUNITY
-    QObjectCleanupHandler *cleaner = new QObjectCleanupHandler;
-    cleaner->setParent(this);
-#endif
-
+//#ifndef COMMUNITY
+//    QObjectCleanupHandler *cleaner = new QObjectCleanupHandler;
+//    cleaner->setParent(this);
+//#endif
+    qInfo() << "loadDeviceInfo";
     QList<Cmd>::iterator it = m_ListCmd.begin();
     for (; it != m_ListCmd.end(); ++it) {
+        qInfo() << (*it).cmd;
         ThreadPoolTask *task = new ThreadPoolTask((*it).cmd, (*it).file, (*it).canNotReplace, (*it).waitingTime);
-#ifndef COMMUNITY
-        cleaner->add(task);
-#endif
+//#ifndef COMMUNITY
+//        cleaner->add(task);
+//#endif
         start(task);
         task->setAutoDelete(true);
     }
@@ -38,16 +39,18 @@ void ThreadPool::loadDeviceInfo()
 void ThreadPool::updateDeviceInfo()
 {
     // 根据m_ListCmd生成所有设备信息
-#ifndef COMMUNITY
-    QObjectCleanupHandler *cleaner = new QObjectCleanupHandler;
-    cleaner->setParent(this);
-#endif
+//#ifndef COMMUNITY
+//    QObjectCleanupHandler *cleaner = new QObjectCleanupHandler;
+//    cleaner->setParent(this);
+//#endif
+    qInfo() << "updateDeviceInfo";
     QList<Cmd>::iterator it = m_ListUpdate.begin();
     for (; it != m_ListUpdate.end(); ++it) {
+        qInfo() << (*it).cmd;
         ThreadPoolTask *task = new ThreadPoolTask((*it).cmd, (*it).file, (*it).canNotReplace, (*it).waitingTime);
-#ifndef COMMUNITY
-        cleaner->add(task);
-#endif
+//#ifndef COMMUNITY
+//        cleaner->add(task);
+//#endif
         start(task);
         task->setAutoDelete(true);
     }
