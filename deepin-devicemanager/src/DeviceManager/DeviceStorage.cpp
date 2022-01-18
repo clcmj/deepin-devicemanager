@@ -426,12 +426,20 @@ void DeviceStorage::getInfoFromsmartctl(const QMap<QString, QString> &mapInfo)
             m_Model = mapInfo["Model Number"];
     }
 
-    if(mapInfo.find("Model Number") != mapInfo.end()){
+    if (mapInfo.find("Model Number") != mapInfo.end()) {
         QString model = mapInfo["Model Number"];
-        if(model.startsWith("FORESEE")){
+        if (model.startsWith("FORESEE")) {
             m_Vendor = "Shenzhen Longsys Electronics Co., Ltd";
             m_Model = mapInfo["Model Number"];
         }
+    }
+
+    // tf5000 hwinfo --disk获取的硬盘型号为TOSHIBA DT01ACA1 实际为smartctl 中的TOSHIBA DT01ACA100
+    // 在此特殊处理针对该型号硬盘,型号信息从smartctl中获取
+    if (m_Model.startsWith("TOSHIBA DT01ACA1", Qt::CaseInsensitive)) {
+        //SATA
+        if (mapInfo.find("Device Model") != mapInfo.end())
+            m_Model = mapInfo["Device Model"];
     }
 
     setAttribute(mapInfo, "Serial Number", m_SerialNumber, true);
