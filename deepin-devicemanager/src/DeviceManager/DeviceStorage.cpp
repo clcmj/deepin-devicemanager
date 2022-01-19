@@ -1,5 +1,6 @@
 // 项目自身文件
 #include "DeviceStorage.h"
+#include "DeviceManager.h"
 
 // Qt库文件
 #include<QDebug>
@@ -66,6 +67,15 @@ bool DeviceStorage::setHwinfoInfo(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "Device File", m_DeviceFile);
     if (m_KeyToLshw.contains("nvme", Qt::CaseInsensitive))
         setAttribute(mapInfo, "SysFS Device Link", m_NvmeKey);
+
+    // bug 111670 当存储设备为mmc卡时，存储设备大小由lsblk获取
+    if (m_DeviceFile.contains("mmcblk0", Qt::CaseInsensitive)) {
+        const QList<QMap<QString, QString>> &lstblk = DeviceManager::instance()->cmdInfo("lsblk_size");
+
+        if (lstblk.size() == 1) {
+            m_Size = lstblk[0]["mmcblk0"];
+        }
+    }
 
     getOtherMapInfo(mapInfo);
     return true;

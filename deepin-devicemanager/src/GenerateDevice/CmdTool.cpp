@@ -146,19 +146,26 @@ void CmdTool::loadLsblkInfo(const QString &debugfile)
 
     QStringList lines = deviceInfo.split("\n");
     QMap<QString, QString> mapInfo;
+    QMap<QString, QString> sizeMap;
 
     // 获取存储设备逻辑名称以及ROTA信息
     foreach (QString line, lines) {
         QStringList words = line.replace(QRegExp("[\\s]+"), " ").split(" ");
-        if (words.size() != 2 || words[0] == "NAME")
+        if (words.size() != 3 || words[0] == "NAME")
             continue;
 
         mapInfo.insert(words[0].trimmed(), words[1].trimmed());
+
+        // bug111670 存储设备为mmc卡，由于hwinfo获取信息不准确,smartctl不支持该类型的存储设备
+        // 与HW沟通后展示系统中能获取的最大的存储大小在设备管理器进行展示
+        // lsblk -d -o name,rota,size中的size是获取的最大值
+        sizeMap.insert(words[0].trimmed(), words[2].trimmed());
 
         //sudo smartctl --all /dev/%1   文件信息
         loadSmartCtlInfo(words[0].trimmed(), "smartctl_" + words[0].trimmed() + ".txt");
     }
     addMapInfo("lsblk_d", mapInfo);
+    addMapInfo("lsblk_size", sizeMap);
 }
 
 void CmdTool::loadLssgInfo(const QString &debugfile)

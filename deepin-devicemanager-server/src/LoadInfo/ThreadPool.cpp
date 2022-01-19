@@ -230,7 +230,7 @@ void ThreadPool::initCmd()
 
     // 添加lsblk -d -o name,rota命令
     Cmd cmdLsblk;
-    cmdLsblk.cmd = QString("%1 %2%3").arg("lsblk -d -o name,rota > ").arg(PATH).arg("lsblk_d.txt");
+    cmdLsblk.cmd = QString("%1 %2%3").arg("lsblk -d -o name,rota,size > ").arg(PATH).arg("lsblk_d.txt");
     cmdLsblk.file = "lsblk_d.txt";
     cmdLsblk.canNotReplace = false;
     m_ListCmd.append(cmdLsblk);
