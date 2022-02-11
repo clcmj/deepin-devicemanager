@@ -76,7 +76,7 @@ QString DeviceStorage::getKLUSerialID(QString& strDeviceLink)
     if(!strDeviceLink.isEmpty() && strDeviceLink.contains("platform/")){
         // /devices/platform/f8300000.ufs/host0/target0:0:0/0:0:0:3
         // /proc/bootdevice/name:f8300000.ufs
-        QRegExp reg(".*platform/([^/]+)/");
+        QRegExp reg(".*platform/([^/]+)/.*");
         QString strName = "";
         QString strBootdeviceName = "";
         if (reg.exactMatch(strDeviceLink)) {
@@ -93,7 +93,7 @@ QString DeviceStorage::getKLUSerialID(QString& strDeviceLink)
                 Path = "/proc/bootdevice/cid";
                 QFile filecid(Path);
                 if (filecid.open(QIODevice::ReadOnly)) {
-                    strSerialNumber = filecid.readAll();
+                    strSerialNumber = filecid.readAll().trimmed();
                     filecid.close();
                 }
             }
