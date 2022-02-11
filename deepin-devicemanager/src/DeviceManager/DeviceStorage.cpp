@@ -69,7 +69,48 @@ bool DeviceStorage::setHwinfoInfo(const QMap<QString, QString> &mapInfo)
     loadOtherDeviceInfo(mapInfo);
     return true;
 }
+QString DeviceStorage::getKLUSerialID(QString& strDeviceLink)
+{
+    //取SerialID优先级：1.取cid 2.取unique_number 3.取hwinfo中的SerialID
+    QString strSerialNumber = "";
+    if(!strDeviceLink.isEmpty() && strDeviceLink.contains("platform/")){
+        // /devices/platform/f8300000.ufs/host0/target0:0:0/0:0:0:3
+        // /proc/bootdevice/name:f8300000.ufs
+        QRegExp reg(".*platform/([^/]+)/");
+        QString strName = "";
+        QString strBootdeviceName = "";
+        if (reg.exactMatch(strDeviceLink)) {
+            strName = reg.cap(1);
+        }
+        if(!strName.isEmpty()){//取到设备名称再去读文件，因为读文件开销大。
+            QString Path = "/proc/bootdevice/name";
+            QFile file(Path);
+            if (file.open(QIODevice::ReadOnly)) {
+                strBootdeviceName = file.readAll();
+                file.close();
+            }
+            if(strName == strBootdeviceName){
+                Path = "/proc/bootdevice/cid";
+                QFile filecid(Path);
+                if (filecid.open(QIODevice::ReadOnly)) {
+                    strSerialNumber = filecid.readAll();
+                    filecid.close();
+                }
+            }
+        }
+    }
 
+    if(strSerialNumber.isEmpty()){
+        QString Path = "/sys" + strDeviceLink + "/unique_number";
+        QFile file(Path);
+        if (file.open(QIODevice::ReadOnly)) {
+            QString value = file.readAll();
+            strSerialNumber = value;
+            file.close();
+        }
+    }
+    return strSerialNumber;
+}
 bool DeviceStorage::setKLUHwinfoInfo(const QMap<QString, QString> &mapInfo)
 {
     // 龙芯机器中 hwinfo --disk会列出所有的分区信息
@@ -100,15 +141,11 @@ bool DeviceStorage::setKLUHwinfoInfo(const QMap<QString, QString> &mapInfo)
         return false;
     }
 
-
     // get serial num
-    QString Path = "/sys" + mapInfo["SysFS Device Link"] + "/unique_number";
-    QFile file(Path);
-    if (file.open(QIODevice::ReadOnly)) {
-        QString value = file.readAll();
-        m_SerialNumber = value;
-        file.close();
-    } else {
+    m_SerialNumber = "";
+    QString strLink = mapInfo["SysFS Device Link"];
+    m_SerialNumber = getKLUSerialID(strLink);
+    if(m_SerialNumber.isEmpty()){
         setAttribute(mapInfo, "Serial ID", m_SerialNumber);
     }
 

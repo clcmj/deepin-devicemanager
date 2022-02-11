@@ -211,6 +211,9 @@ protected:
     void initFilterKey() override;
 
 private:
+    QString getKLUSerialID(QString& strDeviceLink);
+
+private:
     QString               m_Model;              //<! 【型号】1
     QString               m_Vendor;             //<! 【制造商】2
     QString               m_MediaType;          //<! 【介质类型】3
