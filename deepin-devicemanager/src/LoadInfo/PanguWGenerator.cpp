@@ -43,7 +43,7 @@ void PanguWGenerator::generatorNetworkDevice()
 
         // (eth[0-9]$)|(wlan[0-9]$)
         QRegExp reg("(eth[0-9]$)|(wlan[0-9]$)");
-        if (!reg.exactMatch((*it)["logical name"])){
+        if (!reg.exactMatch((*it)["logical name"])) {
             continue;
         }
 
@@ -54,9 +54,9 @@ void PanguWGenerator::generatorNetworkDevice()
         }
 
         //if (tempMap["description"].contains("Wireless", Qt::CaseInsensitive) && tempMap["logical name"].contains("wlan0", Qt::CaseInsensitive)) {
-        if ((*it)["description"].contains("Wireless", Qt::CaseInsensitive)) {
-            continue;
-        }
+//        if ((*it)["description"].contains("Wireless", Qt::CaseInsensitive)) {
+//            continue;
+//        }
         DeviceNetwork device;
         device.setInfoFromLshw(*it);
         DeviceManager::instance()->addNetworkDevice(device);
