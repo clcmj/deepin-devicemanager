@@ -12,6 +12,8 @@ public:
     void setInfoFromLshw(const QMap<QString, QString> &mapInfo);
     // 设置从 hwinfo 获取的信息
     bool setInfoFromHwinfo(const QMap<QString, QString> &mapInfo);
+    // set info form "/sys/hisys/wal/wifi_devices_info"
+    void setWifiInfo();
 
     /**
      * @brief setInfoFromWifiInfo:设置从cat /sys/hisys/wal/wifi_devices_info里面获取的信息

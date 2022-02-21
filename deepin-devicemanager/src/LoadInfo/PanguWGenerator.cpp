@@ -40,6 +40,13 @@ void PanguWGenerator::generatorNetworkDevice()
         if ((*it).size() < 2) {
             continue;
         }
+
+        // (eth[0-9]$)|(wlan[0-9]$)
+        QRegExp reg("(eth[0-9]$)|(wlan[0-9]$)");
+        if (!reg.exactMatch((*it)["logical name"])){
+            continue;
+        }
+
         // KLU的问题特殊处理
         QMap<QString, QString> tempMap;
         foreach (const QString &key, (*it).keys()) {
@@ -54,16 +61,15 @@ void PanguWGenerator::generatorNetworkDevice()
         device.setInfoFromLshw(*it);
         DeviceManager::instance()->addNetworkDevice(device);
     }
-    //wifiinfo
-    const QList<QMap<QString, QString>> lstWifiInfo = DeviceManager::instance()->cmdInfo("wifiinfo");
-    it = lstWifiInfo.begin();
-    for (; it != lstWifiInfo.end(); ++it) {
-        if ((*it).size() < 2) {
-            continue;
-        }
-        DeviceNetwork device;
-        device.setInfoFromWifiInfo(*it);
-        DeviceManager::instance()->addNetworkDevice(device);
-    }
-
+//    //wifiinfo
+//    const QList<QMap<QString, QString>> lstWifiInfo = DeviceManager::instance()->cmdInfo("wifiinfo");
+//    it = lstWifiInfo.begin();
+//    for (; it != lstWifiInfo.end(); ++it) {
+//        if ((*it).size() < 2) {
+//            continue;
+//        }
+//        DeviceNetwork device;
+//        device.setInfoFromWifiInfo(*it);
+//        DeviceManager::instance()->addNetworkDevice(device);
+//    }
 }

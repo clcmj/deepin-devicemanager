@@ -1,5 +1,7 @@
 #include "DeviceNetwork.h"
 
+#include <QFile>
+
 DeviceNetwork::DeviceNetwork()
     : DeviceBaseInfo()
     , m_Name("")
@@ -61,6 +63,36 @@ void DeviceNetwork::setInfoFromLshw(const QMap<QString, QString> &mapInfo)
     setAttribute(mapInfo, "multicast", m_Multicast);
 
     loadOtherDeviceInfo(mapInfo);
+
+    if (m_LogicalName.startsWith("wlan")) {
+        setWifiInfo();
+    }
+}
+
+void DeviceNetwork::setWifiInfo()
+{
+    /*
+        Chip Type: HUAWEI Hi1105
+        NIC  Type: WLAN
+        NIC  Rate(theory): 2.40Gbps
+    */
+    QFile file("/sys/hisys/wal/wifi_devices_info"); //  /sys/hisys/wal/wifi_devices_info
+    if (file.open(QIODevice::ReadOnly)) {
+        QString info = file.readAll();
+        QMap<QString, QString> mapInfo;
+        QStringList lstInfo = info.split("\n");
+        for (QStringList::iterator it = lstInfo.begin(); it != lstInfo.end(); ++it) {
+            QStringList keyValue = (*it).split(":");
+            if (keyValue.size() != 2) {
+                continue;
+            }
+            mapInfo.insert(keyValue[0].trimmed(), keyValue[1].trimmed());
+        }
+
+        setAttribute(mapInfo, "Chip Type", m_Name);
+        setAttribute(mapInfo, "NIC  Type", m_Model);
+        setAttribute(mapInfo, "NIC  Rate(theory)", m_Capacity);
+    }
 }
 
 bool DeviceNetwork::setInfoFromHwinfo(const QMap<QString, QString> &mapInfo)

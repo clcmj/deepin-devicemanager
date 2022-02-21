@@ -193,6 +193,11 @@ void DeviceGenerator::generatorNetworkDevice()
         if ((*it).size() < 2) {
             continue;
         }
+        // (eth[0-9]$)|(wlan[0-9]$) 过滤虚拟网卡
+        QRegExp reg("(eth[0-9]$)|(wlan[0-9]$)");
+        if (!reg.exactMatch((*it)["logical name"])){
+            continue;
+        }
         DeviceNetwork device;
         device.setInfoFromLshw(*it);
         DeviceManager::instance()->addNetworkDevice(device);
